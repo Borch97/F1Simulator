@@ -1,0 +1,79 @@
+package datos;
+
+
+public class Coche {
+
+    protected String nombre;
+    protected String escuderia;
+    protected double velocidad;
+    protected double aceleracion;
+    protected double aerodinamica;
+    protected double probRotura;
+
+    public Coche(){
+        nombre = " ";
+        escuderia = " ";
+        velocidad = 0;
+        aceleracion = 0;
+        aceleracion = 0;
+        aerodinamica = 0;
+        probRotura = 0;
+    }
+
+    public Coche(String nombre, String escuderia, double velocidad, double aceleracion, double aerodinamica, double probRotura) {
+        this.nombre = nombre;
+        this.escuderia = escuderia;
+        this.velocidad = velocidad;
+        this.aceleracion = aceleracion;
+        this.aerodinamica = aerodinamica;
+        this.probRotura = probRotura;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getEscuderia() {
+        return escuderia;
+    }
+
+    public void setEscuderia(String escuderia) {
+        this.escuderia = escuderia;
+    }
+
+    public double getVelocidad() {
+        return velocidad;
+    }
+
+    public void setVelocidad(double velocidad) {
+        this.velocidad = velocidad;
+    }
+
+    public double getAceleracion() {
+        return aceleracion;
+    }
+
+    public void setAceleracion(double aceleracion) {
+        this.aceleracion = aceleracion;
+    }
+
+    public double getAerodinamica() {
+        return aerodinamica;
+    }
+
+    public void setAerodinamica(double aerodinamica) {
+        this.aerodinamica = aerodinamica;
+    }
+
+    public double getProbRotura() {
+        return probRotura;
+    }
+
+    public void setProbRotura(double probRotura) {
+        this.probRotura = probRotura;
+    }
+}
