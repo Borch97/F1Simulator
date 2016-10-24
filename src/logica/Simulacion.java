@@ -13,21 +13,30 @@ public class Simulacion {
     //TODO
     //simulacion = tiempo aleatorio rango circuito - (media (Velocidad, aceleracion, aerodinamica))
 
+    public final int totalCoches = 10;
+
+
+
     public int aleatorio(int min, int max){
         Random random = new Random();
         return random.nextInt(max - min +1) + min;
     }
 
+    public int tiempoVueltaAleatorio(int rangoInicial, int rangoFinal){
+        return aleatorio(rangoInicial, rangoFinal);
+
+    }
+
     //Obtiene un tiempo por vuelta aleatorio teniendo en cuenta una sere de parametros individuales de cada coche
-    
+
     public Rango tiempoVueltaInicial(int rangoInicial, int rangoFinal, double velocidad, double aceleracion, double aerodinamica){
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        sdf.format(rangoInicial);
-        Gestion g = new Gestion();
+        //Gestion g = new Gestion();
         //int rango1 = (int)g.arrayCircuito.get(0).getRangoTiempo()[0];
         //int rango2 = (int)g.arrayCircuito.get(0).getRangoTiempo()[1];
 
-       return milisegundosConversion((long)(aleatorio(rangoInicial, rangoFinal) -((velocidad + aceleracion + aerodinamica) / 3)));
+
+
+       return milisegundosConversion((long)(tiempoVueltaAleatorio(rangoInicial, rangoFinal) -((velocidad*500 + aceleracion*500 + aerodinamica*500) / 3)));
     }
 
     //82648 milisegundos 1:22:826
