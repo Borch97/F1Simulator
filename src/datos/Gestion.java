@@ -6,14 +6,14 @@ import java.util.Random;
 
 public class Gestion {
 
-    protected final int totalPilotos = 10;
-    protected ArrayList<Coche> arrayCoche = new ArrayList<Coche>();
+    protected final int totalPilotos = 9;
+    protected ArrayList<Coche> arrayCoche = new ArrayList<>();
 
 
 
     public int aleatorio(int min, int max){
         Random random = new Random();
-        return (int)random.nextInt(max - min +1) + min;
+        return random.nextInt(max - min +1) + min;
     }
 
     /*public Coche creacionPiloto(String nombre, String escuderia, double velocidad, double aceleracion, double aerodinamica, double probRotura){
@@ -21,7 +21,7 @@ public class Gestion {
     }*/
 
     public void creacionAI(){
-          while(arrayCoche.isEmpty() || arrayCoche.size()<10);
+          while(arrayCoche.isEmpty() || arrayCoche.size()<totalPilotos);
                 //TODO
                 //arrayCoche.add(Coche());
     }

@@ -15,7 +15,6 @@ public class Coche {
         escuderia = " ";
         velocidad = 0;
         aceleracion = 0;
-        aceleracion = 0;
         aerodinamica = 0;
         probRotura = 0;
     }
