@@ -1,5 +1,6 @@
 package datos;
 
+
 import java.io.File;
 import java.lang.Object;
 import java.time.Duration;
@@ -88,11 +89,13 @@ public class Circuito {
         this.rangoTiempo = rangoTiempo;
     }
 
+
     public static void main(String[] args){
         Circuito c = new Circuito();
         c.rangoTiempo[0] = c.rangoTiempo[0].ofSeconds(3600);
         System.out.println(c.rangoTiempo[0].toHours());
         System.out.println(c.rangoTiempo[0].toMinutes());
+
     }
 
 }
