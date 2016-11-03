@@ -1,5 +1,7 @@
 package datos;
 
+//clase para guardar datos de partida
+//dinero, circuito actual, clasificacion actual
 
 public class ConfPartida {
 

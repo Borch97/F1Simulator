@@ -12,7 +12,14 @@ public class Simulacion {
 
     //TODO
     //simulacion = tiempo aleatorio rango circuito - (media (Velocidad, aceleracion, aerodinamica))
-
+	//metodo probRotura
+	//metodo actualizacion despues de granpremio
+	//prueba y creacion circuito
+	
+	
+	
+	
+	
     public final int totalCoches = 10;
 
 
