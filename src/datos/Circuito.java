@@ -1,6 +1,7 @@
 package datos;
 
 // https://github.com/Borch97/F1Simulator.git
+import java.awt.*;
 import java.io.File;
 import java.lang.Object;
 import java.time.Duration;
@@ -10,27 +11,39 @@ public class Circuito {
     protected String nombre;
     protected String pais;
     protected int vueltas;
-    protected double distancia;
     protected double probLluvia;
     protected File fotoCircuito;
-    protected Duration[] rangoTiempo = new Duration[2];
+    protected  long rangoTiempoInicial;
+    protected long rangoTiempoFinal;
 
 
-
+    /**
+     * Contructor vacio con valores predeterminados
+     */
     public Circuito(){
         nombre = " ";
         pais = " ";
         probLluvia = 0;
     }
 
-    public Circuito(String nombre, String pais, int vueltas, double distancia, double probLluvia, File fotoCircuito, Duration[] rangoTiempo) {
+    /**
+     * Contructor para la creacion personalizada de un circuito
+     * @param nombre
+     * @param pais
+     * @param vueltas
+     * @param probLluvia
+     * @param fotoCircuito
+     * @param rangoTiempoInicial
+     * @param rangoTiempoFinal
+     */
+    public Circuito(String nombre, String pais, int vueltas, double probLluvia, File fotoCircuito, long rangoTiempoInicial, long rangoTiempoFinal) {
         this.nombre = nombre;
         this.pais = pais;
         this.vueltas = vueltas;
-        this.distancia = distancia;
         this.probLluvia = probLluvia;
         this.fotoCircuito = fotoCircuito;
-        this.rangoTiempo = rangoTiempo;
+        this.rangoTiempoInicial = rangoTiempoInicial;
+        this.rangoTiempoFinal = rangoTiempoFinal;
     }
 
     public String getNombre() {
@@ -57,14 +70,6 @@ public class Circuito {
         this.vueltas = vueltas;
     }
 
-    public double getDistancia() {
-        return distancia;
-    }
-
-    public void setDistancia(double distancia) {
-        this.distancia = distancia;
-    }
-
     public double getProbLluvia() {
         return probLluvia;
     }
@@ -77,24 +82,26 @@ public class Circuito {
         return fotoCircuito;
     }
 
-    public void setFotoCircuito(File fotoCircuito) {
-        this.fotoCircuito = fotoCircuito;
+    public void setFotoCircuito(File fotoCircuito) { this.fotoCircuito = fotoCircuito;
     }
 
-    public Object[] getRangoTiempo() {
-        return rangoTiempo;
+    public long getRangoTiempoInicial() {  return rangoTiempoInicial;
     }
 
-    public void setRangoTiempo(Duration[] rangoTiempo) {
-        this.rangoTiempo = rangoTiempo;
+    public void setRangoTiempoInicial(long rangoTiempoInicial) {  this.rangoTiempoInicial = rangoTiempoInicial;
     }
 
+    public long getRangoTiempoFinal() {    return rangoTiempoFinal;
+    }
+
+    public void setRangoTiempoFinal(long rangoTiempoFinal) {  this.rangoTiempoFinal = rangoTiempoFinal;
+    }
 
     public static void main(String[] args){
         Circuito c = new Circuito();
-        c.rangoTiempo[0] = c.rangoTiempo[0].ofSeconds(3600);
+        /*c.rangoTiempo[0] = c.rangoTiempo[0].ofSeconds(3600);
         System.out.println(c.rangoTiempo[0].toHours());
-        System.out.println(c.rangoTiempo[0].toMinutes());
+        System.out.println(c.rangoTiempo[0].toMinutes());*/
 
     }
 

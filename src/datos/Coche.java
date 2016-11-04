@@ -10,15 +10,25 @@ public class Coche {
     protected double aerodinamica;
     protected double probRotura;
 
+    /**
+     * Contructor vacio con valores predeterminados
+     */
     public Coche(){
-        nombre = " ";
-        escuderia = " ";
         velocidad = 0;
         aceleracion = 0;
         aerodinamica = 0;
         probRotura = 0;
     }
 
+    /**
+     * Contructor para la creacion personalizada de un piloto
+     * @param nombre
+     * @param escuderia
+     * @param velocidad
+     * @param aceleracion
+     * @param aerodinamica
+     * @param probRotura
+     */
     public Coche(String nombre, String escuderia, double velocidad, double aceleracion, double aerodinamica, double probRotura) {
         this.nombre = nombre;
         this.escuderia = escuderia;
