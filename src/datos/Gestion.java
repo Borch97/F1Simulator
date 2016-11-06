@@ -44,10 +44,9 @@ public class Gestion {
      * Crea un numero de pilotos igual a la variable totalPilotos.
      */
     public void creacionAI(){
-        int contPilotos = totalPilotos;
-         // while(arrayCoche.isEmpty() || arrayCoche.size()<totalPilotos) {
-              Coche cocheComprobar = new Coche();
-              for (int j = contPilotos; j > 0; j--) {
+        // while(arrayCoche.isEmpty() || arrayCoche.size()<totalPilotos) {
+              Coche cocheComprobar;
+              for (int j = totalPilotos; j > 0; j--) {
                   cocheComprobar = creacionPiloto();
                   while((containsElement(arrayCoche, cocheComprobar.getNombre())) || contains2Elements(arrayCoche, cocheComprobar.getEscuderia())){
                       cocheComprobar = creacionPiloto();
@@ -105,7 +104,7 @@ public class Gestion {
         Duration[]duration = new Duration[2];
         duration[0] = duration[0].ofMillis(82648);
         duration[1] = duration[0].ofMillis(85648);
-        File path = new File("E:\\Programacion\\IJ\\F1Simulator\\src\\pictures\\Melbourne.png");
+
 
          // Circuito m = new Circuito("Melbourne", "Australia", 30, 3000.5, 0.0, path , duration);
         //g.arrayCircuito.add(m);
