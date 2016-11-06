@@ -14,7 +14,7 @@ public class Gestion {
     public ArrayList<Circuito> arrayCircuito = new ArrayList<>();
     public ArrayList<String> arrayNombres = new ArrayList<>(Arrays.asList("Hamilton", "Vettel", "Verstappen", "Alonso", "Button", "Sainz", "Massa", "Rosberg", "Ricciardo", "Perez", "Bottas"));
     public ArrayList<String> arrayEscuderias = new ArrayList<>(Arrays.asList("Mercedes", "Ferrari", "Williams", "Mclaren Honda", "Red Bull", "Renault", "Haas", "Toro Rosso"));
-
+    public ArrayList<String> arrayTiempoVuelta = new ArrayList<>();
 
     //Crea un entero aleatorio dentro de los limites establecidos
 

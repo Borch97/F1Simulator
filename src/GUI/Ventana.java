@@ -1,15 +1,18 @@
 package GUI;
 
+import datos.Circuito;
+import datos.Gestion;
+import datos.Rango;
+import logica.Simulacion;
+
 import java.awt.*;
 import java.awt.Color;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+import java.io.File;
+import java.util.ArrayList;
+import javax.swing.*;
 
 /**
  * Clase Ventana
@@ -23,6 +26,9 @@ public class Ventana extends JFrame implements ActionListener {
     private JLabel texto;           // etiqueta o texto no editable
     private JTextField caja;        // caja de texto, para insertar datos
     private JButton boton;          // boton con una determinada accion
+    private JList clasificacionVuelta;
+    Simulacion s = new Simulacion();
+    Gestion g = new Gestion();
 
     public Ventana() {
         super();                    // usamos el contructor de la clase padre JFrame
@@ -40,12 +46,33 @@ public class Ventana extends JFrame implements ActionListener {
         this.setBackground(Color.blue);
     }
 
+
+    private void test(){
+        g.creacionAI();
+        File f = new File("./pictures/Melbourne.png");
+        Circuito barcelona = new Circuito("Barcelona", "Espanya", 50, 50.0,f, 82648, 85648);
+        int cont = 0;
+        Rango r;
+        while (cont<g.totalPilotos) {
+            r = s.tiempoVueltaInicial((int)barcelona.getRangoTiempoInicial(), (int)barcelona.getRangoTiempoFinal(),
+                    g.arrayCoche.get(cont).getVelocidad(), g.arrayCoche.get(cont).getAceleracion(),g.arrayCoche.get(cont).getAerodinamica() );
+            g.arrayTiempoVuelta.add((cont + 1)  + ".-" + g.arrayCoche.get(cont).getNombre() + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
+            cont++;
+        }
+    }
     private void inicializarComponentes() {
         // creamos los componentes
+        JLabel vueltas = new JLabel();
+        clasificacionVuelta = new JList();
         texto = new JLabel();
         caja = new JTextField();
         boton = new JButton();
         // configuramos los componentes
+        vueltas.setText("50" + "/" + "50");
+        vueltas.setBounds(512, 30, 100,25);
+        test();
+        clasificacionVuelta.setListData( g.arrayTiempoVuelta.toArray());
+        clasificacionVuelta.setBounds(400,80,150,500);
         texto.setText("Inserte Nombre");    // colocamos un texto a la etiqueta
         texto.setBounds(50, 50, 100, 25);   // colocamos posicion y tamanio al texto (x, y, ancho, alto)
         caja.setBounds(150, 50, 100, 25);   // colocamos posicion y tamanio a la caja (x, y, ancho, alto)
@@ -56,7 +83,10 @@ public class Ventana extends JFrame implements ActionListener {
         this.add(texto);
         this.add(caja);
         this.add(boton);
+        this.add(vueltas);
+        this.add(clasificacionVuelta);
     }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
