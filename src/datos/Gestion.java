@@ -35,7 +35,7 @@ public class Gestion {
      * @return Devuelve un nuevo piloto de tipo Coche con todos los valores aleatorios
      */
     public Coche creacionPiloto(){
-        return new Coche(arrayNombres.get(aleatorio(0, arrayNombres.size() - 1)), arrayEscuderias.get(aleatorio(0, arrayEscuderias.size() - 1)), aleatorio(0, 10), aleatorio(0, 10), aleatorio(0, 10), 0);
+        return new Coche(arrayNombres.get(aleatorio(0, arrayNombres.size() - 1))," ", arrayEscuderias.get(aleatorio(0, arrayEscuderias.size() - 1)), aleatorio(0, 10), aleatorio(0, 10), aleatorio(0, 10), 0);
     }
     //Metodo que se encarga de crear automaticamente todos los otros pilotos del modo carrera
 
@@ -51,6 +51,7 @@ public class Gestion {
                   while((containsElement(arrayCoche, cocheComprobar.getNombre())) || contains2Elements(arrayCoche, cocheComprobar.getEscuderia())){
                       cocheComprobar = creacionPiloto();
                   }
+                  cocheComprobar.setAbreviado(cocheComprobar.getNombre().substring(0,4));
                   arrayCoche.add(cocheComprobar);
               }
 

@@ -5,6 +5,7 @@ package datos;
 public class Coche {
 
     protected String nombre;
+    protected String abreviado;
     protected String escuderia;
     protected double velocidad;
     protected double aceleracion;
@@ -24,14 +25,16 @@ public class Coche {
     /**
      * Contructor para la creacion personalizada de un piloto
      * @param nombre
+     * @param abreviado
      * @param escuderia
      * @param velocidad
      * @param aceleracion
      * @param aerodinamica
      * @param probRotura
      */
-    public Coche(String nombre, String escuderia, double velocidad, double aceleracion, double aerodinamica, double probRotura) {
+    public Coche(String nombre, String abreviado, String escuderia, double velocidad, double aceleracion, double aerodinamica, double probRotura) {
         this.nombre = nombre;
+        this.abreviado = abreviado;
         this.escuderia = escuderia;
         this.velocidad = velocidad;
         this.aceleracion = aceleracion;
@@ -46,6 +49,10 @@ public class Coche {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    public String getAbreviado() { return abreviado; }
+
+    public void setAbreviado(String abreviado) { this.abreviado = abreviado; }
 
     public String getEscuderia() {
         return escuderia;

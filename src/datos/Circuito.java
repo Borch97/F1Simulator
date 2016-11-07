@@ -12,7 +12,7 @@ public class Circuito {
     protected String pais;
     protected int vueltas;
     protected double probLluvia;
-    protected File fotoCircuito;
+    protected String fotoCircuito;
     protected  long rangoTiempoInicial;
     protected long rangoTiempoFinal;
 
@@ -36,7 +36,7 @@ public class Circuito {
      * @param rangoTiempoInicial
      * @param rangoTiempoFinal
      */
-    public Circuito(String nombre, String pais, int vueltas, double probLluvia, File fotoCircuito, long rangoTiempoInicial, long rangoTiempoFinal) {
+    public Circuito(String nombre, String pais, int vueltas, double probLluvia, String fotoCircuito, long rangoTiempoInicial, long rangoTiempoFinal) {
         this.nombre = nombre;
         this.pais = pais;
         this.vueltas = vueltas;
@@ -78,11 +78,11 @@ public class Circuito {
         this.probLluvia = probLluvia;
     }
 
-    public File getFotoCircuito() {
+    public String getFotoCircuito() {
         return fotoCircuito;
     }
 
-    public void setFotoCircuito(File fotoCircuito) { this.fotoCircuito = fotoCircuito;
+    public void setFotoCircuito(String fotoCircuito) { this.fotoCircuito = fotoCircuito;
     }
 
     public long getRangoTiempoInicial() {  return rangoTiempoInicial;

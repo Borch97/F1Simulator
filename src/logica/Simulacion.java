@@ -87,8 +87,7 @@ public class Simulacion {
         Simulacion s = new Simulacion();
         Gestion g = new Gestion();
         g.creacionAI();
-        File f = new File("./pictures/Melbourne.png");
-        Circuito barcelona = new Circuito("Barcelona", "Espanya", 50, 50.0,f, 82648, 85648);
+        Circuito barcelona = new Circuito("Barcelona", "Espanya", 50, 50.0,"./pictures/Melbourne.png", 82648, 85648);
         int cont = 0;
         Rango r;
         while (cont<g.totalPilotos) {
@@ -97,9 +96,9 @@ public class Simulacion {
             g.arrayTiempoVuelta.add(g.arrayCoche.get(cont).getNombre() + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
             cont++;
         }
-        File p = barcelona.getFotoCircuito();
-        System.out.println(p.getAbsolutePath());
-        System.out.println(p.getAbsoluteFile());
+        //File p = barcelona.getFotoCircuito();
+        //System.out.println(p.getAbsolutePath());
+        //System.out.println(p.getAbsoluteFile());
        /* System.out.println(s.tiempoVueltaInicial(82648, 85648, 0, 0, 0));
         System.out.println(s.tiempoVueltaInicial(82648, 85648, 5, 1, 8));
         System.out.println(s.tiempoVueltaInicial(82648, 85648, 5, 5, 5));
