@@ -5,14 +5,12 @@ import datos.Gestion;
 import datos.Rango;
 import logica.Simulacion;
 
-import java.awt.*;
 import java.awt.Color;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 
 /**
  * Clase Ventana
@@ -28,7 +26,7 @@ public class Ventana extends JFrame implements ActionListener {
     private JButton boton;          // boton con una determinada accion
     private JList clasificacionVuelta;
     Simulacion s = new Simulacion();
-    Gestion g = new Gestion();
+    Gestion ge = new Gestion();
 
     public Ventana() {
         super();                    // usamos el contructor de la clase padre JFrame
@@ -49,15 +47,15 @@ public class Ventana extends JFrame implements ActionListener {
 
     //TODO
     private void test(){
-        g.creacionAI();
-        Circuito barcelona = new Circuito("Barcelona", "Espanya", 50, 50.0,"/pictures/Melbourne.png", 82648, 85648);
-        g.arrayCircuito.add(barcelona);
+        ge.creacionAI();
+        Circuito barcelona = new Circuito("Barcelona", "Espanya", 50, 50.0,"/pictures/test.jpg", 82648, 85648);
+        ge.arrayCircuito.add(barcelona);
         int cont = 0;
         Rango r;
-        while (cont<g.totalPilotos) {
+        while (cont< ge.totalPilotos) {
             r = s.tiempoVueltaInicial((int)barcelona.getRangoTiempoInicial(), (int)barcelona.getRangoTiempoFinal(),
-                    g.arrayCoche.get(cont).getVelocidad(), g.arrayCoche.get(cont).getAceleracion(),g.arrayCoche.get(cont).getAerodinamica() );
-            g.arrayTiempoVuelta.add((cont + 1)  + ".-" + g.arrayCoche.get(cont).getAbreviado() + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
+                    ge.arrayCoche.get(cont).getVelocidad(), ge.arrayCoche.get(cont).getAceleracion(), ge.arrayCoche.get(cont).getAerodinamica() );
+            ge.arrayTiempoVuelta.add((cont + 1)  + ".-" + ge.arrayCoche.get(cont).getAbreviado() + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
             cont++;
         }
     }
@@ -66,29 +64,31 @@ public class Ventana extends JFrame implements ActionListener {
         test();
         JLabel vueltas = new JLabel();
         clasificacionVuelta = new JList();
-        texto = new JLabel(new ImageIcon(this.getClass().getResource(g.arrayCircuito.get(0).getFotoCircuito())));
         caja = new JTextField();
         boton = new JButton();
+        texto = new JLabel(new ImageIcon(this.getClass().getResource(ge.arrayCircuito.get(0).getFotoCircuito())));
         // configuramos los componentes
         texto.setSize(1024,720);
         vueltas.setText("50" + "/" + "50");
-        vueltas.setBounds(512, 30, 100,25);
-        clasificacionVuelta.setListData( g.arrayTiempoVuelta.toArray());
+        vueltas.setForeground(Color.BLACK);
+        vueltas.setBorder(new LineBorder(Color.black));
+        vueltas.setBounds(512, 30, 35,22);
+        clasificacionVuelta.setBackground(new Color(0,0,0,0));//Color(rojo,verde,azul,opacidad)
+        clasificacionVuelta.setListData( ge.arrayTiempoVuelta.toArray());
         clasificacionVuelta.setBounds(20,90,150,300);
-        clasificacionVuelta.setForeground(Color.green);
-        clasificacionVuelta.setBackground(Color.BLACK);
+        clasificacionVuelta.setForeground(Color.black);
         clasificacionVuelta.setOpaque(false);
-        this.setIconImage(new ImageIcon(this.getClass().getResource(g.arrayCircuito.get(0).getFotoCircuito())).getImage());
+        this.setIconImage(new ImageIcon(this.getClass().getResource(ge.arrayCircuito.get(0).getFotoCircuito())).getImage());
         caja.setBounds(150, 50, 100, 25);   // colocamos posicion y tamanio a la caja (x, y, ancho, alto)
         boton.setText("Mostrar Mensaje");   // colocamos un texto al boton
         boton.setBounds(50, 100, 200, 30);  // colocamos posicion y tamanio al boton (x, y, ancho, alto)
         boton.addActionListener(this);      // hacemos que el boton tenga una accion y esa accion estara en esta clase
         // adicionamos los componentes a la ventana
-        this.add(texto);
         //this.add(caja);
         //this.add(boton);
         this.add(vueltas);
         this.add(clasificacionVuelta);
+        this.add(texto);
     }
 
 
