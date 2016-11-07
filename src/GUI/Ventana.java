@@ -63,29 +63,28 @@ public class Ventana extends JFrame implements ActionListener {
     }
     private void inicializarComponentes() {
         // creamos los componentes
+        test();
         JLabel vueltas = new JLabel();
         clasificacionVuelta = new JList();
-        texto = new JLabel();
+        texto = new JLabel(new ImageIcon(this.getClass().getResource(g.arrayCircuito.get(0).getFotoCircuito())));
         caja = new JTextField();
         boton = new JButton();
         // configuramos los componentes
+        texto.setSize(1024,720);
         vueltas.setText("50" + "/" + "50");
         vueltas.setBounds(512, 30, 100,25);
-        test();
         clasificacionVuelta.setListData( g.arrayTiempoVuelta.toArray());
         clasificacionVuelta.setBounds(20,90,150,300);
         clasificacionVuelta.setForeground(Color.green);
         clasificacionVuelta.setBackground(Color.BLACK);
         clasificacionVuelta.setOpaque(false);
         this.setIconImage(new ImageIcon(this.getClass().getResource(g.arrayCircuito.get(0).getFotoCircuito())).getImage());
-        texto.setText("Inserte Nombre");    // colocamos un texto a la etiqueta
-        texto.setBounds(50, 50, 100, 25);   // colocamos posicion y tamanio al texto (x, y, ancho, alto)
         caja.setBounds(150, 50, 100, 25);   // colocamos posicion y tamanio a la caja (x, y, ancho, alto)
         boton.setText("Mostrar Mensaje");   // colocamos un texto al boton
         boton.setBounds(50, 100, 200, 30);  // colocamos posicion y tamanio al boton (x, y, ancho, alto)
         boton.addActionListener(this);      // hacemos que el boton tenga una accion y esa accion estara en esta clase
         // adicionamos los componentes a la ventana
-        //this.add(texto);
+        this.add(texto);
         //this.add(caja);
         //this.add(boton);
         this.add(vueltas);
