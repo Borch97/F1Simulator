@@ -7,11 +7,13 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import GUI.Ventana;
 import datos.Circuito;
+import datos.Coche;
 import datos.Rango;
 import datos.Gestion;
 
-public class Simulacion {
+public class Simulacion{
 
     //TODO
     //simulacion = tiempo aleatorio rango circuito - (media (Velocidad, aceleracion, aerodinamica))
@@ -24,6 +26,7 @@ public class Simulacion {
 	
 	
     public final int totalCoches = 10;
+    Gestion g = new Gestion();
 
 
     /** Metodo que dado un rango de valores, te devuelve un numero aleatorio entre dichos valores
@@ -82,6 +85,23 @@ public class Simulacion {
         return new Rango(minutes, seconds, milliseconds);
     }
 
+    public void simulacionVueltas(ArrayList<Circuito> circuito, int pos, ArrayList<Coche> piloto, ArrayList<String> tiempoVuelta){
+        int cont = 0;
+        Rango r;
+        while (cont<g.totalPilotos) {
+            r = this.tiempoVueltaInicial((int)circuito.get(pos).getRangoTiempoInicial(), (int)circuito.get(pos).getRangoTiempoFinal(),
+                    piloto.get(cont).getVelocidad(), piloto.get(cont).getAceleracion(),piloto.get(cont).getAerodinamica() );
+            tiempoVuelta.add((cont + 1) + ".-" + piloto.get(cont).getNombre() + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
+            cont++;
+        }
+    }
+
+    //TODO
+    //Temporal
+    public Circuito crearCircuito(){
+       return  new Circuito("Barcelona", "Espanya", 50, 50.0,"./pictures/Melbourne.png", 82648, 85648);
+    }
+
 
     public static void main(String[] args){
         Simulacion s = new Simulacion();
@@ -105,4 +125,6 @@ public class Simulacion {
         System.out.println(s.tiempoVueltaInicial(82648, 85648, 10, 10, 10));
         System.out.println(s.tiempoVueltaInicial(82648, 85648, 9, 10, 10));*/
     }
+
+
 }
