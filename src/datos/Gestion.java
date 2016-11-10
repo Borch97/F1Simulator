@@ -19,6 +19,7 @@ public class Gestion {
     public ArrayList<Rango> arrayTiempoVueltaSoloInicial = new ArrayList<>();
     public ArrayList<Rango> arrayTiempoVueltaSoloCopia = new ArrayList<>();
     public ArrayList<String> arrayDiferenciaTiempoVuelta = new ArrayList<>();
+    public ArrayList<String> posPiloto = new ArrayList<>();
 
     //Crea un entero aleatorio dentro de los limites establecidos
 
@@ -155,9 +156,14 @@ public class Gestion {
         int cont = 0;
         arrayString.clear();
         for (Rango r: arrayList) {
-            arrayString.add((cont + 1) + ".-" + piloto.get(cont).getNombre().substring(0,4) + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
+            //TODO
+            arrayString.add((cont + 1) + ".-" + piloto.get(cont).getAbreviado() + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
             cont++;
         }
+    }
+
+    public void ordenarNombres(ArrayList<String> abrev, ArrayList<String> arrayTiempoVuelta){
+
     }
 
 

@@ -85,7 +85,7 @@ public class Simulacion{
         return new Rango(minutes, seconds, milliseconds);
     }
 
-    public void simulacionVueltas(ArrayList<Circuito> circuito, int pos, ArrayList<Coche> piloto, ArrayList<String> tiempoVuelta, ArrayList<Rango> tiempos){
+    public void simulacionVueltas(ArrayList<Circuito> circuito, int pos, ArrayList<Coche> piloto, ArrayList<String> tiempoVuelta, ArrayList<Rango> tiempos, ArrayList<String> posPilotos){
         int cont = 0;
         Rango r;
         while (cont<g.totalPilotos) {
@@ -93,6 +93,7 @@ public class Simulacion{
                     piloto.get(cont).getVelocidad(), piloto.get(cont).getAceleracion(),piloto.get(cont).getAerodinamica() );
             tiempoVuelta.add((cont + 1) + ".-" + piloto.get(cont).getNombre().substring(0,4) + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
             tiempos.add(r);
+            posPilotos.add(piloto.get(cont).getAbreviado());
             cont++;
         }
     }
