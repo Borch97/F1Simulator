@@ -46,14 +46,13 @@ public class Ventana extends JFrame implements ActionListener{
         this.setLayout(null);                                   // no usamos ningun layout, solo asi podremos dar posiciones a los componentes
         this.setResizable(false);                               // hacemos que la ventana no sea redimiensionable
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);    // hacemos que cuando se cierre la ventana termina todo proceso
-        this.setBackground(Color.blue);
 
     }
 
     //TODO
     private void test(){
         g.creacionAI();
-        Circuito barcelona = new Circuito("Barcelona", "Espanya", 50, 50.0,"/pictures/test6.jpg", 82648, 85648);
+        Circuito barcelona = new Circuito("Barcelona", "Espanya", 50, 50.0,"/pictures/test11.jpg", 82648, 85648);
         g.arrayCircuito.add(barcelona);
         /*int cont = 0;
         Rango r;
@@ -74,16 +73,17 @@ public class Ventana extends JFrame implements ActionListener{
         caja = new JTextField();
         boton = new JButton();
         texto = new JLabel(new ImageIcon(this.getClass().getResource(g.arrayCircuito.get(0).getFotoCircuito())));
+
         // configuramos los componentes
         texto.setSize(1280,720);
         vueltas.setText("50" + "/" + "50");
         vueltas.setForeground(Color.BLACK);
         vueltas.setBorder(new LineBorder(Color.black));
-        vueltas.setBounds(640, 30, 35,22);
+        vueltas.setBounds(640, 30, 42,22);
         clasificacionVuelta.setBackground(new Color(0,0,0,0));//Color(rojo,verde,azul,opacidad)
         //clasificacionVuelta.setListData( g.arrayTiempoVuelta.toArray());
-        clasificacionVuelta.setBounds(20,90,150,300);
-        clasificacionVuelta.setForeground(Color.black);
+        clasificacionVuelta.setBounds(20,90,200,300);
+        clasificacionVuelta.setForeground(Color.BLACK);
         clasificacionVuelta.setOpaque(false);
         this.setIconImage(new ImageIcon(this.getClass().getResource(g.arrayCircuito.get(0).getFotoCircuito())).getImage());
         caja.setBounds(150, 50, 100, 25);   // colocamos posicion y tamanio a la caja (x, y, ancho, alto)
@@ -157,7 +157,7 @@ public class Ventana extends JFrame implements ActionListener{
                 modeloJlist(g.arrayTiempoVuelta, listModel);
                 clasificacionVuelta.setModel(listModel);
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
