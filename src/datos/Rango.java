@@ -46,4 +46,15 @@ public class Rango {
     public void setMilliseconds(int milliseconds) {
         this.milliseconds = milliseconds;
     }
+
+    public static void main(String[] args){
+        Rango r1;
+        int minutes = 1;
+        int seconds = 22;
+        int miliseconds = 876;
+        Rango r = new Rango(1,21,777);
+        r1 = new Rango(minutes,seconds,miliseconds);
+        System.out.println( "Minutes: " + (r.getMinutes() - r1.getMinutes()) + " Seconds: " + (r.getSeconds() - r1.getSeconds()) + " Miliseconds: " + (r.getMilliseconds() - r1.getMilliseconds()));
+
+    }
 }

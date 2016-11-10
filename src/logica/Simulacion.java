@@ -85,17 +85,48 @@ public class Simulacion{
         return new Rango(minutes, seconds, milliseconds);
     }
 
-    public void simulacionVueltas(ArrayList<Circuito> circuito, int pos, ArrayList<Coche> piloto, ArrayList<String> tiempoVuelta){
+    public void simulacionVueltas(ArrayList<Circuito> circuito, int pos, ArrayList<Coche> piloto, ArrayList<String> tiempoVuelta, ArrayList<Rango> tiempos){
         int cont = 0;
         Rango r;
         while (cont<g.totalPilotos) {
             r = this.tiempoVueltaInicial((int)circuito.get(pos).getRangoTiempoInicial(), (int)circuito.get(pos).getRangoTiempoFinal(),
                     piloto.get(cont).getVelocidad(), piloto.get(cont).getAceleracion(),piloto.get(cont).getAerodinamica() );
-            tiempoVuelta.add((cont + 1) + ".-" + piloto.get(cont).getNombre() + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
+            tiempoVuelta.add((cont + 1) + ".-" + piloto.get(cont).getNombre().substring(0,4) + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
+            tiempos.add(r);
             cont++;
         }
     }
 
+    public void calcularDiferencia(ArrayList<Rango> tiempo1, ArrayList<Rango> tiempo2, ArrayList<String> diferenciaTiempo){
+        for(int i = 0;i < tiempo1.size();i++){
+            for(int j = i+1;j < tiempo2.size();j++){
+                int minutes = tiempo2.get(j).getMinutes() - tiempo1.get(i).getMinutes();
+                int seconds = tiempo2.get(j).getSeconds() - tiempo1.get(i).getSeconds();
+                int miliseconds = tiempo2.get(j).getMilliseconds() - tiempo1.get(i).getMilliseconds();
+                Rango r = new Rango(minutes,seconds,miliseconds);
+                if(r.getMinutes() < 0 || r.getSeconds() < 0 || r.getMilliseconds() < 0){
+                    tiempo2.add(tiempo2.get(i));
+                    tiempo2.set(j,tiempo2.get(i));
+                    tiempo2.set(i,tiempo2.get(tiempo2.size()-1));
+                    tiempo2.remove(tiempo2.size()-1);
+                }
+                if (minutes == 0){
+                    if(seconds > 0){
+                        if(miliseconds > 0){
+                            diferenciaTiempo.add(j + "+" + r.getSeconds() + "," + r.getMilliseconds());
+                        }
+                        else diferenciaTiempo.add(j + "+" + r.getSeconds() + "," + r.getMilliseconds());
+                    }
+                    else{
+                        if(miliseconds > 0){
+                         diferenciaTiempo.add(j + "+" + r.getSeconds() + "," + r.getMilliseconds());
+                     }
+                        else diferenciaTiempo.add(j + r.getSeconds() + "," + r.getMilliseconds());
+                }
+                }
+            }
+        }
+    }
     //TODO
     //Temporal
     public Circuito crearCircuito(){

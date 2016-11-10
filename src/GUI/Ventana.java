@@ -2,7 +2,6 @@ package GUI;
 
 import datos.Circuito;
 import datos.Gestion;
-import datos.Rango;
 import logica.Simulacion;
 
 import java.awt.Color;
@@ -24,14 +23,17 @@ public class Ventana extends JFrame implements ActionListener{
 
     private JLabel texto;           // etiqueta o texto no editable
     private JTextField caja;        // caja de texto, para insertar datos
-    private JButton boton;          // boton con una determinada accion
+    private JButton boton;
+    private JButton bDiferencia; // boton con una determinada accion
     private static JList clasificacionVuelta;
+    private static JList clasificacionVueltaDiferencia;
     private JLabel vueltas;
     private int cont = 0;
     hilo hilo1 = null;
     Simulacion s = new Simulacion();
     Gestion g = new Gestion();
-    DefaultListModel listModel;
+    DefaultListModel listModelVuelta;
+    DefaultListModel listModelDiferenciaVueltas;
 
     public Ventana() {
         super();                    // usamos el contructor de la clase padre JFrame
@@ -66,12 +68,16 @@ public class Ventana extends JFrame implements ActionListener{
     private void inicializarComponentes() {
         // creamos los componentes
         test();
-        listModel=new DefaultListModel();
-        modeloJlist(g.arrayTiempoVuelta, listModel);
+        listModelVuelta = new DefaultListModel();
+        modeloJlist(g.arrayTiempoVuelta, listModelVuelta);
+        listModelDiferenciaVueltas = new DefaultListModel();
+        //modeloJlist(g.arrayDiferenciaTiempoVuelta,listModelDiferenciaVueltas);
         vueltas = new JLabel();
-        clasificacionVuelta = new JList(listModel);
+        clasificacionVuelta = new JList(listModelVuelta);
+        clasificacionVueltaDiferencia = new JList(listModelDiferenciaVueltas);
         caja = new JTextField();
         boton = new JButton();
+        bDiferencia = new JButton();
         texto = new JLabel(new ImageIcon(this.getClass().getResource(g.arrayCircuito.get(0).getFotoCircuito())));
 
         // configuramos los componentes
@@ -81,21 +87,43 @@ public class Ventana extends JFrame implements ActionListener{
         vueltas.setBorder(new LineBorder(Color.black));
         vueltas.setBounds(640, 30, 42,22);
         clasificacionVuelta.setBackground(new Color(0,0,0,0));//Color(rojo,verde,azul,opacidad)
+        clasificacionVueltaDiferencia.setBackground(new Color(0,0,0,0));
         //clasificacionVuelta.setListData( g.arrayTiempoVuelta.toArray());
         clasificacionVuelta.setBounds(20,90,200,300);
         clasificacionVuelta.setForeground(Color.BLACK);
         clasificacionVuelta.setOpaque(false);
+        clasificacionVueltaDiferencia.setBounds(20,90,200,300);
+        clasificacionVueltaDiferencia.setForeground(Color.BLACK);
+        clasificacionVueltaDiferencia.setOpaque(false);
         this.setIconImage(new ImageIcon(this.getClass().getResource(g.arrayCircuito.get(0).getFotoCircuito())).getImage());
         caja.setBounds(150, 50, 100, 25);   // colocamos posicion y tamanio a la caja (x, y, ancho, alto)
         boton.setText("Comenzar carrera");   // colocamos un texto al boton
         boton.setBounds(20, 650, 150, 30);  // colocamos posicion y tamanio al boton (x, y, ancho, alto)
         boton.setBackground(new Color(0,0,0,0));
         boton.addActionListener(this);      // hacemos que el boton tenga una accion y esa accion estara en esta clase
+        bDiferencia.setBounds(200,650,150,30);
+        bDiferencia.setText("Diferencia/Tiempos");
+        bDiferencia.setBackground(new Color(0,0,0,0));
+        bDiferencia.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(clasificacionVuelta.isVisible()) {
+                    clasificacionVuelta.setVisible(false);
+                    clasificacionVueltaDiferencia.setVisible(true);
+                }
+                else {
+                    clasificacionVuelta.setVisible(true);
+                    clasificacionVueltaDiferencia.setVisible(false);
+                }
+            }
+        });
         // adicionamos los componentes a la ventana
         //this.add(caja);
         this.add(boton);
         this.add(vueltas);
         this.add(clasificacionVuelta);
+        //this.add(clasificacionVueltaDiferencia);
+        this.add(bDiferencia);
         this.add(texto);
     }
 
@@ -152,10 +180,23 @@ public class Ventana extends JFrame implements ActionListener{
                 vueltas.setText((g.arrayCircuito.get(0).getVueltas() - cont) + "/" + g.arrayCircuito.get(0).getVueltas());
                 cont++;
                 g.arrayTiempoVuelta.clear();
-                s.simulacionVueltas(g.arrayCircuito, 0, g.arrayCoche, g.arrayTiempoVuelta);
-                listModel.removeAllElements();
-                modeloJlist(g.arrayTiempoVuelta, listModel);
-                clasificacionVuelta.setModel(listModel);
+                g.arrayTiempoVueltaSoloInicial.clear();
+                s.simulacionVueltas(g.arrayCircuito, 0, g.arrayCoche, g.arrayTiempoVuelta, g.arrayTiempoVueltaSoloInicial);
+                g.ordenar(g.arrayTiempoVueltaSoloInicial);
+                g.stringArrayOrdenado(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVuelta,g.arrayCoche);
+                g.arrayTiempoVueltaSoloCopia.clear();
+                g.copiarArray(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVueltaSoloCopia);
+                g.arrayTiempoVuelta.clear();
+                s.simulacionVueltas(g.arrayCircuito,0,g.arrayCoche,g.arrayTiempoVuelta, g.arrayTiempoVueltaSoloInicial);
+                g.ordenar(g.arrayTiempoVueltaSoloInicial);
+                g.stringArrayOrdenado(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVuelta,g.arrayCoche);
+                s.calcularDiferencia(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVueltaSoloCopia,g.arrayDiferenciaTiempoVuelta);
+                listModelVuelta.removeAllElements();
+                listModelDiferenciaVueltas.removeAllElements();
+                modeloJlist(g.arrayTiempoVuelta, listModelVuelta);
+                modeloJlist(g.arrayDiferenciaTiempoVuelta,listModelDiferenciaVueltas);
+                clasificacionVuelta.setModel(listModelVuelta);
+                clasificacionVueltaDiferencia.setModel(listModelDiferenciaVueltas);
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {

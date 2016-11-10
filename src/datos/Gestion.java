@@ -2,6 +2,7 @@ package datos;
 
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,6 +16,9 @@ public class Gestion {
     public ArrayList<String> arrayNombres = new ArrayList<>(Arrays.asList("Hamilton", "Vettel", "Verstappen", "Alonso", "Button", "Sainz", "Massa", "Rosberg", "Ricciardo", "Perez", "Bottas"));
     public ArrayList<String> arrayEscuderias = new ArrayList<>(Arrays.asList("Mercedes", "Ferrari", "Williams", "Mclaren Honda", "Red Bull", "Renault", "Haas", "Toro Rosso"));
     public ArrayList<String> arrayTiempoVuelta = new ArrayList<>();
+    public ArrayList<Rango> arrayTiempoVueltaSoloInicial = new ArrayList<>();
+    public ArrayList<Rango> arrayTiempoVueltaSoloCopia = new ArrayList<>();
+    public ArrayList<String> arrayDiferenciaTiempoVuelta = new ArrayList<>();
 
     //Crea un entero aleatorio dentro de los limites establecidos
 
@@ -97,6 +101,63 @@ public class Gestion {
         if(cont == 2)
             contains2total = true;
         return contains2total;
+    }
+
+    public void copiarArray(ArrayList<Rango> arrayTiempoVueltaSoloInicial, ArrayList<Rango> arrayTiempoVueltaSoloCopia){
+        for(int i = 0;i<arrayTiempoVueltaSoloInicial.size();i++){
+            arrayTiempoVueltaSoloCopia.add(arrayTiempoVueltaSoloInicial.get(i));
+        }
+        arrayTiempoVueltaSoloInicial.clear();
+    }
+
+   /* public void ordenarArray(ArrayList<Rango> arrayTiempoVueltaSoloInicial){
+        int minutes,seconds,miliseconds;
+        for(int i = 0;i<arrayTiempoVueltaSoloInicial.size() - 1;i++){
+            minutes = arrayTiempoVueltaSoloInicial.get(i).getMinutes();
+            seconds = arrayTiempoVueltaSoloInicial.get(i).getSeconds();
+            miliseconds = arrayTiempoVueltaSoloInicial.get(i).getMilliseconds();
+            if ((arrayTiempoVueltaSoloInicial.get(i + 1).getSeconds() - seconds) < 0 || (arrayTiempoVueltaSoloInicial.get(i + 1).getMilliseconds() - miliseconds) < 0) {
+                arrayTiempoVueltaSoloInicial.add(new Rango(arrayTiempoVueltaSoloInicial.get(i + 1).getMinutes(),arrayTiempoVueltaSoloInicial.get(i + 1).getSeconds(),arrayTiempoVueltaSoloInicial.get(i + 1).getMilliseconds()));
+                arrayTiempoVueltaSoloInicial.set(i + 1,arrayTiempoVueltaSoloInicial.get(i));
+                arrayTiempoVueltaSoloInicial.set(i,arrayTiempoVueltaSoloInicial.get(arrayTiempoVueltaSoloInicial.size() - 1));
+                arrayTiempoVueltaSoloInicial.remove(arrayTiempoVueltaSoloInicial.size() - 1);
+            }
+        }
+    }*/
+
+    public void ordenar(ArrayList<Rango> arrayTiempoVueltaSoloInicial)
+    {
+        int masPequenio; // �ndice del elemento m�s peque�o
+
+        // itera a trav�s de datos.length - 1 elementos
+        for ( int i = 0; i < arrayTiempoVueltaSoloInicial.size() - 1; i++ )
+        {
+            masPequenio = i; // primer �ndice del resto del arreglo
+
+            // itera para buscar el �ndice del elemento m�s peque�o
+            for ( int indice = i + 1; indice < arrayTiempoVueltaSoloInicial.size(); indice++ )
+                if ( arrayTiempoVueltaSoloInicial.get(indice).getSeconds() < arrayTiempoVueltaSoloInicial.get(masPequenio).getSeconds() || arrayTiempoVueltaSoloInicial.get(indice).getMilliseconds() < arrayTiempoVueltaSoloInicial.get(masPequenio).getMilliseconds() )
+                    masPequenio = indice;
+
+            intercambiar( i, masPequenio, arrayTiempoVueltaSoloInicial ); // intercambia el elemento m�s peque�o en la posici�n
+        } // fin de for exterior
+    } // fin del m�todo ordenar
+
+    // m�todo ayudante para intercambiar los valores de dos elementos
+    public void intercambiar( int primero, int segundo, ArrayList<Rango> arrayTiempoVueltaSoloInicial)
+    {
+        Rango temporal = arrayTiempoVueltaSoloInicial.get(primero); // almacena primero en temporal
+        arrayTiempoVueltaSoloInicial.set(primero,arrayTiempoVueltaSoloInicial.get(segundo)); // sustituye primero con segundo
+        arrayTiempoVueltaSoloInicial.set(segundo,temporal); // coloca temporal en segundo
+    } // fin del m�todo intercambiar
+
+    public void stringArrayOrdenado(ArrayList<Rango> arrayList, ArrayList<String> arrayString, ArrayList<Coche> piloto){
+        int cont = 0;
+        arrayString.clear();
+        for (Rango r: arrayList) {
+            arrayString.add((cont + 1) + ".-" + piloto.get(cont).getNombre().substring(0,4) + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
+            cont++;
+        }
     }
 
 
