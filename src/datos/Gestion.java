@@ -111,6 +111,13 @@ public class Gestion {
         arrayTiempoVueltaSoloInicial.clear();
     }
 
+    public void copiarArrayString(ArrayList<String> arrayTiempoVueltaSoloInicial, ArrayList<String> arrayTiempoVueltaSoloCopia){
+        for(int i = 0;i<arrayTiempoVueltaSoloInicial.size();i++){
+            arrayTiempoVueltaSoloCopia.add(arrayTiempoVueltaSoloInicial.get(i));
+        }
+        arrayTiempoVueltaSoloInicial.clear();
+    }
+
    /* public void ordenarArray(ArrayList<Rango> arrayTiempoVueltaSoloInicial){
         int minutes,seconds,miliseconds;
         for(int i = 0;i<arrayTiempoVueltaSoloInicial.size() - 1;i++){
@@ -126,11 +133,11 @@ public class Gestion {
         }
     }*/
 
-    public void ordenar(ArrayList<Rango> arrayTiempoVueltaSoloInicial)
+    public void ordenar(ArrayList<Rango> arrayTiempoVueltaSoloInicial, ArrayList<String> arrayTiempoVuelta)
     {
         int masPequenio; // �ndice del elemento m�s peque�o
 
-        // itera a trav�s de datos.length - 1 elementos
+        // itera a trav�s de datos.size() - 1 elementos
         for ( int i = 0; i < arrayTiempoVueltaSoloInicial.size() - 1; i++ )
         {
             masPequenio = i; // primer �ndice del resto del arreglo
@@ -140,30 +147,40 @@ public class Gestion {
                 if ( arrayTiempoVueltaSoloInicial.get(indice).getSeconds() < arrayTiempoVueltaSoloInicial.get(masPequenio).getSeconds() || arrayTiempoVueltaSoloInicial.get(indice).getMilliseconds() < arrayTiempoVueltaSoloInicial.get(masPequenio).getMilliseconds() )
                     masPequenio = indice;
 
-            intercambiar( i, masPequenio, arrayTiempoVueltaSoloInicial ); // intercambia el elemento m�s peque�o en la posici�n
+            intercambiar( i, masPequenio, arrayTiempoVueltaSoloInicial, arrayTiempoVuelta ); // intercambia el elemento m�s peque�o en la posici�n
         } // fin de for exterior
     } // fin del m�todo ordenar
 
     // m�todo ayudante para intercambiar los valores de dos elementos
-    public void intercambiar( int primero, int segundo, ArrayList<Rango> arrayTiempoVueltaSoloInicial)
+    public void intercambiar( int primero, int segundo, ArrayList<Rango> arrayTiempoVueltaSoloInicial, ArrayList<String> arrayTiempoVuelta)
     {
         Rango temporal = arrayTiempoVueltaSoloInicial.get(primero); // almacena primero en temporal
+        String temporal1 = arrayTiempoVuelta.get(primero);
         arrayTiempoVueltaSoloInicial.set(primero,arrayTiempoVueltaSoloInicial.get(segundo)); // sustituye primero con segundo
+        arrayTiempoVuelta.set(primero,arrayTiempoVuelta.get(segundo));
         arrayTiempoVueltaSoloInicial.set(segundo,temporal); // coloca temporal en segundo
+        arrayTiempoVuelta.set(segundo,temporal1);
     } // fin del m�todo intercambiar
 
-    public void stringArrayOrdenado(ArrayList<Rango> arrayList, ArrayList<String> arrayString, ArrayList<Coche> piloto){
+    public void reordenarIndices(ArrayList<String> arrayTiempoVuelta){
+        for(int i = 0;i < arrayTiempoVuelta.size();i++){
+            arrayTiempoVuelta.set(i,arrayTiempoVuelta.get(i).replaceFirst(arrayTiempoVuelta.get(i).substring(0,1),Integer.toString(i+1)));
+        }
+    }
+    public void stringArrayOrdenado(ArrayList<Rango> arrayList, ArrayList<String> arrayString, ArrayList<String> posNombrePiloto){
         int cont = 0;
         arrayString.clear();
         for (Rango r: arrayList) {
             //TODO
-            arrayString.add((cont + 1) + ".-" + piloto.get(cont).getAbreviado() + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
+            arrayString.add((cont + 1) + ".-" + posNombrePiloto.get(cont).substring(0,3) + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
             cont++;
         }
     }
 
-    public void ordenarNombres(ArrayList<String> abrev, ArrayList<String> arrayTiempoVuelta){
+    public void ordenarNombres(ArrayList<String> abrev, ArrayList<String> arrayTiempoVueltaSoloInicial){
+        for(int i = 0;i<arrayTiempoVueltaSoloInicial.size();i++){
 
+        }
     }
 
 
