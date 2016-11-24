@@ -158,7 +158,6 @@ public class Ventana extends JFrame implements ActionListener{
 
 
     }
-    //prueba
     class hilo implements Runnable{
 
         Ventana v = new Ventana();
