@@ -184,6 +184,49 @@ public class Gestion {
     }
 
 
+    public void mejoraIAExponencial(ArrayList<Coche> arrayCoche, double porcentajeMejora){
+        for(int i = 0; i <arrayCoche.size();i++){
+            int a = aleatorio(0,2);
+            switch (a) {
+                case 0:
+                    if (arrayCoche.get(i).getAceleracion() < 10 && arrayCoche.get(i).getAceleracion() * porcentajeMejora <= 10) {
+                        if (arrayCoche.get(i).getAceleracion() == 0) {
+                            arrayCoche.get(i).setAceleracion(arrayCoche.get(i).getAceleracion() + 1);
+                        }
+                        else
+                            arrayCoche.get(i).setAceleracion(arrayCoche.get(i).getAceleracion() * porcentajeMejora);
+                    }
+                    else if(arrayCoche.get(i).getAceleracion() * porcentajeMejora >= 10)
+                        arrayCoche.get(i).setAceleracion(10);
+                    break;
+                case 1:
+                    if (arrayCoche.get(i).getAerodinamica() < 10 && arrayCoche.get(i).getAerodinamica() * porcentajeMejora <= 10) {
+                        if(arrayCoche.get(i).getAerodinamica()==0){
+                            arrayCoche.get(i).setAerodinamica(arrayCoche.get(i).getAerodinamica() + 1);
+                        }
+                        else
+                            arrayCoche.get(i).setAerodinamica(arrayCoche.get(i).getAerodinamica() * porcentajeMejora);
+                    }
+                    else if(arrayCoche.get(i).getAerodinamica() * porcentajeMejora >= 10)
+                        arrayCoche.get(i).setAerodinamica(10);
+                    break;
+                case 2:
+                    if(arrayCoche.get(i).getVelocidad()<10 && arrayCoche.get(i).getVelocidad() * porcentajeMejora <= 10) {
+                        if(arrayCoche.get(i).getVelocidad()==0){
+                            arrayCoche.get(i).setVelocidad(arrayCoche.get(i).getVelocidad() + 1);
+                        }
+                        else
+                            arrayCoche.get(i).setVelocidad(arrayCoche.get(i).getVelocidad() * porcentajeMejora);
+                    }
+                    else if(arrayCoche.get(i).getVelocidad() * porcentajeMejora >= 10)
+                        arrayCoche.get(i).setVelocidad(10);
+                    break;
+                default:
+                    a = aleatorio(0,2);
+            }
+        }
+    }
+
     public static void main(String[] args){
         Gestion g = new Gestion();
         Duration[]duration = new Duration[2];
@@ -194,6 +237,11 @@ public class Gestion {
          // Circuito m = new Circuito("Melbourne", "Australia", 30, 3000.5, 0.0, path , duration);
         //g.arrayCircuito.add(m);
         g.creacionAI();
+        for (Coche coche: g.arrayCoche) {
+            System.out.println("Nombre: " + coche.getNombre() + " Escuderia: "+ coche.getEscuderia() + " Velocidad : " + coche.getVelocidad() + " Aceleracion : " + coche.getAceleracion() + " Aerodinamica: " + coche.getAerodinamica() + " Probabilidad Rotura: " + coche.getProbRotura());
+        }
+        g.mejoraIAExponencial(g.arrayCoche, 1.08);
+        System.out.println("===============================================================================================\n");
         for (Coche coche: g.arrayCoche) {
             System.out.println("Nombre: " + coche.getNombre() + " Escuderia: "+ coche.getEscuderia() + " Velocidad : " + coche.getVelocidad() + " Aceleracion : " + coche.getAceleracion() + " Aerodinamica: " + coche.getAerodinamica() + " Probabilidad Rotura: " + coche.getProbRotura());
         }

@@ -204,6 +204,7 @@ public class Ventana extends JFrame implements ActionListener{
                     e.printStackTrace();
                 }
             }
+            g.mejoraIAExponencial(g.arrayCoche, 1.08);
         }
     }
 }
