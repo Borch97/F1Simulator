@@ -157,8 +157,9 @@ public class Ventana extends JFrame implements ActionListener{
         Ventana V = new Ventana();      // creamos una ventana
         V.setVisible(true);             // hacemos visible la ventana creada
 
-    }
 
+    }
+    //prueba
     class hilo implements Runnable{
 
         Ventana v = new Ventana();
