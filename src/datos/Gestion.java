@@ -245,5 +245,6 @@ public class Gestion {
         for (Coche coche: g.arrayCoche) {
             System.out.println("Nombre: " + coche.getNombre() + " Escuderia: "+ coche.getEscuderia() + " Velocidad : " + coche.getVelocidad() + " Aceleracion : " + coche.getAceleracion() + " Aerodinamica: " + coche.getAerodinamica() + " Probabilidad Rotura: " + coche.getProbRotura());
         }
+        //prueba
     }
 }
