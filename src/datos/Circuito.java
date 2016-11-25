@@ -8,7 +8,7 @@ import java.time.Duration;
 
 public class Circuito {
 
-    protected String nombre;
+    protected String nom_circuito;
     protected String pais;
     protected int vueltas;
     protected double probLluvia;

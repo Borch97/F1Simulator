@@ -146,7 +146,11 @@ public class Simulacion{
         Simulacion s = new Simulacion();
         Gestion g = new Gestion();
         g.creacionAI();
+        
         Circuito barcelona = new Circuito("Barcelona", "Espanya", 50, 50.0,"./pictures/Melbourne.png", 82648, 85648);
+        
+        Circuito barcelona = GestorBD.obtenerInfoCircuito("Barcelona");
+        
         int cont = 0;
         Rango r;
         while (cont<g.totalPilotos) {
