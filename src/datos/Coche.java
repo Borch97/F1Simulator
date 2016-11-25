@@ -11,6 +11,7 @@ public class Coche {
     protected double aceleracion;
     protected double aerodinamica;
     protected double probRotura;
+    protected double neumaticos;
 
     /**
      * Contructor vacio con valores predeterminados
@@ -32,7 +33,7 @@ public class Coche {
      * @param aerodinamica
      * @param probRotura
      */
-    public Coche(String nombre, String abreviado, String escuderia, double velocidad, double aceleracion, double aerodinamica, double probRotura) {
+    public Coche(String nombre, String abreviado, String escuderia, double velocidad, double aceleracion, double aerodinamica, double probRotura, double neumaticos) {
         this.nombre = nombre;
         this.abreviado = abreviado;
         this.escuderia = escuderia;
@@ -40,6 +41,7 @@ public class Coche {
         this.aceleracion = aceleracion;
         this.aerodinamica = aerodinamica;
         this.probRotura = probRotura;
+        this.neumaticos = neumaticos;
     }
 
     public String getNombre() {
@@ -92,5 +94,11 @@ public class Coche {
 
     public void setProbRotura(double probRotura) {
         this.probRotura = probRotura;
+    }
+
+    public double getNeumaticos() { return neumaticos;
+    }
+
+    public void setNeumaticos(double neumaticos) { this.neumaticos = neumaticos;
     }
 }

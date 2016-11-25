@@ -135,6 +135,13 @@ public class Simulacion{
     }
 
 
+    public void gestionNeumaticos(ArrayList<Coche> coches){
+        for(int i = 0; i < coches.size();i++){
+            coches.get(i).setNeumaticos(coches.get(i).getNeumaticos() - 5);
+        }
+    }
+
+
     public static void main(String[] args){
         Simulacion s = new Simulacion();
         Gestion g = new Gestion();
@@ -147,6 +154,14 @@ public class Simulacion{
                   g.arrayCoche.get(cont).getVelocidad(), g.arrayCoche.get(cont).getAceleracion(),g.arrayCoche.get(cont).getAerodinamica() );
             g.arrayTiempoVuelta.add(g.arrayCoche.get(cont).getNombre() + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
             cont++;
+        }
+        for (Coche coche: g.arrayCoche) {
+            System.out.println("Nombre: " + coche.getNombre() + " Neumaticos: "+ coche.getNeumaticos());
+        }
+        s.gestionNeumaticos(g.arrayCoche);
+        System.out.println("===============================================================");
+        for (Coche coche: g.arrayCoche) {
+            System.out.println("Nombre: " + coche.getNombre() + " Neumaticos: "+ coche.getNeumaticos());
         }
         //File p = barcelona.getFotoCircuito();
         //System.out.println(p.getAbsolutePath());

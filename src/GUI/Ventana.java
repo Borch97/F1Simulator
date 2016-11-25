@@ -53,7 +53,7 @@ public class Ventana extends JFrame implements ActionListener{
     //TODO
     private void test(){
         g.creacionAI();
-        Circuito barcelona = new Circuito("Barcelona", "Espanya", 50, 50.0,"/pictures/test11.jpg", 82648, 85648);
+        Circuito barcelona = new Circuito("Barcelona", "Espanya", 50, 50.0,"/pictures/CocheRuedas1.png", 82648, 85648);
         g.arrayCircuito.add(barcelona);
         /*int cont = 0;
         Rango r;
@@ -198,6 +198,7 @@ public class Ventana extends JFrame implements ActionListener{
                 modeloJlist(g.arrayDiferenciaTiempoVuelta,listModelDiferenciaVueltas);
                 clasificacionVuelta.setModel(listModelVuelta);
                 clasificacionVueltaDiferencia.setModel(listModelDiferenciaVueltas);
+                s.gestionNeumaticos(g.arrayCoche);
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
