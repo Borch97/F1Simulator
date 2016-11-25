@@ -158,7 +158,6 @@ public class Ventana extends JFrame implements ActionListener{
 
 
     }
-    //prueba
     class hilo implements Runnable{
 
         Ventana v = new Ventana();
@@ -205,6 +204,7 @@ public class Ventana extends JFrame implements ActionListener{
                     e.printStackTrace();
                 }
             }
+            g.mejoraIAExponencial(g.arrayCoche, 1.08);
         }
     }
 }
