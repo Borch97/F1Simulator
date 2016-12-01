@@ -4,7 +4,7 @@ import datos.Circuito;
 import datos.Gestion;
 import logica.Simulacion;
 
-import java.awt.Color;
+import java.awt.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,13 +27,20 @@ public class Ventana extends JFrame implements ActionListener{
     private static JList clasificacionVuelta;
     private static JList clasificacionVueltaDiferencia;
     private JLabel vueltas;
-    public JProgressBar progressBar;
+    private JLabel weather;
+    public JProgressBar progressBarUR;
+    public JProgressBar progressBarUL;
+    public JProgressBar progressBarDR;
+    public JProgressBar progressBarDL;
+    private JLabel neumaticos;
+    private JButton boxes;
     private int cont = 0;
     hilo hilo1 = null;
     Simulacion s = new Simulacion();
     Gestion g = new Gestion();
     DefaultListModel listModelVuelta;
     DefaultListModel listModelDiferenciaVueltas;
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     public Ventana() {
         super();                    // usamos el contructor de la clase padre JFrame
@@ -43,18 +50,19 @@ public class Ventana extends JFrame implements ActionListener{
 
     private void configurarVentana() {
         this.setTitle("Esta Es Una Ventana");                   // colocamos titulo a la ventana
-        this.setSize(1280, 720);                                 // colocamos tamanio a la ventana (ancho, alto)
+        this.setSize(screenSize);//(int) screenSize.getWidth(),(int)screenSize.getHeight()); // colocamos tamanio a la ventana (ancho, alto)
         this.setLocationRelativeTo(null);                       // centramos la ventana en la pantalla
         this.setLayout(null);                                   // no usamos ningun layout, solo asi podremos dar posiciones a los componentes
-        this.setResizable(false);                               // hacemos que la ventana no sea redimiensionable
+        this.setResizable(true);                               // hacemos que la ventana no sea redimiensionable
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);    // hacemos que cuando se cierre la ventana termina todo proceso
+
 
     }
 
     //TODO
     private void test(){
         g.creacionAI();
-        Circuito barcelona = new Circuito("Barcelona", "Espanya", 50, 50.0,"/pictures/CocheRuedas1.png", 82648, 85648);
+        Circuito barcelona = new Circuito("Barcelona", "Espanya", 50, 50.0,"/pictures/testGrande.jpg", 82648, 85648);
         g.arrayCircuito.add(barcelona);
         /*int cont = 0;
         Rango r;
@@ -73,42 +81,73 @@ public class Ventana extends JFrame implements ActionListener{
         listModelDiferenciaVueltas = new DefaultListModel();
         //modeloJlist(g.arrayDiferenciaTiempoVuelta,listModelDiferenciaVueltas);
         vueltas = new JLabel();
+        neumaticos = new JLabel(new ImageIcon(this.getClass().getResource("/pictures/neumaticos.png")));
         clasificacionVuelta = new JList(listModelVuelta);
         clasificacionVueltaDiferencia = new JList(listModelDiferenciaVueltas);
         caja = new JTextField();
         boton = new JButton();
+        boxes = new JButton();
         bDiferencia = new JButton();
+        weather = new JLabel(new ImageIcon(this.getClass().getResource("/pictures/sun.png")));
         texto = new JLabel(new ImageIcon(this.getClass().getResource(g.arrayCircuito.get(0).getFotoCircuito())));
-        progressBar = new JProgressBar();
+        progressBarUR = new JProgressBar();
+        progressBarUL = new JProgressBar();
+        progressBarDR = new JProgressBar();
+        progressBarDL = new JProgressBar();
 
         // configuramos los componentes
-        texto.setSize(1280,720);
+        texto.setSize(screenSize);
+        weather.setSize(130,130);
+        weather.setBounds(1620,100,130,130);
+        neumaticos.setSize(181,272);
+        neumaticos.setBounds(1600,370,181,272);
         vueltas.setText("50" + "/" + "50");
         vueltas.setForeground(Color.BLACK);
         vueltas.setBorder(new LineBorder(Color.black));
-        vueltas.setBounds(640, 30, 42,22);
-        progressBar = new JProgressBar(0, 100);
-        progressBar.setValue(100);
-        progressBar.setStringPainted(true);
-        progressBar.setBounds(800,60,50,30);
-        clasificacionVuelta.setBackground(new Color(0,0,0,0));//Color(rojo,verde,azul,opacidad)
+        //vueltas.setBounds(640, 30, 42,22);
+        vueltas.setBounds((int)(screenSize.getWidth())/2,(int)(screenSize.getHeight() - screenSize.getHeight()) + 30,35,20);
+        vueltas.setOpaque(false);
+        progressBarUR = new JProgressBar(0, 100);
+        progressBarUR.setValue(100);
+        progressBarUR.setStringPainted(true);
+        progressBarUR.setBounds(1750,407,50,30);
+        progressBarUL = new JProgressBar(0, 100);
+        progressBarUL.setValue(100);
+        progressBarUL.setStringPainted(true);
+        progressBarUL.setBounds(1580,407,50,30);
+        progressBarDR = new JProgressBar(0, 100);
+        progressBarDR.setValue(100);
+        progressBarDR.setStringPainted(true);
+        progressBarDR.setBounds(1750,580,50,30);
+        progressBarDL = new JProgressBar(0, 100);
+        progressBarDL.setValue(100);
+        progressBarDL.setStringPainted(true);
+        progressBarDL.setBounds(1580,580,50,30);
+        //progressBar.setOpaque(false);
+        clasificacionVuelta.setBackground(new Color(64,64,64,150));//Color(rojo,verde,azul,opacidad)
         clasificacionVueltaDiferencia.setBackground(new Color(0,0,0,0));
         //clasificacionVuelta.setListData( g.arrayTiempoVuelta.toArray());
-        clasificacionVuelta.setBounds(20,90,200,300);
+        clasificacionVuelta.setBounds(20,90,120,200);
         clasificacionVuelta.setForeground(Color.BLACK);
         clasificacionVuelta.setOpaque(false);
         clasificacionVueltaDiferencia.setBounds(20,90,200,300);
         clasificacionVueltaDiferencia.setForeground(Color.BLACK);
         clasificacionVueltaDiferencia.setOpaque(false);
         this.setIconImage(new ImageIcon(this.getClass().getResource(g.arrayCircuito.get(0).getFotoCircuito())).getImage());
-        caja.setBounds(150, 50, 100, 25);   // colocamos posicion y tamanio a la caja (x, y, ancho, alto)
+        //caja.setBounds(150, 50, 100, 25);   // colocamos posicion y tamanio a la caja (x, y, ancho, alto)
         boton.setText("Comenzar carrera");   // colocamos un texto al boton
-        boton.setBounds(20, 650, 150, 30);  // colocamos posicion y tamanio al boton (x, y, ancho, alto)
+        boton.setBounds((int)(screenSize.getWidth()/2)/2,(int)screenSize.getHeight() - 100, 150, 30);  // colocamos posicion y tamanio al boton (x, y, ancho, alto)
         boton.setBackground(new Color(0,0,0,0));
         boton.addActionListener(this);      // hacemos que el boton tenga una accion y esa accion estara en esta clase
-        bDiferencia.setBounds(200,650,150,30);
+        boton.setOpaque(false);
+        bDiferencia.setBounds((int)screenSize.getWidth()/2,(int)screenSize.getHeight() - 100,150,30);
         bDiferencia.setText("Diferencia/Tiempos");
         bDiferencia.setBackground(new Color(0,0,0,0));
+        bDiferencia.setOpaque(false);
+        boxes.setBounds((boton.getX() + bDiferencia.getX())/ 2,(int)screenSize.getHeight() - 100,150,30);
+        boxes.setText("Boxes");
+        boxes.setOpaque(false);
+        boxes.setBackground(new Color(0,0,0,0));
         bDiferencia.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -129,8 +168,14 @@ public class Ventana extends JFrame implements ActionListener{
         this.add(clasificacionVuelta);
         //this.add(clasificacionVueltaDiferencia);
         this.add(bDiferencia);
+        this.add(progressBarUR);
+        this.add(progressBarUL);
+        this.add(progressBarDR);
+        this.add(progressBarDL);
+        this.add(neumaticos);
+        this.add(weather);
+        this.add(boxes);
         this.add(texto);
-        this.add(progressBar);
     }
 
 
@@ -208,9 +253,13 @@ public class Ventana extends JFrame implements ActionListener{
                 clasificacionVueltaDiferencia.setModel(listModelDiferenciaVueltas);
                 s.gestionNeumaticos(g.arrayCoche);
                 //TODO
-                progressBar.setValue((int)g.arrayCoche.get(0).getNeumaticos());
+                progressBarUR.setValue((int)g.arrayCoche.get(0).getNeumaticos());
+                progressBarUL.setValue((int)g.arrayCoche.get(0).getNeumaticos());
+                progressBarDR.setValue((int)g.arrayCoche.get(0).getNeumaticos());
+                progressBarDL.setValue((int)g.arrayCoche.get(0).getNeumaticos());
+                s.paradaBoxesIA(g.arrayCircuito, g.arrayCoche, g.arrayTiempoVuelta, g.arrayTiempoVueltaSoloInicial, g.posPiloto);
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

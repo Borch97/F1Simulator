@@ -97,39 +97,74 @@ public class Simulacion{
         int cont = 0;
         Rango r;
         while (cont<g.totalPilotos) {
-            r = this.tiempoVueltaInicial((int)circuito.get(pos).getRangoTiempoInicial(), (int)circuito.get(pos).getRangoTiempoFinal(),
-                    piloto.get(cont).getVelocidad(), piloto.get(cont).getAceleracion(),piloto.get(cont).getAerodinamica() );
+            if (piloto.get(cont).getProbRotura() == 100) {
+                r = new Rango(9,99,999);
+                tiempoVuelta.add((cont + 1) + ".-" + piloto.get(cont).getNombre().substring(0,4) + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
+                tiempos.add(r);
+            } else {
+                r = this.tiempoVueltaInicial((int) circuito.get(pos).getRangoTiempoInicial(), (int) circuito.get(pos).getRangoTiempoFinal(),
+                        piloto.get(cont).getVelocidad(), piloto.get(cont).getAceleracion(), piloto.get(cont).getAerodinamica());
 
-            if(piloto.get(cont).getNeumaticos() < 50){
-                if(lluvia((int)circuito.get(pos).getProbLluvia())){
-                    cambioTiempos(3,cont,r,piloto,tiempoVuelta,tiempos);
-                }
-                else
-                    cambioTiempos(1,cont,r,piloto,tiempoVuelta,tiempos);
-            }
-            else if(piloto.get(cont).getNeumaticos() < 25){
-                if(lluvia((int)circuito.get(pos).getProbLluvia())){
-                    cambioTiempos(4,cont,r,piloto,tiempoVuelta,tiempos);
-                }
-                else
-                    cambioTiempos(2,cont,r,piloto,tiempoVuelta,tiempos);
-            }
-            else if(piloto.get(cont).getNeumaticos() >=50){
-                if(lluvia((int)circuito.get(pos).getProbLluvia())) {
-                    cambioTiempos(2,cont,r,piloto,tiempoVuelta,tiempos);
-                }
-                else {
-                    tiempoVuelta.add((cont + 1) + ".-" + piloto.get(cont).getNombre().substring(0, 4) + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
-                    tiempos.add(r);
-                }
-            }
-            else
-                piloto.get(cont).setProbRotura(100);
+                if (piloto.get(cont).getNeumaticos() < 50 && piloto.get(cont).getNeumaticos() >= 25) {
+                    if (lluvia((int) circuito.get(pos).getProbLluvia())) {
+                        cambioTiempos(3, cont, r, piloto, tiempoVuelta, tiempos);
+                    } else
+                        cambioTiempos(1, cont, r, piloto, tiempoVuelta, tiempos);
+                } else if (piloto.get(cont).getNeumaticos() < 25 && piloto.get(cont).getNeumaticos() >0) {
+                    if (lluvia((int) circuito.get(pos).getProbLluvia())) {
+                        cambioTiempos(4, cont, r, piloto, tiempoVuelta, tiempos);
+                    } else
+                        cambioTiempos(2, cont, r, piloto, tiempoVuelta, tiempos);
+                } else if (piloto.get(cont).getNeumaticos() >= 50) {
+                    if (lluvia((int) circuito.get(pos).getProbLluvia())) {
+                        cambioTiempos(2, cont, r, piloto, tiempoVuelta, tiempos);
+                    } else {
+                        tiempoVuelta.add((cont + 1) + ".-" + piloto.get(cont).getNombre().substring(0, 4) + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
+                        tiempos.add(r);
+                    }
+                } else if (piloto.get(cont).getNeumaticos() <= 0)
+                    piloto.get(cont).setProbRotura(100);
 
-            posPilotos.add(piloto.get(cont).getAbreviado());
-            cont++;
+                posPilotos.add(piloto.get(cont).getAbreviado());
+                cont++;
+            }
         }
     }
+
+
+    public void paradaBoxesIA(ArrayList<Circuito> circuito, ArrayList<Coche> piloto, ArrayList<String> tiempoVuelta, ArrayList<Rango> tiempos, ArrayList<String> posPilotos){
+       for(int i = 0; i< piloto.size();i++){
+           int aleatorio = aleatorio(1,100);
+           if(piloto.get(i).getNeumaticos()>=50){
+               if(aleatorio < 20){
+                   System.out.println("El piloto " + piloto.get(i).getNombre() + " ha realizado su parada con mas de 50 % de neumaticos");
+                   piloto.get(i).setNeumaticos(100);
+                   simulacionVueltas(circuito, 0, piloto, tiempoVuelta, tiempos, posPilotos);
+               }
+           }
+           else if(piloto.get(i).getNeumaticos()< 50 && piloto.get(i).getNeumaticos()>=25){
+               if(aleatorio < 50){
+                   System.out.println("El piloto " + piloto.get(i).getNombre() + " ha realizado su parada con mas de 25 % y menos de 50% de neumaticos");
+                   piloto.get(i).setNeumaticos(100);
+                   simulacionVueltas(circuito, 0, piloto, tiempoVuelta, tiempos, posPilotos);
+               }
+           }
+           else if(piloto.get(i).getNeumaticos()<25){
+               if(aleatorio < 80){
+                   System.out.println("El piloto " + piloto.get(i).getNombre() + " ha realizado su parada con menos de 25 % de neumaticos");
+                   piloto.get(i).setNeumaticos(100);
+                   simulacionVueltas(circuito, 0, piloto, tiempoVuelta, tiempos, posPilotos);
+               }
+           }
+       }
+
+
+    }
+    //TODO
+    /*public void paradaBoxes(ArrayList<Circuito> circuito, ArrayList<Coche> piloto, ArrayList<String> tiempoVuelta, ArrayList<Rango> tiempos, ArrayList<String> posPilotos){
+        piloto.get(pos).setNeumaticos(100);
+        simulacionVueltas(circuito, 0, piloto, tiempoVuelta, tiempos, g.posPiloto);
+    }*/
 
     public void calcularDiferencia(ArrayList<Rango> tiempo1, ArrayList<Rango> tiempo2, ArrayList<String> diferenciaTiempo){
         for(int i = 0;i < tiempo1.size();i++){
