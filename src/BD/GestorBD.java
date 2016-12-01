@@ -129,7 +129,7 @@ public class GestorBD{
 	    		
 	    		
 	    		
-	    		alo.add( new Circuito(nom,pais,vuel,lluv,null,tini,tfin));
+	    		//alo.add( new Circuito(nom,pais,vuel,lluv,null,tini,tfin));
 	    	}    		    			
     	}
     	catch( SQLException ex )
@@ -175,7 +175,7 @@ public class GestorBD{
 	    		double aero = resultado.getDouble("aerodinamica");
 	    		double rot = resultado.getDouble("rotura");
 	    		
-	    		alo.add( new Coche(nom,abr,esc,vel,ace,aero,rot));
+	    		//alo.add( new Coche(nom,abr,esc,vel,ace,aero,rot));
 	    	}    		    			
     	}
     	catch( SQLException ex )
@@ -194,16 +194,15 @@ public class GestorBD{
     {
     	
     	String nom = pCoche.getNombre();
-    	int nive = pCoche.
+    	//int nive = pCoche.
     	
-    	try
-    	{
-	    	String q = "select nom_piloto,Tiempo,Nivel from Puntuacion where Nombre = '" + nom + "' AND Nivel = " + nivel;
-	    	
-	    	ResultSet resultado = consultar( q );
-	    	
-	    	//insertar el coche porque es nuevo
-	    	if( resultado.next() == false )
+    	//try {
+			//String q = "select nom_piloto,Tiempo,Nivel from Puntuacion where Nombre = '" + nom + "' AND Nivel = " + nivel;
+
+			//ResultSet resultado = consultar( q );
+
+			//insertar el coche porque es nuevo
+	    	/*if( resultado.next() == false )
 	    	{
 	    		String ins = "INSERT INTO Puntuacion ('Nombre','Tiempo','Nivel') VALUES ('"+pNombre+"'," + pTiempo + "," + pNivel +")";    	
 	    		insertar( ins );
@@ -216,11 +215,11 @@ public class GestorBD{
 		    		int t = resultado.getInt("Tiempo");
 		    		int n = resultado.getInt("Nivel");
 		    		
-		    		if ( pTiempo < t )
+		    		//if ( pTiempo < t )
 		    		{
 		    			System.out.println("POR AQUI");
 		    			
-		    			String upd = "UPDATE Puntuacion SET Tiempo = " + pTiempo 
+		    			/*String upd = "UPDATE Puntuacion SET Tiempo = " + pTiempo
 		    					+ " WHERE Nombre = '" + nom + "' AND Nivel = " + n;	
 		    			
 		    			sentencia.executeUpdate( upd );
@@ -232,9 +231,9 @@ public class GestorBD{
     	{
     		ex.printStackTrace();
     	}
-    }
+    }*/
 
-	public ArrayList<Circuito> obtenerInfoCircuitos(){
+	/*public ArrayList<Circuito> obtenerInfoCircuitos(){
 				
 		String c = "select * from Circuito";
     	Circuito circuito = null;
@@ -247,7 +246,7 @@ public class GestorBD{
     		while( resultado.next() )
 	    	{
     			//cada campo de la tabla de la BD
-	    		String nom = resultado.getString("Nombre");
+	    		//String nom = resultado.getString("Nombre");
 	    		String pais = resultado.getString("pais");
 	    		int vuel = resultado.getInt("numerovueltas");
 	    		double lluv = resultado.getDouble("prob lluvia");
@@ -255,7 +254,7 @@ public class GestorBD{
 	    		long tini = resultado.getLong("rangoTiempoInicial");
 	    		long tfin = resultado.getLong("rangoTiempoFinal");
 	    		
-	    		circuito = new Circuito(nombre,pais,vueltas,probll //........ )
+	    		//circuito = new Circuito(nombre,pais,vueltas,probll //........ )
 	    				
 	    		circuitos.add( circuito );
 	    	}    		    			
@@ -271,9 +270,9 @@ public class GestorBD{
     		
 			
 		return circuitos;
-	}  
-    
-}
+	}  */
+
+		}}
 
 
 

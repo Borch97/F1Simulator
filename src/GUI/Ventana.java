@@ -27,6 +27,7 @@ public class Ventana extends JFrame implements ActionListener{
     private static JList clasificacionVuelta;
     private static JList clasificacionVueltaDiferencia;
     private JLabel vueltas;
+    public JProgressBar progressBar;
     private int cont = 0;
     hilo hilo1 = null;
     Simulacion s = new Simulacion();
@@ -78,6 +79,7 @@ public class Ventana extends JFrame implements ActionListener{
         boton = new JButton();
         bDiferencia = new JButton();
         texto = new JLabel(new ImageIcon(this.getClass().getResource(g.arrayCircuito.get(0).getFotoCircuito())));
+        progressBar = new JProgressBar();
 
         // configuramos los componentes
         texto.setSize(1280,720);
@@ -85,6 +87,10 @@ public class Ventana extends JFrame implements ActionListener{
         vueltas.setForeground(Color.BLACK);
         vueltas.setBorder(new LineBorder(Color.black));
         vueltas.setBounds(640, 30, 42,22);
+        progressBar = new JProgressBar(0, 100);
+        progressBar.setValue(100);
+        progressBar.setStringPainted(true);
+        progressBar.setBounds(800,60,50,30);
         clasificacionVuelta.setBackground(new Color(0,0,0,0));//Color(rojo,verde,azul,opacidad)
         clasificacionVueltaDiferencia.setBackground(new Color(0,0,0,0));
         //clasificacionVuelta.setListData( g.arrayTiempoVuelta.toArray());
@@ -124,6 +130,7 @@ public class Ventana extends JFrame implements ActionListener{
         //this.add(clasificacionVueltaDiferencia);
         this.add(bDiferencia);
         this.add(texto);
+        this.add(progressBar);
     }
 
 
@@ -180,6 +187,7 @@ public class Ventana extends JFrame implements ActionListener{
                 cont++;
                 g.arrayTiempoVuelta.clear();
                 g.arrayTiempoVueltaSoloInicial.clear();
+                //TODO posicion circuito
                 s.simulacionVueltas(g.arrayCircuito, 0, g.arrayCoche, g.arrayTiempoVuelta, g.arrayTiempoVueltaSoloInicial, g.posPiloto);
                 g.ordenar(g.arrayTiempoVueltaSoloInicial, g.arrayTiempoVuelta);
                 g.reordenarIndices(g.arrayTiempoVuelta);
@@ -199,8 +207,10 @@ public class Ventana extends JFrame implements ActionListener{
                 clasificacionVuelta.setModel(listModelVuelta);
                 clasificacionVueltaDiferencia.setModel(listModelDiferenciaVueltas);
                 s.gestionNeumaticos(g.arrayCoche);
+                //TODO
+                progressBar.setValue((int)g.arrayCoche.get(0).getNeumaticos());
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(3000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

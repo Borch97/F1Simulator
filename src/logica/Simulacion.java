@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import BD.GestorBD;
 import GUI.Ventana;
 import datos.Circuito;
 import datos.Coche;
@@ -85,14 +86,46 @@ public class Simulacion{
         return new Rango(minutes, seconds, milliseconds);
     }
 
+    public void cambioTiempos(int suma, int cont, Rango r, ArrayList<Coche> piloto, ArrayList<String> tiempoVuelta, ArrayList<Rango> tiempos){
+        r.setSeconds(r.getSeconds() + suma);
+        tiempoVuelta.add((cont + 1) + ".-" + piloto.get(cont).getNombre().substring(0,4) + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
+        Rango r1 =  new Rango(r.getMinutes(),r.getSeconds(), r.getMilliseconds());
+        tiempos.add(r1);
+    }
+
     public void simulacionVueltas(ArrayList<Circuito> circuito, int pos, ArrayList<Coche> piloto, ArrayList<String> tiempoVuelta, ArrayList<Rango> tiempos, ArrayList<String> posPilotos){
         int cont = 0;
         Rango r;
         while (cont<g.totalPilotos) {
             r = this.tiempoVueltaInicial((int)circuito.get(pos).getRangoTiempoInicial(), (int)circuito.get(pos).getRangoTiempoFinal(),
                     piloto.get(cont).getVelocidad(), piloto.get(cont).getAceleracion(),piloto.get(cont).getAerodinamica() );
-            tiempoVuelta.add((cont + 1) + ".-" + piloto.get(cont).getNombre().substring(0,4) + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
-            tiempos.add(r);
+
+            if(piloto.get(cont).getNeumaticos() < 50){
+                if(lluvia((int)circuito.get(pos).getProbLluvia())){
+                    cambioTiempos(3,cont,r,piloto,tiempoVuelta,tiempos);
+                }
+                else
+                    cambioTiempos(1,cont,r,piloto,tiempoVuelta,tiempos);
+            }
+            else if(piloto.get(cont).getNeumaticos() < 25){
+                if(lluvia((int)circuito.get(pos).getProbLluvia())){
+                    cambioTiempos(4,cont,r,piloto,tiempoVuelta,tiempos);
+                }
+                else
+                    cambioTiempos(2,cont,r,piloto,tiempoVuelta,tiempos);
+            }
+            else if(piloto.get(cont).getNeumaticos() >=50){
+                if(lluvia((int)circuito.get(pos).getProbLluvia())) {
+                    cambioTiempos(2,cont,r,piloto,tiempoVuelta,tiempos);
+                }
+                else {
+                    tiempoVuelta.add((cont + 1) + ".-" + piloto.get(cont).getNombre().substring(0, 4) + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
+                    tiempos.add(r);
+                }
+            }
+            else
+                piloto.get(cont).setProbRotura(100);
+
             posPilotos.add(piloto.get(cont).getAbreviado());
             cont++;
         }
@@ -138,20 +171,16 @@ public class Simulacion{
     public void gestionNeumaticos(ArrayList<Coche> coches){
         for(int i = 0; i < coches.size();i++){
             coches.get(i).setNeumaticos(coches.get(i).getNeumaticos() - 5);
+            //v.progressBar.setValue((int)coches.get(i).getNeumaticos());
         }
     }
     
-    public boolean lluvia (ArrayList<Circuito> prob_lluvia){
-    	boolean llueve = false;
-    	int numeroAleatorio = (int) (Math.random()*100+1);
-    	if((prob_lluvia.get(0).getProbLluvia) > numeroAleatorio){
-    		llueve = true;
-    	}else{
-    		llueve = false;
-    	}
-    	
-    	
-    	return llueve;
+    public boolean lluvia (int probLluvia){
+    	int numeroAleatorio = aleatorio(1,100);
+    	if(probLluvia > numeroAleatorio)
+    		return true;
+    	else
+    	    return false;
     }
 
 
@@ -161,8 +190,6 @@ public class Simulacion{
         g.creacionAI();
         
         Circuito barcelona = new Circuito("Barcelona", "Espanya", 50, 50.0,"./pictures/Melbourne.png", 82648, 85648);
-        
-        Circuito barcelona = GestorBD.obtenerInfoCircuito("Barcelona");
         
         int cont = 0;
         Rango r;

@@ -144,7 +144,11 @@ public class Gestion {
 
             // itera para buscar el �ndice del elemento m�s peque�o
             for ( int indice = i + 1; indice < arrayTiempoVueltaSoloInicial.size(); indice++ )
-                if ( arrayTiempoVueltaSoloInicial.get(indice).getSeconds() < arrayTiempoVueltaSoloInicial.get(masPequenio).getSeconds() || arrayTiempoVueltaSoloInicial.get(indice).getMilliseconds() < arrayTiempoVueltaSoloInicial.get(masPequenio).getMilliseconds() )
+                if ( arrayTiempoVueltaSoloInicial.get(indice).getSeconds() == arrayTiempoVueltaSoloInicial.get(masPequenio).getSeconds()) {
+                    if (arrayTiempoVueltaSoloInicial.get(indice).getMilliseconds() < arrayTiempoVueltaSoloInicial.get(masPequenio).getMilliseconds())
+                        masPequenio = indice;
+                }
+                else if(arrayTiempoVueltaSoloInicial.get(indice).getSeconds() < arrayTiempoVueltaSoloInicial.get(masPequenio).getSeconds())
                     masPequenio = indice;
 
             intercambiar( i, masPequenio, arrayTiempoVueltaSoloInicial, arrayTiempoVuelta ); // intercambia el elemento m�s peque�o en la posici�n
