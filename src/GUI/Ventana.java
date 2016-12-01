@@ -148,17 +148,14 @@ public class Ventana extends JFrame implements ActionListener{
         boxes.setText("Boxes");
         boxes.setOpaque(false);
         boxes.setBackground(new Color(0,0,0,0));
-        bDiferencia.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(clasificacionVuelta.isVisible()) {
-                    clasificacionVuelta.setVisible(false);
-                    clasificacionVueltaDiferencia.setVisible(true);
-                }
-                else {
-                    clasificacionVuelta.setVisible(true);
-                    clasificacionVueltaDiferencia.setVisible(false);
-                }
+        bDiferencia.addActionListener(e -> {
+            if(clasificacionVuelta.isVisible()) {
+                clasificacionVuelta.setVisible(false);
+                clasificacionVueltaDiferencia.setVisible(true);
+            }
+            else {
+                clasificacionVuelta.setVisible(true);
+                clasificacionVueltaDiferencia.setVisible(false);
             }
         });
         // adicionamos los componentes a la ventana
@@ -199,9 +196,7 @@ public class Ventana extends JFrame implements ActionListener{
     }
 
     public void modeloJlist(ArrayList<String> tiempoVuelta, DefaultListModel listModel){
-        for (String s: tiempoVuelta) {
-            listModel.addElement(s);
-        }
+        tiempoVuelta.forEach(listModel::addElement);
     }
 
     public static void main(String[] args) {

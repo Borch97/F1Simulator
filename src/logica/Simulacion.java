@@ -212,10 +212,7 @@ public class Simulacion{
     
     public boolean lluvia (int probLluvia){
     	int numeroAleatorio = aleatorio(1,100);
-    	if(probLluvia > numeroAleatorio)
-    		return true;
-    	else
-    	    return false;
+        return probLluvia > numeroAleatorio;
     }
 
 
