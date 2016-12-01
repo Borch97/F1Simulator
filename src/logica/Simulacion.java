@@ -140,6 +140,19 @@ public class Simulacion{
             coches.get(i).setNeumaticos(coches.get(i).getNeumaticos() - 5);
         }
     }
+    
+    public boolean lluvia (ArrayList<Circuito> prob_lluvia){
+    	boolean llueve = false;
+    	int numeroAleatorio = (int) (Math.random()*100+1);
+    	if((prob_lluvia.get(0).getProbLluvia) > numeroAleatorio){
+    		llueve = true;
+    	}else{
+    		llueve = false;
+    	}
+    	
+    	
+    	return llueve;
+    }
 
 
     public static void main(String[] args){
