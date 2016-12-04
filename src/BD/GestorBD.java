@@ -1,13 +1,12 @@
 package BD;
-
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.FormatFlagsConversionMismatchException;
 
 import javax.swing.JOptionPane;
 
 import datos.Circuito;
 import datos.Coche;
-
 
 
 public class GestorBD{
@@ -105,6 +104,66 @@ public class GestorBD{
     
     
    
+    
+    
+    //1 METODO RECURSIVO ----> 2 METODOS!!!! 1 no RECURSIVO y OTRO recursivo
+    
+    
+    public ArrayList<Circuito> cargarDatosCircuitos()
+    {
+    	String c = "select * from Circuito";
+    	
+    	ResultSet resultado = consultar( c );
+    
+    	ArrayList<Circuito> circ = new ArrayList<>();
+    	
+    	try
+    	{ 		
+    		cargarDatosCircuitosREC( circ , resultado );	
+    	}
+    	catch( SQLException ex )
+    	{
+    		ex.printStackTrace();
+    	}   	
+    	finally
+    	{
+    		desconectar();
+    	}
+    	
+    	return circ;
+    }
+    
+    private ArrayList<Circuito> cargarDatosCircuitosREC(ArrayList<Circuito> pCircuitos, 
+    													ResultSet pResultado) throws SQLException
+    {
+    	//CB
+    	if( !pResultado.next() )
+    	{
+    		return pCircuitos;
+    	}
+    	//CR
+    	else
+    	{
+			//cada campo de la tabla de la BD
+			String nom = pResultado.getString("nom_circuito");
+    		String pais = pResultado.getString("pais");
+    		int vuel = pResultado.getInt("num_vueltas");
+    		double lluv = pResultado.getDouble("pro_lluvia");
+    		String foto = pResultado.getString("foto_circ");
+    		int tini = pResultado.getInt("rango_tinicial");
+    		int tfin = pResultado.getInt("rango_tfinal");
+    		    		    		
+    		pCircuitos.add( new Circuito(nom,pais,vuel,lluv,foto,tini,tfin));
+    		
+    		cargarDatosCircuitosREC(pCircuitos, pResultado);
+      	
+    		return pCircuitos;
+    	}
+    }    
+    
+    
+    
+    /*
     //AÑADIR METODOS DE USO
     public ArrayList<Circuito> cargarDatosCircuitos()
     {
@@ -112,24 +171,23 @@ public class GestorBD{
     	
     	ResultSet resultado = consultar( c );
     
-    	ArrayList<Circuito> alo = new ArrayList<>();
+    	ArrayList<Circuito> circ = new ArrayList<>();
     	
     	try
     	{ 		
     		while( resultado.next() )
 	    	{
     			//cada campo de la tabla de la BD
-	    		String nom = resultado.getString("Nombre");
+    			String nom = resultado.getString("nom_circuito");
 	    		String pais = resultado.getString("pais");
-	    		int vuel = resultado.getInt("numerovueltas");
-	    		double lluv = resultado.getDouble("prob lluvia");
-	    		// String foto
-	    		long tini = resultado.getLong("rangoTiempoInicial");
-	    		long tfin = resultado.getLong("rangoTiempoFinal");
+	    		int vuel = resultado.getInt("num_vueltas");
+	    		double lluv = resultado.getDouble("pro_lluvia");
+	    		String foto = resultado.getString("foto_circ");
+	    		int tini = resultado.getInt("rango_tinicial");
+	    		int tfin = resultado.getInt("rango_tfinal");
+	    		    		
 	    		
-	    		
-	    		
-	    		//alo.add( new Circuito(nom,pais,vuel,lluv,null,tini,tfin));
+	    		circ.add( new Circuito(nom,pais,vuel,lluv,foto,tini,tfin));
 	    	}    		    			
     	}
     	catch( SQLException ex )
@@ -141,101 +199,13 @@ public class GestorBD{
     		desconectar();
     	}
     	
-    	return alo;
+    	return circ;
     }
+    */
     
-    
-    public void visualizarDatosCoches()
-    {
-    	ArrayList<Coche> alo = cargarDatosCoche();
-    
-    	System.out.println( alo );
-    }
-    
-    
-    public ArrayList<Coche> cargarDatosCoche()
-    {
-    	String q = "select * from Coche";
-    	
-    	ResultSet resultado = consultar( q );
-    
-    	ArrayList<Coche> alo = new ArrayList<>();
-    	
-    	try
-    	{ 		
-    		while( resultado.next() )
-	    	{
-    			//cada campo de la tabla de la BD
-	    		String nom = resultado.getString("nom_piloto");
-	    		String usu = resultado.getString("nom_usuario");
-	    		String abr = resultado.getString("abreviado");
-	    		String esc = resultado.getString("escuderia");
-	    		double vel = resultado.getDouble("velocidad");
-	    		double ace = resultado.getDouble("aceleracion");
-	    		double aero = resultado.getDouble("aerodinamica");
-	    		double rot = resultado.getDouble("rotura");
-	    		
-	    		//alo.add( new Coche(nom,abr,esc,vel,ace,aero,rot));
-	    	}    		    			
-    	}
-    	catch( SQLException ex )
-    	{
-    		ex.printStackTrace();
-    	}   	
-    	finally
-    	{
-    		desconectar();
-    	}
-    	
-    	return alo;
-    }
-    //enviar por parametros los datos de un coche
-    public void guardarDatosCoche ( Coche pCoche )
-    {
-    	
-    	String nom = pCoche.getNombre();
-    	//int nive = pCoche.
-    	
-    	//try {
-			//String q = "select nom_piloto,Tiempo,Nivel from Puntuacion where Nombre = '" + nom + "' AND Nivel = " + nivel;
-
-			//ResultSet resultado = consultar( q );
-
-			//insertar el coche porque es nuevo
-	    	/*if( resultado.next() == false )
-	    	{
-	    		String ins = "INSERT INTO Puntuacion ('Nombre','Tiempo','Nivel') VALUES ('"+pNombre+"'," + pTiempo + "," + pNivel +")";    	
-	    		insertar( ins );
-	    	}
-	    	else
-	    	{
-	    		while( resultado.next() )
-		    	{
-		    		String nom = resultado.getString("Nombre");
-		    		int t = resultado.getInt("Tiempo");
-		    		int n = resultado.getInt("Nivel");
-		    		
-		    		//if ( pTiempo < t )
-		    		{
-		    			System.out.println("POR AQUI");
-		    			
-		    			/*String upd = "UPDATE Puntuacion SET Tiempo = " + pTiempo
-		    					+ " WHERE Nombre = '" + nom + "' AND Nivel = " + n;	
-		    			
-		    			sentencia.executeUpdate( upd );
-		    		}
-		    	}    	
-	    	}
-    	}
-    	catch(SQLException ex )
-    	{
-    		ex.printStackTrace();
-    	}
-    }*/
-
-	/*public ArrayList<Circuito> obtenerInfoCircuitos(){
-				
-		String c = "select * from Circuito";
+    public ArrayList<Circuito> obtenerInfoCircuito(){
+		
+		String c = "select * from Circuito ";
     	Circuito circuito = null;
     	ResultSet resultado = consultar( c );
     	
@@ -246,15 +216,15 @@ public class GestorBD{
     		while( resultado.next() )
 	    	{
     			//cada campo de la tabla de la BD
-	    		//String nom = resultado.getString("Nombre");
+	    		String nom = resultado.getString("nom_circuito");
 	    		String pais = resultado.getString("pais");
-	    		int vuel = resultado.getInt("numerovueltas");
-	    		double lluv = resultado.getDouble("prob lluvia");
-	    		// String foto
-	    		long tini = resultado.getLong("rangoTiempoInicial");
-	    		long tfin = resultado.getLong("rangoTiempoFinal");
+	    		int vuel = resultado.getInt("num_vueltas");
+	    		double lluv = resultado.getDouble("pro_lluvia");
+	    		String foto = resultado.getString("foto_circ");
+	    		int tini = resultado.getInt("rango_tinicial");
+	    		int tfin = resultado.getInt("rango_tfinal");
 	    		
-	    		//circuito = new Circuito(nombre,pais,vueltas,probll //........ )
+	    		circuito = new Circuito(nom,pais,vuel,lluv,foto,tini,tfin);
 	    				
 	    		circuitos.add( circuito );
 	    	}    		    			
@@ -270,10 +240,200 @@ public class GestorBD{
     		
 			
 		return circuitos;
-	}  */
+	}  
+    
+    public ArrayList<String> obtenerInfoPilotos(){
+		
+		String c = "select nom_piloto from Coche";
+    	
+    	ResultSet resultado = consultar( c );
+    	 
+    	ArrayList<String> pilotos = new ArrayList<String>();
+    	
+    	try
+    	{ 		
+    		while( resultado.next() )
+	    	{
+    			//cada campo de la tabla de la BD
+	    		String nom = resultado.getString("nom_piloto");	    				
+	    		pilotos.add( nom );
+	    	}    		    			
+    	}
+    	catch( SQLException ex )
+    	{
+    		ex.printStackTrace();
+    	}   	
+    	finally
+    	{
+    		desconectar();
+    	}
+			
+		return pilotos;
+	}  
+    
+ public ArrayList<String> obtenerInfoEscuderias(){
+		
+		String c = "select escuderia from Coche";
+    	
+    	ResultSet resultado = consultar( c );
+    	 
+    	ArrayList<String> escuderias = new ArrayList<String>();
+    	
+    	try
+    	{ 		
+    		while( resultado.next() )
+	    	{
+    			//cada campo de la tabla de la BD
+	    		String esc = resultado.getString("escuderia");	    				
+	    		escuderias.add( esc );
+	    	}    		    			
+    	}
+    	catch( SQLException ex )
+    	{
+    		ex.printStackTrace();
+    	}   	
+    	finally
+    	{
+    		desconectar();
+    	}
+			
+		return escuderias;
+	}  
+    
+    public double obtenerProbLluviaCircuito(String nomcircuito ){
+    
+    	String c = "select prob_lluvia from Circuito where nom_circuito = '" + nomcircuito + "'";
+    	
+    	ResultSet resultado = consultar( c );
+    	
+    	double lluvia = 0.0;
+    	
+    	try
+    	{ 		
+    		if( resultado.next() )
+	    	{
+    			//cada campo de la tabla de la BD
+	    		lluvia = resultado.getDouble("prob_lluvia");	    				
+	       	}    		    			
+    	}
+    	catch( SQLException ex )
+    	{
+    		ex.printStackTrace();
+    	}   	
+    	finally
+    	{
+    		desconectar();
+    	}
+    	
+    	return lluvia;
+    }
+    public void visualizarDatosCircuitos()
+    {
+    	ArrayList<Circuito> alo = cargarDatosCircuitos();
+    
+    	System.out.println( alo );
+    
+    }
+    
+   /**
+    
+  public ArrayList<Coche> cargarDatosCoche()
+    {
+    	String q = "select * from Coche";
+    	
+    	ResultSet resultado = consultar( q );
+    
+    	ArrayList<Coche> coche = new ArrayList<>();
+    	
+    	try
+    	{ 		
+    		while( resultado.next() )
+	    	{
+    			//cada campo de la tabla de la BD
+	    		String nom = resultado.getString("nom_piloto");
+	    		//String usu = resultado.getString("nom_usuario");
+	    		String abr = resultado.getString("abreviado");
+	    		String esc = resultado.getString("escuderia");
+	    		double vel = resultado.getDouble("velocidad");
+	    		double ace = resultado.getDouble("aceleracion");
+	    		double aero = resultado.getDouble("aerodinamica");
+	    		double rot = resultado.getDouble("rotura");
+	    		double neu = resultado.getDouble("neumaticos");
+	    		
+	    		//coche.add( new Coche(nom,usu,abr,esc,vel,ace,aero,rot));
+	    		coche.add( new Coche(nom,abr,esc,vel,ace,aero,rot,neu));
+	    	}    		    			
+    	}
+    	catch( SQLException ex )
+    	{
+    		ex.printStackTrace();
+    	}   	
+    	finally
+    	{
+    		desconectar();
+    	}
+    	
+    	return coche;
+    }
+    //enviar por parametros los datos de un coche
+    public void guardarDatosCoche ( Coche pCoche )
+    {
+    	
+    	String nom = pCoche.getNombre();
+    	int nive = pCoche.
+    	
+    	try
+    	{
+    		//Poner  como los datos del add de arriba??
+	    	String q = "select nom_piloto,abreviado,escuderia, velocidad, aceleracion, aerodinamica,"
+	    			+ "prob_rotura,neumaticos from Coche where nom_piloto = '" + nom + "' AND Nivel = " + nivel;
+	    	
+	    	ResultSet resultado = consultar( q );
+	    	
+	    	//insertar el coche porque es nuevo
+	    	if( resultado.next() == false )
+	    	{
+	    		String ins = "INSERT INTO Puntuacion ('Nombre','Tiempo','Nivel') VALUES ('"+pNombre+"'," + pTiempo + "," + pNivel +")";    	
+	    		insertar( ins );
+	    	}
+	    	else
+	    	{
+	    		while( resultado.next() )
+		    	{
+		    		String nom = resultado.getString("Nombre");
+		    		int t = resultado.getInt("Tiempo");
+		    		int n = resultado.getInt("Nivel");
+		    		
+		    		if ( pTiempo < t )
+		    		{
+		    			System.out.println("POR AQUI");
+		    			
+		    			String upd = "UPDATE Puntuacion SET Tiempo = " + pTiempo 
+		    					+ " WHERE Nombre = '" + nom + "' AND Nivel = " + n;	
+		    			
+		    			sentencia.executeUpdate( upd );
+		    		}
+		    	}    	
+	    	}
+    	}
+    	catch(SQLException ex )
+    	{
+    		ex.printStackTrace();
+    	}
+    }
 
-		}}
-
+    
+    public void visualizarDatosCoches()
+    {
+    	ArrayList<Coche> alo = cargarDatosCoche();
+    
+    	System.out.println( alo );
+    }
+    
+   **/
+    
+   
+}
 
 
 
