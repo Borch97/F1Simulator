@@ -6,9 +6,9 @@ import logica.Simulacion;
 
 import java.awt.*;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
@@ -20,6 +20,7 @@ import javax.swing.border.LineBorder;
  */
 public class Ventana extends JFrame implements ActionListener{
 
+    private JPanel panelPrincipal;
     private JLabel texto;           // etiqueta o texto no editable
     private JTextField caja;        // caja de texto, para insertar datos
     private JButton boton;
@@ -41,6 +42,8 @@ public class Ventana extends JFrame implements ActionListener{
     DefaultListModel listModelVuelta;
     DefaultListModel listModelDiferenciaVueltas;
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private static Rectangle tamanyoPanel = null;
+    private static HashMap<Object,Rectangle> tamComponentes = new HashMap<>();
 
     public Ventana() {
         super();                    // usamos el contructor de la clase padre JFrame
@@ -48,6 +51,13 @@ public class Ventana extends JFrame implements ActionListener{
         inicializarComponentes();   // inicializamos los atributos o componentes
     }
 
+    /*public void componentResized(ComponentEvent event)
+    {
+        JOptionPane.showMessageDialog(this,
+                "JFrame has been resized!",
+                "JFrame Resize",
+                JOptionPane.INFORMATION_MESSAGE);
+    }*/
     private void configurarVentana() {
         this.setTitle("Esta Es Una Ventana");                   // colocamos titulo a la ventana
         this.setSize(screenSize);//(int) screenSize.getWidth(),(int)screenSize.getHeight()); // colocamos tamanio a la ventana (ancho, alto)
@@ -76,6 +86,7 @@ public class Ventana extends JFrame implements ActionListener{
     private void inicializarComponentes() {
         // creamos los componentes
         test();
+        panelPrincipal = new JPanel();
         listModelVuelta = new DefaultListModel();
         modeloJlist(g.arrayTiempoVuelta, listModelVuelta);
         listModelDiferenciaVueltas = new DefaultListModel();
@@ -96,6 +107,8 @@ public class Ventana extends JFrame implements ActionListener{
         progressBarDL = new JProgressBar();
 
         // configuramos los componentes
+        panelPrincipal.setLayout(null);
+        panelPrincipal.setSize(screenSize);
         texto.setSize(screenSize);
         weather.setSize(130,130);
         weather.setBounds(1620,100,130,130);
@@ -160,19 +173,19 @@ public class Ventana extends JFrame implements ActionListener{
         });
         // adicionamos los componentes a la ventana
         //this.add(caja);
-        this.add(boton);
-        this.add(vueltas);
-        this.add(clasificacionVuelta);
+        panelPrincipal.add(boton);
+        panelPrincipal.add(vueltas);
+        panelPrincipal.add(clasificacionVuelta);
         //this.add(clasificacionVueltaDiferencia);
-        this.add(bDiferencia);
-        this.add(progressBarUR);
-        this.add(progressBarUL);
-        this.add(progressBarDR);
-        this.add(progressBarDL);
-        this.add(neumaticos);
-        this.add(weather);
-        this.add(boxes);
-        this.add(texto);
+        panelPrincipal.add(bDiferencia);
+        panelPrincipal.add(progressBarUR);
+        panelPrincipal.add(progressBarUL);
+        panelPrincipal.add(progressBarDR);
+        panelPrincipal.add(progressBarDL);
+        panelPrincipal.add(neumaticos);
+        panelPrincipal.add(weather);
+        panelPrincipal.add(boxes);
+        panelPrincipal.add(texto);
     }
 
 
@@ -188,6 +201,7 @@ public class Ventana extends JFrame implements ActionListener{
         //JOptionPane.showMessageDialog(this, "Hola " + nombre + ".");    // mostramos un mensaje (frame, mensaje)
     }
 
+
     public Thread crearThread(){
         this.hilo1 = this.new hilo();
         Thread crearHilo = new Thread(this.hilo1);
@@ -195,14 +209,40 @@ public class Ventana extends JFrame implements ActionListener{
         return crearHilo;
     }
 
+
     public void modeloJlist(ArrayList<String> tiempoVuelta, DefaultListModel listModel){
         tiempoVuelta.forEach(listModel::addElement);
     }
-
+    //TODO fuera del main
     public static void main(String[] args) {
-        Ventana V = new Ventana();      // creamos una ventana
-        V.setVisible(true);             // hacemos visible la ventana creada
-
+        Ventana V = new Ventana(); // creamos una ventana
+        V.addWindowListener( new WindowAdapter() {
+            @Override
+            public void windowActivated(WindowEvent e) {  // Al activarse la ventana almacenamos el tamaño del panel
+                tamanyoPanel = V.panelPrincipal.getBounds();
+                for (Component c : V.panelPrincipal.getComponents()) {
+                    tamComponentes.put( c, c.getBounds() );  // Guardamos el tamaño y posición inicial de cada componente para luego escalarlo con él
+                }
+            }
+        });
+        V.panelPrincipal.addComponentListener( new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {  // Al redimensionarse el panel, reajustamos sus componentes
+                if (V.panelPrincipal!=null && tamanyoPanel!=null) {
+                    double escalaX = V.panelPrincipal.getWidth() / tamanyoPanel.getWidth();   // Nueva escala X
+                    double escalaY = V.panelPrincipal.getHeight() / tamanyoPanel.getHeight(); // Nueva escala Y
+                    for (Component c : V.panelPrincipal.getComponents()) {
+                        Rectangle tamanyoInicial = tamComponentes.get( c );
+                        if (c!=null) {
+                            c.setSize( new Dimension( (int) (tamanyoInicial.getWidth()*escalaX), (int)(tamanyoInicial.getHeight()*escalaY) ) );
+                            c.setLocation( (int) (tamanyoInicial.getX()*escalaX), (int)(tamanyoInicial.getY()*escalaY) );
+                        }
+                    }
+                }
+            }
+        });
+        V.getContentPane().add( V.panelPrincipal, BorderLayout.CENTER );  // El panel ocupa siempre toda la ventana y se reescala con ella
+        V.setVisible( true );
 
     }
     class hilo implements Runnable{
