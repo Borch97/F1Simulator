@@ -28,7 +28,7 @@ public class Ventana extends JFrame implements ActionListener{
     private static JList clasificacionVuelta;
     private static JList clasificacionVueltaDiferencia;
     private JLabel vueltas;
-    private JLabelGrafico o = new JLabelGrafico( "/pictures/sun.png", true, 130, 130, 0.0 );
+    private JLabelGrafico o = new JLabelGrafico( "/pictures/sun.png", true, 128, 128, 0.0 );
     public JProgressBar progressBarUR;
     public JProgressBar progressBarUL;
     public JProgressBar progressBarDR;
@@ -108,8 +108,7 @@ public class Ventana extends JFrame implements ActionListener{
         panelPrincipal.setLayout(null);
         panelPrincipal.setSize(screenSize);
         texto.setSize(screenSize);
-        o.setSize(110,110);
-        o.setBounds(1620,100,130,130);
+        o.setBounds(1620,100,128,128);
         neumaticos.setSize(181,272);
         neumaticos.setBounds(1600,370,181,272);
         vueltas.setText("50" + "/" + "50");
@@ -243,7 +242,7 @@ public class Ventana extends JFrame implements ActionListener{
         V.getContentPane().add( V.panelPrincipal, BorderLayout.CENTER );  // El panel ocupa siempre toda la ventana y se reescala con ella
         V.setVisible( true );
         while(true){
-            V.o.incRotacion(0.1);
+            V.o.incRotacion(0.01);
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
