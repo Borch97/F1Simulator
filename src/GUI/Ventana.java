@@ -28,7 +28,7 @@ public class Ventana extends JFrame implements ActionListener{
     private static JList clasificacionVuelta;
     private static JList clasificacionVueltaDiferencia;
     private JLabel vueltas;
-    private JLabel weather;
+    private JLabelGrafico o = new JLabelGrafico( "/pictures/sun.png", true, 130, 130, 0.0 );
     public JProgressBar progressBarUR;
     public JProgressBar progressBarUL;
     public JProgressBar progressBarDR;
@@ -62,7 +62,6 @@ public class Ventana extends JFrame implements ActionListener{
         this.setTitle("Esta Es Una Ventana");                   // colocamos titulo a la ventana
         this.setSize(screenSize);//(int) screenSize.getWidth(),(int)screenSize.getHeight()); // colocamos tamanio a la ventana (ancho, alto)
         this.setLocationRelativeTo(null);                       // centramos la ventana en la pantalla
-        this.setLayout(null);                                   // no usamos ningun layout, solo asi podremos dar posiciones a los componentes
         this.setResizable(true);                               // hacemos que la ventana no sea redimiensionable
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);    // hacemos que cuando se cierre la ventana termina todo proceso
 
@@ -99,7 +98,6 @@ public class Ventana extends JFrame implements ActionListener{
         boton = new JButton();
         boxes = new JButton();
         bDiferencia = new JButton();
-        weather = new JLabel(new ImageIcon(this.getClass().getResource("/pictures/sun.png")));
         texto = new JLabel(new ImageIcon(this.getClass().getResource(g.arrayCircuito.get(0).getFotoCircuito())));
         progressBarUR = new JProgressBar();
         progressBarUL = new JProgressBar();
@@ -110,8 +108,8 @@ public class Ventana extends JFrame implements ActionListener{
         panelPrincipal.setLayout(null);
         panelPrincipal.setSize(screenSize);
         texto.setSize(screenSize);
-        weather.setSize(130,130);
-        weather.setBounds(1620,100,130,130);
+        o.setSize(110,110);
+        o.setBounds(1620,100,130,130);
         neumaticos.setSize(181,272);
         neumaticos.setBounds(1600,370,181,272);
         vueltas.setText("50" + "/" + "50");
@@ -183,7 +181,7 @@ public class Ventana extends JFrame implements ActionListener{
         panelPrincipal.add(progressBarDR);
         panelPrincipal.add(progressBarDL);
         panelPrincipal.add(neumaticos);
-        panelPrincipal.add(weather);
+        panelPrincipal.add(o);
         panelPrincipal.add(boxes);
         panelPrincipal.add(texto);
     }
@@ -213,9 +211,10 @@ public class Ventana extends JFrame implements ActionListener{
     public void modeloJlist(ArrayList<String> tiempoVuelta, DefaultListModel listModel){
         tiempoVuelta.forEach(listModel::addElement);
     }
-    //TODO fuera del main
+
     public static void main(String[] args) {
         Ventana V = new Ventana(); // creamos una ventana
+        //TODO fuera del main
         V.addWindowListener( new WindowAdapter() {
             @Override
             public void windowActivated(WindowEvent e) {  // Al activarse la ventana almacenamos el tamaño del panel
@@ -243,6 +242,14 @@ public class Ventana extends JFrame implements ActionListener{
         });
         V.getContentPane().add( V.panelPrincipal, BorderLayout.CENTER );  // El panel ocupa siempre toda la ventana y se reescala con ella
         V.setVisible( true );
+        while(true){
+            V.o.incRotacion(0.1);
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
     class hilo implements Runnable{

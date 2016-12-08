@@ -1,9 +1,12 @@
 package GUI;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-public class ImageResize {
+public class ImageResize extends JLabel {
 
     public static Dimension getScaledDimension(Dimension imgSize, Dimension boundary) {
 
