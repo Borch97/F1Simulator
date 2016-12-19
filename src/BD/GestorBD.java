@@ -13,7 +13,7 @@ public class GestorBD{
 	
 	private Connection conexion;
 	private Statement sentencia;
-	private String ruta = "formula1.sqlite";
+	private String ruta = "Formula1.sqlite";
 	
 	private static GestorBD mGestorBD;
 	
@@ -244,7 +244,7 @@ public class GestorBD{
     
     public ArrayList<String> obtenerInfoPilotos(){
 		
-		String c = "select nom_piloto from Coche";
+		String c = "select nom_piloto from Pilotos";
     	
     	ResultSet resultado = consultar( c );
     	 
@@ -273,7 +273,7 @@ public class GestorBD{
     
  public ArrayList<String> obtenerInfoEscuderias(){
 		
-		String c = "select escuderia from Coche";
+		String c = "select escuderia from Escuderias";
     	
     	ResultSet resultado = consultar( c );
     	 
