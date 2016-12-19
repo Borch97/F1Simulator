@@ -8,19 +8,29 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
+import BD.GestorBD;
+
 public class Gestion {
 
     public final int totalPilotos = 9;
     public ArrayList<Coche> arrayCoche = new ArrayList<>();
     public ArrayList<Circuito> arrayCircuito = new ArrayList<>();
-    public ArrayList<String> arrayNombres = new ArrayList<>(Arrays.asList("Hamilton", "Vettel", "Verstappen", "Alonso", "Button", "Sainz", "Massa", "Rosberg", "Ricciardo", "Perez", "Bottas"));
-    public ArrayList<String> arrayEscuderias = new ArrayList<>(Arrays.asList("Mercedes", "Ferrari", "Williams", "Mclaren Honda", "Red Bull", "Renault", "Haas", "Toro Rosso"));
+    public ArrayList<String> arrayNombres; //= new ArrayList<>(Arrays.asList("Hamilton", "Vettel", "Verstappen", "Alonso", "Button", "Sainz", "Massa", "Rosberg", "Ricciardo", "Perez", "Bottas"));
+    public ArrayList<String> arrayEscuderias; // = new ArrayList<>(Arrays.asList("Mercedes", "Ferrari", "Williams", "Mclaren Honda", "Red Bull", "Renault", "Haas", "Toro Rosso"));
     public ArrayList<String> arrayTiempoVuelta = new ArrayList<>();
     public ArrayList<Rango> arrayTiempoVueltaSoloInicial = new ArrayList<>();
     public ArrayList<Rango> arrayTiempoVueltaSoloCopia = new ArrayList<>();
     public ArrayList<String> arrayDiferenciaTiempoVuelta = new ArrayList<>();
     public ArrayList<String> posPiloto = new ArrayList<>();
 
+    //Obtener nombre y escuderia de la base de datos
+    
+    public Gestion()
+    {
+    	arrayNombres = GestorBD.getInstance().obtenerInfoPilotos();
+    	arrayEscuderias = GestorBD.getInstance().obtenerInfoEscuderias();
+    }
+    
     //Crea un entero aleatorio dentro de los limites establecidos
 
     /** Metodo que dado un rango de valores, te devuelve un numero aleatorio entre dichos valores
@@ -40,7 +50,13 @@ public class Gestion {
      * @return Devuelve un nuevo piloto de tipo Coche con todos los valores aleatorios
      */
     public Coche creacionPiloto(){
-        return new Coche(arrayNombres.get(aleatorio(0, arrayNombres.size() - 1))," ", arrayEscuderias.get(aleatorio(0, arrayEscuderias.size() - 1)), aleatorio(0, 10), aleatorio(0, 10), aleatorio(0, 10), 0, 100);
+    	
+    	String nombrepiloto = arrayNombres.get(aleatorio(0, arrayNombres.size() - 1));
+		String nombreescuderia = arrayEscuderias.get(aleatorio(0, arrayEscuderias.size() - 1));
+
+		return new Coche(nombrepiloto, " ", nombreescuderia, aleatorio(0, 10), aleatorio(0, 10), aleatorio(0, 10), 0,
+				100);
+    	// return new Coche(arrayNombres.get(aleatorio(0, arrayNombres.size() - 1))," ", arrayEscuderias.get(aleatorio(0, arrayEscuderias.size() - 1)), aleatorio(0, 10), aleatorio(0, 10), aleatorio(0, 10), 0, 100);
     }
     //Metodo que se encarga de crear automaticamente todos los otros pilotos del modo carrera
 
