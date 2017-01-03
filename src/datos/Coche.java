@@ -1,6 +1,7 @@
 package datos;
 
 
+import java.awt.*;
 
 public class Coche {
 
@@ -12,6 +13,8 @@ public class Coche {
 	    protected double aerodinamica;
 	    protected double prob_rotura;
 	    protected double neumaticos;
+		protected Image imagen;
+		protected int paradasBoxes;
 
 	    /**
 	     * Contructor vacio con valores predeterminados
@@ -33,7 +36,7 @@ public class Coche {
 	     * @param aerodinamica
 	     * @param probRotura
 	     */
-	    public Coche(String nombre, String abreviado, String escuderia, double velocidad, double aceleracion, double aerodinamica, double probRotura, double neumaticos) {
+	    public Coche(String nombre, String abreviado, String escuderia, double velocidad, double aceleracion, double aerodinamica, double probRotura, double neumaticos, Image imagen, int paradasBoxes) {
 	        this.nom_piloto = nombre;
 	        this.abreviado = abreviado;
 	        this.escuderia = escuderia;
@@ -42,11 +45,45 @@ public class Coche {
 	        this.aerodinamica = aerodinamica;
 	        this.prob_rotura = probRotura;
 	        this.neumaticos = neumaticos;
+			this.imagen = imagen;
+			this.paradasBoxes = paradasBoxes;
 	    }
 
-	    public String getNombre() {
-	        return nom_piloto;
-	    }
+		public int getParadasBoxes() {
+			return paradasBoxes;
+		}
+
+		public void setParadasBoxes(int paradasBoxes) {
+			this.paradasBoxes = paradasBoxes;
+		}
+
+		public String getNom_piloto() {
+				return nom_piloto;
+			}
+
+		public void setNom_piloto(String nom_piloto) {
+			this.nom_piloto = nom_piloto;
+		}
+
+		public double getProb_rotura() {
+			return prob_rotura;
+		}
+
+		public void setProb_rotura(double prob_rotura) {
+			this.prob_rotura = prob_rotura;
+		}
+
+		public Image getImagen() {
+			return imagen;
+		}
+
+		public void setImagen(Image imagen) {
+			this.imagen = imagen;
+		}
+
+		public String getNombre() {
+				return nom_piloto;
+			}
 
 	    public void setNombre(String nombre) {
 	        this.nom_piloto = nombre;

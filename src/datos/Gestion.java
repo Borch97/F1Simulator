@@ -22,6 +22,10 @@ public class Gestion {
     public ArrayList<Rango> arrayTiempoVueltaSoloCopia = new ArrayList<>();
     public ArrayList<String> arrayDiferenciaTiempoVuelta = new ArrayList<>();
     public ArrayList<String> posPiloto = new ArrayList<>();
+    public ArrayList<String> nombreColumnas = new ArrayList<>();
+    public String[] columnNames = {" ", "Nombre", "Coche", "Tiempo", "Diferencia", "P. Boxes"};
+    public ArrayList<informacionTabla> informacionTabla = new ArrayList<>();
+
 
     //Obtener nombre y escuderia de la base de datos
     
@@ -30,7 +34,27 @@ public class Gestion {
     	arrayNombres = GestorBD.getInstance().obtenerInfoPilotos();
     	arrayEscuderias = GestorBD.getInstance().obtenerInfoEscuderias();
     }
-    
+
+    public int buscarPiloto(ArrayList<Coche> arrayCoche, String nombre){
+        int pos = 0;
+        int i = 0;
+        for (Coche c : arrayCoche){
+            if(c.getNombre() == nombre){
+                pos = i;
+                break;
+            }
+            else
+                i++;
+        }
+        return pos;
+    }
+    public void recopilarInformacion(ArrayList<informacionTabla> arrayInformacionTabla){
+        for(int i = 0; i<= totalPilotos;i++){
+            informacionTabla a = new informacionTabla(arrayCoche.get(i).getNombre(),arrayCoche.get(i).getImagen(), arrayTiempoVuelta.get(buscarPiloto(arrayCoche,arrayCoche.get(i).getNombre())),arrayDiferenciaTiempoVuelta.get(buscarPiloto(arrayCoche,arrayCoche.get(i).getNombre())),arrayCoche.get(i).getParadasBoxes());
+            arrayInformacionTabla.add(a);
+        }
+    }
+
     //Crea un entero aleatorio dentro de los limites establecidos
 
     /** Metodo que dado un rango de valores, te devuelve un numero aleatorio entre dichos valores
@@ -53,9 +77,9 @@ public class Gestion {
     	
     	String nombrepiloto = arrayNombres.get(aleatorio(0, arrayNombres.size() - 1));
 		String nombreescuderia = arrayEscuderias.get(aleatorio(0, arrayEscuderias.size() - 1));
-
+        //TODO añadir imagen coche
 		return new Coche(nombrepiloto, " ", nombreescuderia, aleatorio(0, 10), aleatorio(0, 10), aleatorio(0, 10), 0,
-				100);
+				100, null, 0);
     	// return new Coche(arrayNombres.get(aleatorio(0, arrayNombres.size() - 1))," ", arrayEscuderias.get(aleatorio(0, arrayEscuderias.size() - 1)), aleatorio(0, 10), aleatorio(0, 10), aleatorio(0, 10), 0, 100);
     }
     //Metodo que se encarga de crear automaticamente todos los otros pilotos del modo carrera
@@ -67,14 +91,20 @@ public class Gestion {
     public void creacionAI(){
         // while(arrayCoche.isEmpty() || arrayCoche.size()<totalPilotos) {
               Coche cocheComprobar;
-              for (int j = totalPilotos; j > 0; j--) {
-                  cocheComprobar = creacionPiloto();
-                  while((containsElement(arrayCoche, cocheComprobar.getNombre())) || contains2Elements(arrayCoche, cocheComprobar.getEscuderia())){
-                      cocheComprobar = creacionPiloto();
-                  }
-                  cocheComprobar.setAbreviado(cocheComprobar.getNombre().substring(0,4));
-                  arrayCoche.add(cocheComprobar);
-              }
+        if(arrayCoche.isEmpty()) {
+            for (int j = totalPilotos; j > 0; j--) {
+                cocheComprobar = creacionPiloto();
+                while ((containsElement(arrayCoche, cocheComprobar.getNombre())) || contains2Elements(arrayCoche, cocheComprobar.getEscuderia())) {
+                    cocheComprobar = creacionPiloto();
+                }
+                cocheComprobar.setAbreviado(cocheComprobar.getNombre().substring(0, 4));
+                arrayCoche.add(cocheComprobar);
+            }
+        }
+        else {
+            arrayCoche.clear();
+            creacionAI();
+        }
 
           //}
     }
