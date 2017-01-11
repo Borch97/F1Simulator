@@ -2,6 +2,7 @@ package datos;
 
 
 
+
 public class Coche {
 
 	  protected String nom_piloto;
@@ -13,6 +14,21 @@ public class Coche {
 	    protected double prob_rotura;
 	    protected double neumaticos;
 
+	    //
+	    protected int tiempo;
+	    
+	    
+	    //en milisegundos
+	    public int getTiempo()
+	    {
+	    	return tiempo;
+	    }
+	    
+	    public void incrementarTiempo( int mins , int segs , int msegs )
+	    {
+	    	tiempo += msegs + segs*1000 + mins*60*1000;
+	    }
+	    
 	    /**
 	     * Contructor vacio con valores predeterminados
 	     */
@@ -21,6 +37,8 @@ public class Coche {
 	        aceleracion = 0;
 	        aerodinamica = 0;
 	        prob_rotura = 0;
+	        //
+	        tiempo = 0;
 	    }
 
 	    /**

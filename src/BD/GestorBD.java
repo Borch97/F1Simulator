@@ -375,6 +375,15 @@ public class GestorBD{
     	
     	return coche;
     }
+    
+    *//
+    
+    public void guardarDatosCoche ( Piloto pPiloto )
+    {
+    	
+    }  
+    
+    
     //enviar por parametros los datos de un coche
     public void guardarDatosCoche ( Coche pCoche )
     {
@@ -422,7 +431,7 @@ public class GestorBD{
     	}
     }
 
-    
+    /**
     public void visualizarDatosCoches()
     {
     	ArrayList<Coche> alo = cargarDatosCoche();
