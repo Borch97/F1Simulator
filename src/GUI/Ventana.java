@@ -105,6 +105,7 @@ public class Ventana extends JFrame implements ActionListener{
             rowData[5] = list.get(i).getParadasBoxes();
             model.addRow(rowData);
         }
+
     }
     private void inicializarComponentes() {
         // creamos los componentes
@@ -144,12 +145,10 @@ public class Ventana extends JFrame implements ActionListener{
 
         // configuramos los componentes
 
-        /*String[] columnNames = {" ", "Nombre", "Coche", "Tiempo", "Diferencia", "P. Boxes"};
+        String[] columnNames = {" ", "Nombre", "Coche", "Tiempo", "Diferencia", "P. Boxes"};
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-        Object[] objs = {"1", "Arsenal", "", "345", "0234", "4"};
-        model.addRow(objs);
         tablaClasificacion.setModel(model);
-        JScrollPane skrol = new JScrollPane(tablaClasificacion);*/
+        JScrollPane skrol = new JScrollPane(tablaClasificacion);
 
 
         panelPrincipal.setSize(screenSize);
@@ -221,10 +220,10 @@ public class Ventana extends JFrame implements ActionListener{
         panelNeumaticos.add(panelNeumaticosAbajo, BorderLayout.SOUTH);
         panelIzquierda.add(panelNeumaticos, BorderLayout.SOUTH);
         //panelCentral.add(tablaClasificacion.getTableHeader(), BorderLayout.PAGE_START);
-        panelCentral.add(tablaClasificacion, BorderLayout.CENTER);
-        panelCentral.add(vueltas,BorderLayout.CENTER);
+        panelCentral.add(skrol, BorderLayout.CENTER);
+        //panelCentral.add(vueltas,BorderLayout.CENTER);
         //panelIzquierda.add(texto, BorderLayout.NORTH);
-        panelPrincipal.add(fV);
+
         //this.add(caja);
         //panelPrincipal.add(boton);
         panelTop.add(vueltas, BorderLayout.CENTER);

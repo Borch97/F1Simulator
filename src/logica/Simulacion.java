@@ -120,10 +120,7 @@ public class Simulacion{
                         cambioTiempos(2, cont, r, piloto, tiempoVuelta, tiempos);
                     } else {
                         tiempoVuelta.add((cont + 1) + ".-" + piloto.get(cont).getNombre().substring(0, 4) + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
-                        
                         tiempos.add(r);
-                        
-                        piloto.get(cont).incrementarTiempo(r.getMinutes(), r.getSeconds(), r.getMilliseconds() );
                     }
                 } else if (piloto.get(cont).getNeumaticos() <= 0)
                     piloto.get(cont).setProbRotura(100);
@@ -131,6 +128,7 @@ public class Simulacion{
                 posPilotos.add(piloto.get(cont).getAbreviado());
                 cont++;
             }
+            piloto.get(cont).incrementarTiempo(tiempos.get(cont).getMinutes(), r.getSeconds(), r.getMilliseconds() );
         }
 
         
