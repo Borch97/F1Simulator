@@ -331,14 +331,14 @@ public class Ventana extends JFrame implements ActionListener{
                 g.arrayTiempoVueltaSoloInicial.clear();
                 //TODO posicion circuito
                 s.simulacionVueltas(g.arrayCircuito, 0, g.arrayCoche, g.arrayTiempoVuelta, g.arrayTiempoVueltaSoloInicial, g.posPiloto);
-                g.ordenar(g.arrayTiempoVueltaSoloInicial, g.arrayTiempoVuelta);
+                g.ordenar(g.arrayTiempoVueltaSoloInicial, g.arrayTiempoVuelta,g.arrayCoche);
                 g.reordenarIndices(g.arrayTiempoVuelta);
                 //g.stringArrayOrdenado(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVuelta,g.posPiloto);
                 g.arrayTiempoVueltaSoloCopia.clear();
                 g.copiarArray(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVueltaSoloCopia);
                 g.arrayTiempoVuelta.clear();
                 s.simulacionVueltas(g.arrayCircuito,0,g.arrayCoche,g.arrayTiempoVuelta, g.arrayTiempoVueltaSoloInicial, g.posPiloto);
-                g.ordenar(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVuelta);
+                g.ordenar(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVuelta,g.arrayCoche);
                 g.reordenarIndices(g.arrayTiempoVuelta);
                 //g.stringArrayOrdenado(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVuelta,g.posPiloto);
                 s.calcularDiferencia(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVueltaSoloCopia,g.arrayDiferenciaTiempoVuelta);
