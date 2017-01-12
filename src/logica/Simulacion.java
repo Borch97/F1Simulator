@@ -146,9 +146,6 @@ public class Simulacion{
         if(cont2 == 0)
             cont2++;
 
-        
-        for( Coche c : piloto )
-        	System.out.println( c.getAbreviado() + " Tiempo Total : " + c.getTiempo() + " msegs");
     }
 
 

@@ -23,7 +23,7 @@ public class Gestion {
     public ArrayList<String> arrayDiferenciaTiempoVuelta = new ArrayList<>();
     public ArrayList<String> posPiloto = new ArrayList<>();
     public ArrayList<String> nombreColumnas = new ArrayList<>();
-    public String[] columnNames = {" ", "Nombre", "Coche", "Tiempo", "Diferencia", "P. Boxes"};
+    public String[] columnNames = {"Posición", "Nombre", "Coche", "Tiempo", "Diferencia", "P. Boxes"};
     public ArrayList<informacionTabla> informacionTabla = new ArrayList<>();
 
 

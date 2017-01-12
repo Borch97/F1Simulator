@@ -32,7 +32,7 @@ public class test {
 
     public static void main(String[] args) {
 
-        titel.add(" ");
+        titel.add("Posición");
         titel.add("Nombre");
         titel.add("Coche");
         titel.add("Tiempo");

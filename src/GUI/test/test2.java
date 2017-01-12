@@ -97,7 +97,7 @@ public class test2 extends javax.swing.JFrame {
 
                 },
                 new String [] {
-                        " ", "Nombre", "Coche", "Tiempo", "Diferencia", "P.Boxes"
+                        "Posición", "Nombre", "Coche", "Tiempo", "Diferencia", "P.Boxes"
                 }
         ));
         jScrollPane1.setViewportView(jTable1);

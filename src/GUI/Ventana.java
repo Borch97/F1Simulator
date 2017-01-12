@@ -146,7 +146,7 @@ public class Ventana extends JFrame implements ActionListener{
 
         // configuramos los componentes
 
-        String[] columnNames = {" ", "Nombre", "Coche", "Tiempo", "Diferencia", "P. Boxes"};
+        String[] columnNames = {"Posición", "Nombre", "Coche", "Tiempo", "Diferencia", "P. Boxes"};
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
         tablaClasificacion.setModel(model);
         JScrollPane skrol = new JScrollPane(tablaClasificacion);
