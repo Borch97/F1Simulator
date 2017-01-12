@@ -110,7 +110,7 @@ public class Simulacion{
                         cambioTiempos(3, cont, r, piloto, tiempoVuelta, tiempos);
                     } else
                         cambioTiempos(1, cont, r, piloto, tiempoVuelta, tiempos);
-                } else if (piloto.get(cont).getNeumaticos() < 25 && piloto.get(cont).getNeumaticos() >0) {
+                } else if (piloto.get(cont).getNeumaticos() < 25 && piloto.get(cont).getNeumaticos() > 0) {
                     if (lluvia((int) circuito.get(pos).getProbLluvia())) {
                         cambioTiempos(4, cont, r, piloto, tiempoVuelta, tiempos);
                     } else
@@ -122,13 +122,13 @@ public class Simulacion{
                         tiempoVuelta.add((cont + 1) + ".-" + piloto.get(cont).getNombre().substring(0, 4) + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
                         tiempos.add(r);
                     }
-                } else if (piloto.get(cont).getNeumaticos() <= 0)
+                } else if (piloto.get(cont).getNeumaticos() <= 0) {
                     piloto.get(cont).setProbRotura(100);
-
+                }
                 posPilotos.add(piloto.get(cont).getAbreviado());
+                piloto.get(cont).incrementarTiempo(tiempos.get(cont).getMinutes(), r.getSeconds(), r.getMilliseconds());
                 cont++;
             }
-            piloto.get(cont).incrementarTiempo(tiempos.get(cont).getMinutes(), r.getSeconds(), r.getMilliseconds() );
         }
 
         
