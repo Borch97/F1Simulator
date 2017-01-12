@@ -1,6 +1,8 @@
 package datos;
 
 
+import logica.Simulacion;
+
 import java.awt.*;
 
 
@@ -18,18 +20,28 @@ public class Coche {
 		protected int paradasBoxes;
 
 	    //
-	    protected int tiempo;
+	    protected Rango tiempo;
+
+		Simulacion s = new Simulacion();
 	    
 	    
 	    //en milisegundos
-	    public int getTiempo()
+	    public Rango getTiempo()
 	    {
 	    	return tiempo;
 	    }
-	    
-	    public void incrementarTiempo( int mins , int segs , int msegs )
+
+    public void setTiempo(Rango tiempo) {
+        this.tiempo = tiempo;
+    }
+
+    public void incrementarTiempo(int mins , int segs , int msegs )
 	    {
-	    	tiempo += msegs + segs*1000 + mins*60*1000;
+			if(tiempo != null) {
+				long t1 = s.rangoMilisegundos(tiempo.getMinutes(), tiempo.getSeconds(), tiempo.getMilliseconds());
+				long t2 = msegs + segs * 1000 + mins * 60 * 1000;
+				tiempo = s.milisegundosConversion(t1 + t2);
+			}
 	    }
 	    
 	    /**
@@ -40,8 +52,7 @@ public class Coche {
 	        aceleracion = 0;
 	        aerodinamica = 0;
 	        prob_rotura = 0;
-	        //
-	        tiempo = 0;
+
 	    }
 
 	    /**

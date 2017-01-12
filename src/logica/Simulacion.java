@@ -86,21 +86,31 @@ public class Simulacion{
         return new Rango(minutes, seconds, milliseconds);
     }
 
+    public long rangoMilisegundos( int mins , int segs , int msegs )
+    {
+        return msegs + segs*1000 + mins*60*1000;
+    }
+
     public void cambioTiempos(int suma, int cont, Rango r, ArrayList<Coche> piloto, ArrayList<String> tiempoVuelta, ArrayList<Rango> tiempos){
         r.setSeconds(r.getSeconds() + suma);
         tiempoVuelta.add((cont + 1) + ".-" + piloto.get(cont).getNombre().substring(0,4) + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
         Rango r1 =  new Rango(r.getMinutes(),r.getSeconds(), r.getMilliseconds());
         tiempos.add(r1);
+        if(piloto.get(cont).getTiempo()==null)
+            piloto.get(cont).setTiempo(r);
     }
 
     public void simulacionVueltas(ArrayList<Circuito> circuito, int pos, ArrayList<Coche> piloto, ArrayList<String> tiempoVuelta, ArrayList<Rango> tiempos, ArrayList<String> posPilotos){
         int cont = 0;
+        int cont2=0;
         Rango r;
         while (cont<g.totalPilotos) {
             if (piloto.get(cont).getProbRotura() == 100) {
                 r = new Rango(9,99,999);
                 tiempoVuelta.add((cont + 1) + ".-" + piloto.get(cont).getNombre().substring(0,4) + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
                 tiempos.add(r);
+                if(piloto.get(cont).getTiempo()==null)
+                    piloto.get(cont).setTiempo(r);
             } else {
                 r = this.tiempoVueltaInicial((int) circuito.get(pos).getRangoTiempoInicial(), (int) circuito.get(pos).getRangoTiempoFinal(),
                         piloto.get(cont).getVelocidad(), piloto.get(cont).getAceleracion(), piloto.get(cont).getAerodinamica());
@@ -121,15 +131,20 @@ public class Simulacion{
                     } else {
                         tiempoVuelta.add((cont + 1) + ".-" + piloto.get(cont).getNombre().substring(0, 4) + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
                         tiempos.add(r);
+                        if(piloto.get(cont).getTiempo()==null)
+                            piloto.get(cont).setTiempo(r);
                     }
                 } else if (piloto.get(cont).getNeumaticos() <= 0) {
                     piloto.get(cont).setProbRotura(100);
                 }
                 posPilotos.add(piloto.get(cont).getAbreviado());
-                piloto.get(cont).incrementarTiempo(tiempos.get(cont).getMinutes(), r.getSeconds(), r.getMilliseconds());
+                if(cont2==1)
+                    piloto.get(cont).incrementarTiempo(tiempos.get(cont).getMinutes(), r.getSeconds(), r.getMilliseconds());
                 cont++;
             }
         }
+        if(cont2 == 0)
+            cont2++;
 
         
         for( Coche c : piloto )

@@ -18,6 +18,7 @@ public class Rango {
         this.milliseconds = milliseconds;
     }
 
+
     /**
      * Contructor Vacio
      */
