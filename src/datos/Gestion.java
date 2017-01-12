@@ -20,7 +20,7 @@ public class Gestion {
     public ArrayList<String> arrayTiempoVuelta = new ArrayList<>();
     public ArrayList<Rango> arrayTiempoVueltaSoloInicial = new ArrayList<>();
     public ArrayList<Rango> arrayTiempoVueltaSoloCopia = new ArrayList<>();
-    public ArrayList<String> arrayDiferenciaTiempoVuelta = new ArrayList<>();
+    public ArrayList<Rango> arrayDiferenciaTiempoVuelta = new ArrayList<>();
     public ArrayList<String> posPiloto = new ArrayList<>();
     public ArrayList<String> nombreColumnas = new ArrayList<>();
     public String[] columnNames = {"Posición", "Nombre", "Coche", "Tiempo", "Diferencia", "P. Boxes"};
@@ -48,12 +48,12 @@ public class Gestion {
         }
         return pos;
     }
-    public void recopilarInformacion(ArrayList<informacionTabla> arrayInformacionTabla){
+    /*public void recopilarInformacion(ArrayList<informacionTabla> arrayInformacionTabla){
         for(int i = 0; i<= totalPilotos;i++){
             informacionTabla a = new informacionTabla(arrayCoche.get(i).getNombre(),arrayCoche.get(i).getImagen(), arrayTiempoVuelta.get(buscarPiloto(arrayCoche,arrayCoche.get(i).getNombre())),arrayDiferenciaTiempoVuelta.get(buscarPiloto(arrayCoche,arrayCoche.get(i).getNombre())),arrayCoche.get(i).getParadasBoxes());
             arrayInformacionTabla.add(a);
         }
-    }
+    }*/
 
     //Crea un entero aleatorio dentro de los limites establecidos
 
@@ -179,6 +179,13 @@ public class Gestion {
         }
     }*/
 
+
+   public void inicializarArray(ArrayList<Rango> array){
+       for(int i=0;i< totalPilotos;i++){
+           array.add(new Rango(0,0,0));
+       }
+
+   }
     public void ordenar(ArrayList<Rango> arrayTiempoVueltaSoloInicial, ArrayList<String> arrayTiempoVuelta, ArrayList<Coche> arrayCoche)
     {
         int masPequenio; // �ndice del elemento m�s peque�o

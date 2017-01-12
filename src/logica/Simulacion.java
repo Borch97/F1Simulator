@@ -1,5 +1,6 @@
 package logica;
 
+import java.awt.image.AreaAveragingScaleFilter;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -183,6 +184,21 @@ public class Simulacion{
         simulacionVueltas(circuito, 0, piloto, tiempoVuelta, tiempos, g.posPiloto);
     }*/
 
+
+
+    public Rango comprobarDiferencias(Rango tiempo1, Rango tiempo2){
+        long t1 = rangoMilisegundos(tiempo1.getMinutes(),tiempo1.getSeconds(),tiempo1.getMilliseconds());
+        long t2 = rangoMilisegundos(tiempo2.getMinutes(),tiempo2.getSeconds(),tiempo2.getMilliseconds());
+        return milisegundosConversion(t2-t1);
+    }
+
+    public void comprobacionDiferenciasArray(ArrayList<Coche> pilotos, ArrayList<Rango> diferencia){
+        for(int i = 0;i<pilotos.size();i++){
+            if(i<pilotos.size() - 1)
+                diferencia.add(comprobarDiferencias(pilotos.get(i).getTiempo(),pilotos.get(i + 1).getTiempo()));
+        }
+
+    }
     public void calcularDiferencia(ArrayList<Rango> tiempo1, ArrayList<Rango> tiempo2, ArrayList<String> diferenciaTiempo){
         for(int i = 0;i < tiempo1.size();i++){
             for(int j = i+1;j < tiempo2.size();j++){

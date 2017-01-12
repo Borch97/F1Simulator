@@ -85,8 +85,8 @@ public class Ventana extends JFrame implements ActionListener{
         ArrayList<testInformacion> list = new ArrayList<>();
 
         for(int i = 0;i<g.totalPilotos;i++){
-            testInformacion info = new testInformacion(i + 1,g.arrayCoche.get(i).getNombre(),g.arrayCoche.get(i).getEscuderia(),g.arrayTiempoVuelta.get(i),g.arrayCoche.get(i).getTiempo().getMinutes() + ":"
-                    + g.arrayCoche.get(i).getTiempo().getSeconds() + "," + g.arrayCoche.get(i).getTiempo().getMilliseconds(),g.arrayCoche.get(i).getParadasBoxes());
+            testInformacion info = new testInformacion(i + 1,g.arrayCoche.get(i).getNombre(),g.arrayCoche.get(i).getEscuderia(),g.arrayTiempoVuelta.get(i),g.arrayDiferenciaTiempoVuelta.get(i).getMinutes() + ":"
+                    + g.arrayDiferenciaTiempoVuelta.get(i).getSeconds() + "," + g.arrayDiferenciaTiempoVuelta.get(i).getMilliseconds(),g.arrayCoche.get(i).getParadasBoxes());
             list.add(info);
         }
         return list;
@@ -152,6 +152,7 @@ public class Ventana extends JFrame implements ActionListener{
         JScrollPane skrol = new JScrollPane(tablaClasificacion);
 
 
+        g.inicializarArray(g.arrayDiferenciaTiempoVuelta);
         panelPrincipal.setSize(screenSize);
         o.setBounds(1620,100,128,128);
         neumaticos.setSize(181,272);
@@ -237,7 +238,7 @@ public class Ventana extends JFrame implements ActionListener{
         panelNeumaticosAbajo.add(progressBarDL, BorderLayout.WEST);
         //panelPrincipal.add(neumaticos);
         //panelPrincipal.add(o);
-        panelTop.add(boxes, BorderLayout.WEST);
+        panelTop.add(boton, BorderLayout.WEST);
         //panelPrincipal.add(texto);
     }
 
@@ -334,6 +335,7 @@ public class Ventana extends JFrame implements ActionListener{
                 s.simulacionVueltas(g.arrayCircuito, 0, g.arrayCoche, g.arrayTiempoVuelta, g.arrayTiempoVueltaSoloInicial, g.posPiloto);
                 g.ordenar(g.arrayTiempoVueltaSoloInicial, g.arrayTiempoVuelta,g.arrayCoche);
                 g.reordenarIndices(g.arrayTiempoVuelta);
+                s.comprobacionDiferenciasArray(g.arrayCoche,g.arrayDiferenciaTiempoVuelta);
                 //g.stringArrayOrdenado(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVuelta,g.posPiloto);
                 g.arrayTiempoVueltaSoloCopia.clear();
                 g.copiarArray(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVueltaSoloCopia);
@@ -341,12 +343,13 @@ public class Ventana extends JFrame implements ActionListener{
                 s.simulacionVueltas(g.arrayCircuito,0,g.arrayCoche,g.arrayTiempoVuelta, g.arrayTiempoVueltaSoloInicial, g.posPiloto);
                 g.ordenar(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVuelta,g.arrayCoche);
                 g.reordenarIndices(g.arrayTiempoVuelta);
+                s.comprobacionDiferenciasArray(g.arrayCoche,g.arrayDiferenciaTiempoVuelta);
                 //g.stringArrayOrdenado(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVuelta,g.posPiloto);
-                s.calcularDiferencia(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVueltaSoloCopia,g.arrayDiferenciaTiempoVuelta);
+                //s.calcularDiferencia(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVueltaSoloCopia,g.arrayDiferenciaTiempoVuelta);
                 listModelVuelta.removeAllElements();
                 listModelDiferenciaVueltas.removeAllElements();
                 modeloJlist(g.arrayTiempoVuelta, listModelVuelta);
-                modeloJlist(g.arrayDiferenciaTiempoVuelta,listModelDiferenciaVueltas);
+                //modeloJlist(g.arrayDiferenciaTiempoVuelta,listModelDiferenciaVueltas);
                 clasificacionVuelta.setModel(listModelVuelta);
                 clasificacionVueltaDiferencia.setModel(listModelDiferenciaVueltas);
                 s.gestionNeumaticos(g.arrayCoche);
@@ -356,7 +359,7 @@ public class Ventana extends JFrame implements ActionListener{
                 progressBarDR.setValue((int)g.arrayCoche.get(0).getNeumaticos());
                 progressBarDL.setValue((int)g.arrayCoche.get(0).getNeumaticos());
                 s.paradaBoxesIA(g.arrayCircuito, g.arrayCoche, g.arrayTiempoVuelta, g.arrayTiempoVueltaSoloInicial, g.posPiloto);
-                g.recopilarInformacion(g.informacionTabla);
+                //g.recopilarInformacion(g.informacionTabla);
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
