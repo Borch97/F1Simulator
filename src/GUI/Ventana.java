@@ -46,6 +46,7 @@ public class Ventana extends JFrame implements ActionListener{
     private static Rectangle tamanyoPanel = null;
     private static HashMap<Object,Rectangle> tamComponentes = new HashMap<>();
     TableModel tableModel = new informacionTableModel(g.informacionTabla);
+    DefaultTableModel model;
 
     public Ventana() {
         super();                    // usamos el contructor de la clase padre JFrame
@@ -94,7 +95,7 @@ public class Ventana extends JFrame implements ActionListener{
 
     // added rows from arraylist to jtable
     public void addRowToJTable() {
-        DefaultTableModel model = (DefaultTableModel) tablaClasificacion.getModel();
+        model = (DefaultTableModel) tablaClasificacion.getModel();
         ArrayList<testInformacion> list = listPilots();
         Object rowData[] = new Object[6];
         for (int i = 0; i < list.size(); i++) {
@@ -106,6 +107,13 @@ public class Ventana extends JFrame implements ActionListener{
             rowData[5] = list.get(i).getParadasBoxes();
             model.addRow(rowData);
         }
+
+    }
+
+    public void updateModel(){
+        model.setRowCount(0);
+        addRowToJTable();
+        tablaClasificacion.setModel(model);
 
     }
     private void inicializarComponentes() {
@@ -147,7 +155,7 @@ public class Ventana extends JFrame implements ActionListener{
         // configuramos los componentes
 
         String[] columnNames = {"Posición", "Nombre", "Coche", "Tiempo", "Diferencia", "P. Boxes"};
-        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+        model = new DefaultTableModel(columnNames, 0);
         tablaClasificacion.setModel(model);
         JScrollPane skrol = new JScrollPane(tablaClasificacion);
 
@@ -311,8 +319,6 @@ public class Ventana extends JFrame implements ActionListener{
     }
     class hilo implements Runnable{
 
-        Ventana v = new Ventana();
-
         /**
          * When an object implementing interface <code>Runnable</code> is used
          * to create a thread, starting the thread causes the object's
@@ -360,6 +366,8 @@ public class Ventana extends JFrame implements ActionListener{
                 progressBarDL.setValue((int)g.arrayCoche.get(0).getNeumaticos());
                 s.paradaBoxesIA(g.arrayCircuito, g.arrayCoche, g.arrayTiempoVuelta, g.arrayTiempoVueltaSoloInicial, g.posPiloto);
                 //g.recopilarInformacion(g.informacionTabla);
+                updateModel();
+                model.fireTableDataChanged();
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {

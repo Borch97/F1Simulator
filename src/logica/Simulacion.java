@@ -158,6 +158,7 @@ public class Simulacion{
                    System.out.println("El piloto " + piloto.get(i).getNombre() + " ha realizado su parada con mas de 50 % de neumaticos");
                    piloto.get(i).setNeumaticos(100);
                    simulacionVueltas(circuito, 0, piloto, tiempoVuelta, tiempos, posPilotos);
+                   piloto.get(i).setParadasBoxes(piloto.get(i).getParadasBoxes() + 1);
                }
            }
            else if(piloto.get(i).getNeumaticos()< 50 && piloto.get(i).getNeumaticos()>=25){
@@ -165,6 +166,7 @@ public class Simulacion{
                    System.out.println("El piloto " + piloto.get(i).getNombre() + " ha realizado su parada con mas de 25 % y menos de 50% de neumaticos");
                    piloto.get(i).setNeumaticos(100);
                    simulacionVueltas(circuito, 0, piloto, tiempoVuelta, tiempos, posPilotos);
+                   piloto.get(i).setParadasBoxes(piloto.get(i).getParadasBoxes() + 1);
                }
            }
            else if(piloto.get(i).getNeumaticos()<25){
@@ -172,6 +174,7 @@ public class Simulacion{
                    System.out.println("El piloto " + piloto.get(i).getNombre() + " ha realizado su parada con menos de 25 % de neumaticos");
                    piloto.get(i).setNeumaticos(100);
                    simulacionVueltas(circuito, 0, piloto, tiempoVuelta, tiempos, posPilotos);
+                   piloto.get(i).setParadasBoxes(piloto.get(i).getParadasBoxes() + 1);
                }
            }
        }
