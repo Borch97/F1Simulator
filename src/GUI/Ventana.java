@@ -86,7 +86,8 @@ public class Ventana extends JFrame implements ActionListener{
         ArrayList<testInformacion> list = new ArrayList<>();
 
         for(int i = 0;i<g.totalPilotos;i++){
-            testInformacion info = new testInformacion(i + 1,g.arrayCoche.get(i).getNombre(),g.arrayCoche.get(i).getEscuderia(),g.arrayTiempoVuelta.get(i),g.arrayDiferenciaTiempoVuelta.get(i).getMinutes() + ":"
+            testInformacion info = new testInformacion(i + 1,g.arrayCoche.get(i).getNombre(),g.arrayCoche.get(i).getEscuderia(),g.arrayTiempoVueltaSoloInicial.get(i).getMinutes() + ":" + g.arrayTiempoVueltaSoloInicial.get(i).getSeconds() + "," +
+                    g.arrayTiempoVueltaSoloInicial.get(i).getMilliseconds(),g.arrayDiferenciaTiempoVuelta.get(i).getMinutes() + ":"
                     + g.arrayDiferenciaTiempoVuelta.get(i).getSeconds() + "," + g.arrayDiferenciaTiempoVuelta.get(i).getMilliseconds(),g.arrayCoche.get(i).getParadasBoxes());
             list.add(info);
         }
@@ -367,7 +368,6 @@ public class Ventana extends JFrame implements ActionListener{
                 s.paradaBoxesIA(g.arrayCircuito, g.arrayCoche, g.arrayTiempoVuelta, g.arrayTiempoVueltaSoloInicial, g.posPiloto);
                 //g.recopilarInformacion(g.informacionTabla);
                 updateModel();
-                model.fireTableDataChanged();
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
