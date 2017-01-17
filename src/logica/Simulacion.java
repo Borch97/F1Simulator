@@ -1,6 +1,5 @@
 package logica;
 
-import java.awt.image.AreaAveragingScaleFilter;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -87,31 +86,21 @@ public class Simulacion{
         return new Rango(minutes, seconds, milliseconds);
     }
 
-    public long rangoMilisegundos( int mins , int segs , int msegs )
-    {
-        return msegs + segs*1000 + mins*60*1000;
-    }
-
     public void cambioTiempos(int suma, int cont, Rango r, ArrayList<Coche> piloto, ArrayList<String> tiempoVuelta, ArrayList<Rango> tiempos){
         r.setSeconds(r.getSeconds() + suma);
         tiempoVuelta.add((cont + 1) + ".-" + piloto.get(cont).getNombre().substring(0,4) + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
         Rango r1 =  new Rango(r.getMinutes(),r.getSeconds(), r.getMilliseconds());
         tiempos.add(r1);
-        if(piloto.get(cont).getTiempo()==null)
-            piloto.get(cont).setTiempo(r);
     }
 
     public void simulacionVueltas(ArrayList<Circuito> circuito, int pos, ArrayList<Coche> piloto, ArrayList<String> tiempoVuelta, ArrayList<Rango> tiempos, ArrayList<String> posPilotos){
         int cont = 0;
-        int cont2=0;
         Rango r;
         while (cont<g.totalPilotos) {
             if (piloto.get(cont).getProbRotura() == 100) {
                 r = new Rango(9,99,999);
                 tiempoVuelta.add((cont + 1) + ".-" + piloto.get(cont).getNombre().substring(0,4) + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
                 tiempos.add(r);
-                if(piloto.get(cont).getTiempo()==null)
-                    piloto.get(cont).setTiempo(r);
             } else {
                 r = this.tiempoVueltaInicial((int) circuito.get(pos).getRangoTiempoInicial(), (int) circuito.get(pos).getRangoTiempoFinal(),
                         piloto.get(cont).getVelocidad(), piloto.get(cont).getAceleracion(), piloto.get(cont).getAerodinamica());
@@ -121,7 +110,7 @@ public class Simulacion{
                         cambioTiempos(3, cont, r, piloto, tiempoVuelta, tiempos);
                     } else
                         cambioTiempos(1, cont, r, piloto, tiempoVuelta, tiempos);
-                } else if (piloto.get(cont).getNeumaticos() < 25 && piloto.get(cont).getNeumaticos() > 0) {
+                } else if (piloto.get(cont).getNeumaticos() < 25 && piloto.get(cont).getNeumaticos() >0) {
                     if (lluvia((int) circuito.get(pos).getProbLluvia())) {
                         cambioTiempos(4, cont, r, piloto, tiempoVuelta, tiempos);
                     } else
@@ -132,21 +121,14 @@ public class Simulacion{
                     } else {
                         tiempoVuelta.add((cont + 1) + ".-" + piloto.get(cont).getNombre().substring(0, 4) + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
                         tiempos.add(r);
-                        if(piloto.get(cont).getTiempo()==null)
-                            piloto.get(cont).setTiempo(r);
                     }
-                } else if (piloto.get(cont).getNeumaticos() <= 0) {
+                } else if (piloto.get(cont).getNeumaticos() <= 0)
                     piloto.get(cont).setProbRotura(100);
-                }
+
                 posPilotos.add(piloto.get(cont).getAbreviado());
-                if(cont2==1)
-                    piloto.get(cont).incrementarTiempo(tiempos.get(cont).getMinutes(), r.getSeconds(), r.getMilliseconds());
                 cont++;
             }
         }
-        if(cont2 == 0)
-            cont2++;
-
     }
 
 
@@ -184,21 +166,6 @@ public class Simulacion{
         simulacionVueltas(circuito, 0, piloto, tiempoVuelta, tiempos, g.posPiloto);
     }*/
 
-
-
-    public Rango comprobarDiferencias(Rango tiempo1, Rango tiempo2){
-        long t1 = rangoMilisegundos(tiempo1.getMinutes(),tiempo1.getSeconds(),tiempo1.getMilliseconds());
-        long t2 = rangoMilisegundos(tiempo2.getMinutes(),tiempo2.getSeconds(),tiempo2.getMilliseconds());
-        return milisegundosConversion(t2-t1);
-    }
-
-    public void comprobacionDiferenciasArray(ArrayList<Coche> pilotos, ArrayList<Rango> diferencia){
-        for(int i = 0;i<pilotos.size();i++){
-            if(i<pilotos.size() - 1)
-                diferencia.add(comprobarDiferencias(pilotos.get(i).getTiempo(),pilotos.get(i + 1).getTiempo()));
-        }
-
-    }
     public void calcularDiferencia(ArrayList<Rango> tiempo1, ArrayList<Rango> tiempo2, ArrayList<String> diferenciaTiempo){
         for(int i = 0;i < tiempo1.size();i++){
             for(int j = i+1;j < tiempo2.size();j++){

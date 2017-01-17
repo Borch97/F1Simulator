@@ -1,11 +1,7 @@
 package GUI;
 
-import GUI.test.fondoVentana;
-import GUI.test.test2;
-import GUI.test.testInformacion;
 import datos.Circuito;
 import datos.Gestion;
-import datos.informacionTableModel;
 import logica.Simulacion;
 
 import java.awt.*;
@@ -15,9 +11,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 /**
  * Clase Ventana
@@ -27,33 +20,44 @@ import javax.swing.table.TableModel;
  */
 public class Ventana extends JFrame implements ActionListener{
 
-    private JPanel panelPrincipal, panelTop, panelCentral, panelIzquierda, panelNeumaticos, panelNeumaticosArriba, panelNeumaticosAbajo;
-    private JLabel texto, vueltas, neumaticos;           // etiqueta o texto no editable
+    private JPanel panelPrincipal;
+    private JLabel texto;           // etiqueta o texto no editable
     private JTextField caja;        // caja de texto, para insertar datos
-    private JButton boton, bDiferencia, boxes;
-    private JTable tablaClasificacion;
-    private static JList clasificacionVuelta, clasificacionVueltaDiferencia;
-    private JLabelGrafico o = new JLabelGrafico( "/pictures/sun.png", true, 128, 128, 0.0 );
-    private fondoVentana fV;
-    public JProgressBar progressBarUR, progressBarUL, progressBarDR, progressBarDL;
-    private Image circuitoFoto;
+    private JButton boton;
+    private JButton bDiferencia; // boton con una determinada accion
+    private static JList clasificacionVuelta;
+    private static JList clasificacionVueltaDiferencia;
+    private JLabel vueltas;
+    private JLabelGrafico o = new JLabelGrafico( "/pictures/sun.png", true, 130, 130, 0.0 );
+    public JProgressBar progressBarUR;
+    public JProgressBar progressBarUL;
+    public JProgressBar progressBarDR;
+    public JProgressBar progressBarDL;
+    private JLabel neumaticos;
+    private JButton boxes;
     private int cont = 0;
     hilo hilo1 = null;
     Simulacion s = new Simulacion();
     Gestion g = new Gestion();
-    DefaultListModel listModelVuelta, listModelDiferenciaVueltas;
+    DefaultListModel listModelVuelta;
+    DefaultListModel listModelDiferenciaVueltas;
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private static Rectangle tamanyoPanel = null;
     private static HashMap<Object,Rectangle> tamComponentes = new HashMap<>();
-    TableModel tableModel = new informacionTableModel(g.informacionTabla);
 
     public Ventana() {
         super();                    // usamos el contructor de la clase padre JFrame
         configurarVentana();        // configuramos la ventana
         inicializarComponentes();   // inicializamos los atributos o componentes
-        addRowToJTable();
     }
 
+    /*public void componentResized(ComponentEvent event)
+    {
+        JOptionPane.showMessageDialog(this,
+                "JFrame has been resized!",
+                "JFrame Resize",
+                JOptionPane.INFORMATION_MESSAGE);
+    }*/
     private void configurarVentana() {
         this.setTitle("Esta Es Una Ventana");                   // colocamos titulo a la ventana
         this.setSize(screenSize);//(int) screenSize.getWidth(),(int)screenSize.getHeight()); // colocamos tamanio a la ventana (ancho, alto)
@@ -65,11 +69,10 @@ public class Ventana extends JFrame implements ActionListener{
     }
 
     //TODO
-    public void test(){
+    private void test(){
         g.creacionAI();
-        Circuito barcelona = new Circuito("Barcelona", "Espanya", 50, 50.0,"/pictures/test1.jpg", 82648, 85648);
+        Circuito barcelona = new Circuito("Barcelona", "Espanya", 50, 50.0,"/pictures/testGrande.jpg", 82648, 85648);
         g.arrayCircuito.add(barcelona);
-        s.simulacionVueltas(g.arrayCircuito,0,g.arrayCoche,g.arrayTiempoVuelta,g.arrayTiempoVueltaSoloInicial,g.posPiloto);
         /*int cont = 0;
         Rango r;
         while (cont< g.totalPilotos) {
@@ -79,61 +82,15 @@ public class Ventana extends JFrame implements ActionListener{
             cont++;
         }*/
     }
-
-    public ArrayList listPilots()
-    {
-        ArrayList<testInformacion> list = new ArrayList<>();
-
-        for(int i = 0;i<g.totalPilotos;i++){
-            testInformacion info = new testInformacion(i + 1,g.arrayCoche.get(i).getNombre(),g.arrayCoche.get(i).getEscuderia(),g.arrayTiempoVuelta.get(i),g.arrayDiferenciaTiempoVuelta.get(i).getMinutes() + ":"
-                    + g.arrayDiferenciaTiempoVuelta.get(i).getSeconds() + "," + g.arrayDiferenciaTiempoVuelta.get(i).getMilliseconds(),g.arrayCoche.get(i).getParadasBoxes());
-            list.add(info);
-        }
-        return list;
-    }
-
-    // added rows from arraylist to jtable
-    public void addRowToJTable() {
-        DefaultTableModel model = (DefaultTableModel) tablaClasificacion.getModel();
-        ArrayList<testInformacion> list = listPilots();
-        Object rowData[] = new Object[6];
-        for (int i = 0; i < list.size(); i++) {
-            rowData[0] = list.get(i).getPos();
-            rowData[1] = list.get(i).getNombre();
-            rowData[2] = list.get(i).getImagen();
-            rowData[3] = list.get(i).getTiempo();
-            rowData[4] = list.get(i).getDiferencia();
-            rowData[5] = list.get(i).getParadasBoxes();
-            model.addRow(rowData);
-        }
-
-    }
     private void inicializarComponentes() {
         // creamos los componentes
         test();
         panelPrincipal = new JPanel();
-        panelTop = new JPanel();
-        panelCentral = new JPanel();
-        panelIzquierda = new JPanel();
-        panelNeumaticos = new JPanel();
-        panelNeumaticosArriba = new JPanel();
-        panelNeumaticosAbajo = new JPanel();
-        panelPrincipal.setLayout(new BorderLayout());
-        panelTop.setLayout(new BorderLayout());
-        panelCentral.setLayout(new BorderLayout());
-        panelIzquierda.setLayout(new BorderLayout());
-        panelNeumaticos.setLayout(new BorderLayout());
-        panelNeumaticosArriba.setLayout(new BorderLayout());
-        panelNeumaticosAbajo.setLayout(new BorderLayout());
-        //panelCentral.setOpaque(true);
-        fV = new fondoVentana(Color.gray);
-        tablaClasificacion = new JTable();
-        circuitoFoto = new ImageIcon(this.getClass().getResource(g.arrayCircuito.get(0).getFotoCircuito())).getImage();
-        listModelVuelta = listModelDiferenciaVueltas = new DefaultListModel();
+        listModelVuelta = new DefaultListModel();
         modeloJlist(g.arrayTiempoVuelta, listModelVuelta);
+        listModelDiferenciaVueltas = new DefaultListModel();
+        //modeloJlist(g.arrayDiferenciaTiempoVuelta,listModelDiferenciaVueltas);
         vueltas = new JLabel();
-        vueltas.setHorizontalAlignment(JLabel.CENTER);
-        vueltas.setVerticalAlignment(JLabel.CENTER);
         neumaticos = new JLabel(new ImageIcon(this.getClass().getResource("/pictures/neumaticos.png")));
         clasificacionVuelta = new JList(listModelVuelta);
         clasificacionVueltaDiferencia = new JList(listModelDiferenciaVueltas);
@@ -141,27 +98,25 @@ public class Ventana extends JFrame implements ActionListener{
         boton = new JButton();
         boxes = new JButton();
         bDiferencia = new JButton();
-        texto = new JLabel(new ImageIcon(circuitoFoto));
-        progressBarUR = progressBarUL = progressBarDR = progressBarDL = new JProgressBar();
+        texto = new JLabel(new ImageIcon(this.getClass().getResource(g.arrayCircuito.get(0).getFotoCircuito())));
+        progressBarUR = new JProgressBar();
+        progressBarUL = new JProgressBar();
+        progressBarDR = new JProgressBar();
+        progressBarDL = new JProgressBar();
 
         // configuramos los componentes
-
-        String[] columnNames = {"Posición", "Nombre", "Coche", "Tiempo", "Diferencia", "P. Boxes"};
-        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-        tablaClasificacion.setModel(model);
-        JScrollPane skrol = new JScrollPane(tablaClasificacion);
-
-
-        g.inicializarArray(g.arrayDiferenciaTiempoVuelta);
+        panelPrincipal.setLayout(null);
         panelPrincipal.setSize(screenSize);
-        o.setBounds(1620,100,128,128);
+        texto.setSize(screenSize);
+        o.setSize(110,110);
+        o.setBounds(1620,100,130,130);
         neumaticos.setSize(181,272);
         neumaticos.setBounds(1600,370,181,272);
-        vueltas.setText(" 50 " + " / " + " 50 ");
+        vueltas.setText("50" + "/" + "50");
         vueltas.setForeground(Color.BLACK);
-        //vueltas.setBorder(new LineBorder(Color.black));
+        vueltas.setBorder(new LineBorder(Color.black));
         //vueltas.setBounds(640, 30, 42,22);
-        vueltas.setBounds((int)(screenSize.getWidth())/2,(int)(screenSize.getHeight() - screenSize.getHeight()) + 30,55,20);
+        vueltas.setBounds((int)(screenSize.getWidth())/2,(int)(screenSize.getHeight() - screenSize.getHeight()) + 30,35,20);
         vueltas.setOpaque(false);
         progressBarUR = new JProgressBar(0, 100);
         progressBarUR.setValue(100);
@@ -180,7 +135,7 @@ public class Ventana extends JFrame implements ActionListener{
         progressBarDL.setStringPainted(true);
         progressBarDL.setBounds(1580,580,50,30);
         //progressBar.setOpaque(false);
-        clasificacionVuelta.setBackground(new Color(64,64,64,0));//Color(rojo,verde,azul,opacidad)
+        clasificacionVuelta.setBackground(new Color(64,64,64,150));//Color(rojo,verde,azul,opacidad)
         clasificacionVueltaDiferencia.setBackground(new Color(0,0,0,0));
         //clasificacionVuelta.setListData( g.arrayTiempoVuelta.toArray());
         clasificacionVuelta.setBounds(20,90,120,200);
@@ -215,33 +170,21 @@ public class Ventana extends JFrame implements ActionListener{
             }
         });
         // adicionamos los componentes a la ventana
-        panelPrincipal.add(panelCentral, BorderLayout.CENTER);
-        panelPrincipal.add(panelTop, BorderLayout.NORTH);
-        panelPrincipal.add(panelIzquierda, BorderLayout.WEST);
-        panelNeumaticos.add(panelNeumaticosArriba, BorderLayout.NORTH);
-        panelNeumaticos.add(panelNeumaticosAbajo, BorderLayout.SOUTH);
-        panelIzquierda.add(panelNeumaticos, BorderLayout.SOUTH);
-        //panelCentral.add(tablaClasificacion.getTableHeader(), BorderLayout.PAGE_START);
-        panelCentral.add(skrol, BorderLayout.CENTER);
-        //panelCentral.add(vueltas,BorderLayout.CENTER);
-        //panelIzquierda.add(texto, BorderLayout.NORTH);
-
         //this.add(caja);
-        //panelPrincipal.add(boton);
-        panelTop.add(vueltas, BorderLayout.CENTER);
-        //panelPrincipal.add(clasificacionVuelta);
+        panelPrincipal.add(boton);
+        panelPrincipal.add(vueltas);
+        panelPrincipal.add(clasificacionVuelta);
         //this.add(clasificacionVueltaDiferencia);
-        //panelPrincipal.add(bDiferencia);
-        panelNeumaticosArriba.add(progressBarUR, BorderLayout.EAST);
-        panelNeumaticosArriba.add(progressBarUL, BorderLayout.WEST);
-        panelNeumaticosAbajo.add(progressBarDR, BorderLayout.EAST);
-        panelNeumaticosAbajo.add(progressBarDL, BorderLayout.WEST);
-        //panelPrincipal.add(neumaticos);
-        //panelPrincipal.add(o);
-        panelTop.add(boton, BorderLayout.WEST);
-        //panelPrincipal.add(texto);
+        panelPrincipal.add(bDiferencia);
+        panelPrincipal.add(progressBarUR);
+        panelPrincipal.add(progressBarUL);
+        panelPrincipal.add(progressBarDR);
+        panelPrincipal.add(progressBarDL);
+        panelPrincipal.add(neumaticos);
+        panelPrincipal.add(o);
+        panelPrincipal.add(boxes);
+        panelPrincipal.add(texto);
     }
-
 
 
     @Override
@@ -300,7 +243,7 @@ public class Ventana extends JFrame implements ActionListener{
         V.getContentPane().add( V.panelPrincipal, BorderLayout.CENTER );  // El panel ocupa siempre toda la ventana y se reescala con ella
         V.setVisible( true );
         while(true){
-            V.o.incRotacion(0.01);
+            V.o.incRotacion(0.1);
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -333,23 +276,21 @@ public class Ventana extends JFrame implements ActionListener{
                 g.arrayTiempoVueltaSoloInicial.clear();
                 //TODO posicion circuito
                 s.simulacionVueltas(g.arrayCircuito, 0, g.arrayCoche, g.arrayTiempoVuelta, g.arrayTiempoVueltaSoloInicial, g.posPiloto);
-                g.ordenar(g.arrayTiempoVueltaSoloInicial, g.arrayTiempoVuelta,g.arrayCoche);
+                g.ordenar(g.arrayTiempoVueltaSoloInicial, g.arrayTiempoVuelta);
                 g.reordenarIndices(g.arrayTiempoVuelta);
-                s.comprobacionDiferenciasArray(g.arrayCoche,g.arrayDiferenciaTiempoVuelta);
                 //g.stringArrayOrdenado(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVuelta,g.posPiloto);
                 g.arrayTiempoVueltaSoloCopia.clear();
                 g.copiarArray(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVueltaSoloCopia);
                 g.arrayTiempoVuelta.clear();
                 s.simulacionVueltas(g.arrayCircuito,0,g.arrayCoche,g.arrayTiempoVuelta, g.arrayTiempoVueltaSoloInicial, g.posPiloto);
-                g.ordenar(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVuelta,g.arrayCoche);
+                g.ordenar(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVuelta);
                 g.reordenarIndices(g.arrayTiempoVuelta);
-                s.comprobacionDiferenciasArray(g.arrayCoche,g.arrayDiferenciaTiempoVuelta);
                 //g.stringArrayOrdenado(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVuelta,g.posPiloto);
-                //s.calcularDiferencia(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVueltaSoloCopia,g.arrayDiferenciaTiempoVuelta);
+                s.calcularDiferencia(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVueltaSoloCopia,g.arrayDiferenciaTiempoVuelta);
                 listModelVuelta.removeAllElements();
                 listModelDiferenciaVueltas.removeAllElements();
                 modeloJlist(g.arrayTiempoVuelta, listModelVuelta);
-                //modeloJlist(g.arrayDiferenciaTiempoVuelta,listModelDiferenciaVueltas);
+                modeloJlist(g.arrayDiferenciaTiempoVuelta,listModelDiferenciaVueltas);
                 clasificacionVuelta.setModel(listModelVuelta);
                 clasificacionVueltaDiferencia.setModel(listModelDiferenciaVueltas);
                 s.gestionNeumaticos(g.arrayCoche);
@@ -359,7 +300,6 @@ public class Ventana extends JFrame implements ActionListener{
                 progressBarDR.setValue((int)g.arrayCoche.get(0).getNeumaticos());
                 progressBarDL.setValue((int)g.arrayCoche.get(0).getNeumaticos());
                 s.paradaBoxesIA(g.arrayCircuito, g.arrayCoche, g.arrayTiempoVuelta, g.arrayTiempoVueltaSoloInicial, g.posPiloto);
-                //g.recopilarInformacion(g.informacionTabla);
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {

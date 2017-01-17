@@ -167,7 +167,8 @@ public class JLabelGrafico extends JLabel {
             at.translate(anchuraObjeto, alturaObjeto);
             g2.setTransform(at);
             */
-            g2.rotate( radsRotacion, anchuraObjeto/2, alturaObjeto/2 );  // Incorporar al gráfico la rotación definida
+            g2.rotate( radsRotacion, anchuraObjeto/2, 52 );  // Incorporar al gráfico la rotación definida
+            System.out.println(anchuraObjeto/2 + "----" + alturaObjeto/2);
             g2.setComposite(AlphaComposite.getInstance( AlphaComposite.SRC_OVER, opacity ) ); // Incorporar la transparencia definida
             int anchoDibujado = (int)Math.round(icono.getIconWidth()*zoom);  // Calcular las coordenadas de dibujado con el zoom, siempre centrado en el label
             int altoDibujado = (int)Math.round(icono.getIconHeight()*zoom);
