@@ -23,7 +23,7 @@ public class test2 extends javax.swing.JFrame {
         g.creacionAI();
         Circuito barcelona = new Circuito("Barcelona", "Espanya", 50, 50.0,"/pictures/test1.jpg", 82648, 85648);
         g.arrayCircuito.add(barcelona);
-        s.simulacionVueltas(g.arrayCircuito,0,g.arrayCoche,g.arrayTiempoVuelta,g.arrayTiempoVueltaSoloInicial,g.posPiloto);
+        s.simulacionVueltas(g.arrayCircuito,0,g.arrayCoche,g.arrayTiempoVuelta,g.arrayTiempoVueltaSoloInicial,g.posPiloto, true);
         initComponents();
 
         // use the addRowToJTable
