@@ -94,7 +94,7 @@ public class Simulacion{
 
     public void cambioTiempos(int suma, int cont, Rango r, ArrayList<Coche> piloto, ArrayList<String> tiempoVuelta, ArrayList<Rango> tiempos){
         r.setSeconds(r.getSeconds() + suma);
-        tiempoVuelta.add((cont + 1) + ".-" + piloto.get(cont).getNombre().substring(0,4) + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
+        tiempoVuelta.add((cont + 1) + ".-" + piloto.get(cont).getNom_piloto().substring(0,4) + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
         Rango r1 =  new Rango(r.getMinutes(),r.getSeconds(), r.getMilliseconds());
         tiempos.add(r1);
         if(piloto.get(cont).getTiempo()==null)
@@ -105,9 +105,9 @@ public class Simulacion{
         int cont = 0;
         Rango r;
         while (cont<g.totalPilotos) {
-            if (piloto.get(cont).getProbRotura() == 100) {
+            if (piloto.get(cont).getProb_rotura() == 100) {
                 r = new Rango(9,99,999);
-                tiempoVuelta.add((cont + 1) + ".-" + piloto.get(cont).getNombre().substring(0,4) + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
+                tiempoVuelta.add((cont + 1) + ".-" + piloto.get(cont).getNom_piloto().substring(0,4) + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
                 tiempos.add(r);
                 if(piloto.get(cont).getTiempo()==null)
                     piloto.get(cont).setTiempo(r);
@@ -129,13 +129,13 @@ public class Simulacion{
                     if (lluvia((int) circuito.get(pos).getProbLluvia())) {
                         cambioTiempos(2, cont, r, piloto, tiempoVuelta, tiempos);
                     } else {
-                        tiempoVuelta.add((cont + 1) + ".-" + piloto.get(cont).getNombre().substring(0, 4) + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
+                        tiempoVuelta.add((cont + 1) + ".-" + piloto.get(cont).getNom_piloto().substring(0, 4) + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
                         tiempos.add(r);
                         if(piloto.get(cont).getTiempo()==null)
                             piloto.get(cont).setTiempo(r);
                     }
                 } else if (piloto.get(cont).getNeumaticos() <= 0) {
-                    piloto.get(cont).setProbRotura(100);
+                    piloto.get(cont).setProb_rotura(100);;
                 }
                 posPilotos.add(piloto.get(cont).getAbreviado());
                 if(cont2==1 && incrementar)
@@ -154,7 +154,7 @@ public class Simulacion{
            int aleatorio = aleatorio(1,100);
            if(piloto.get(i).getNeumaticos()>=50){
                if(aleatorio < 20){
-                   System.out.println("El piloto " + piloto.get(i).getNombre() + " ha realizado su parada con mas de 50 % de neumaticos");
+                   System.out.println("El piloto " + piloto.get(i).getNom_piloto() + " ha realizado su parada con mas de 50 % de neumaticos");
                    piloto.get(i).setNeumaticos(100);
                    simulacionVueltas(circuito, 0, piloto, tiempoVuelta, tiempos, posPilotos, false);
                    piloto.get(i).setParadasBoxes(piloto.get(i).getParadasBoxes() + 1);
@@ -162,7 +162,7 @@ public class Simulacion{
            }
            else if(piloto.get(i).getNeumaticos()< 50 && piloto.get(i).getNeumaticos()>=25){
                if(aleatorio < 50){
-                   System.out.println("El piloto " + piloto.get(i).getNombre() + " ha realizado su parada con mas de 25 % y menos de 50% de neumaticos");
+                   System.out.println("El piloto " + piloto.get(i).getNom_piloto() + " ha realizado su parada con mas de 25 % y menos de 50% de neumaticos");
                    piloto.get(i).setNeumaticos(100);
                    simulacionVueltas(circuito, 0, piloto, tiempoVuelta, tiempos, posPilotos, false);
                    piloto.get(i).setParadasBoxes(piloto.get(i).getParadasBoxes() + 1);
@@ -170,7 +170,7 @@ public class Simulacion{
            }
            else if(piloto.get(i).getNeumaticos()<25){
                if(aleatorio < 80){
-                   System.out.println("El piloto " + piloto.get(i).getNombre() + " ha realizado su parada con menos de 25 % de neumaticos");
+                   System.out.println("El piloto " + piloto.get(i).getNom_piloto() + " ha realizado su parada con menos de 25 % de neumaticos");
                    piloto.get(i).setNeumaticos(100);
                    simulacionVueltas(circuito, 0, piloto, tiempoVuelta, tiempos, posPilotos, false);
                    piloto.get(i).setParadasBoxes(piloto.get(i).getParadasBoxes() + 1);
@@ -263,16 +263,16 @@ public class Simulacion{
         while (cont<g.totalPilotos) {
             r = s.tiempoVueltaInicial((int)barcelona.getRangoTiempoInicial(), (int)barcelona.getRangoTiempoFinal(),
                   g.arrayCoche.get(cont).getVelocidad(), g.arrayCoche.get(cont).getAceleracion(),g.arrayCoche.get(cont).getAerodinamica() );
-            g.arrayTiempoVuelta.add(g.arrayCoche.get(cont).getNombre() + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
+            g.arrayTiempoVuelta.add(g.arrayCoche.get(cont).getNom_piloto() + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
             cont++;
         }
         for (Coche coche: g.arrayCoche) {
-            System.out.println("Nombre: " + coche.getNombre() + " Neumaticos: "+ coche.getNeumaticos());
+            System.out.println("Nombre: " + coche.getNom_piloto() + " Neumaticos: "+ coche.getNeumaticos());
         }
         s.gestionNeumaticos(g.arrayCoche);
         System.out.println("===============================================================");
         for (Coche coche: g.arrayCoche) {
-            System.out.println("Nombre: " + coche.getNombre() + " Neumaticos: "+ coche.getNeumaticos());
+            System.out.println("Nombre: " + coche.getNom_piloto() + " Neumaticos: "+ coche.getNeumaticos());
         }
         //File p = barcelona.getFotoCircuito();
         //System.out.println(p.getAbsolutePath());

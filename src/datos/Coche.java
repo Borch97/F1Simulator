@@ -18,6 +18,7 @@ public class Coche {
 	    protected double neumaticos;
 		protected Image imagen;
 		protected int paradasBoxes;
+	//	protected String nom_usuario;
 
 	    //
 	    protected Rango tiempo;
@@ -48,6 +49,7 @@ public class Coche {
 	     * Contructor vacio con valores predeterminados
 	     */
 	    public Coche(){
+	    	
 	        velocidad = 0;
 	        aceleracion = 0;
 	        aerodinamica = 0;
@@ -65,33 +67,74 @@ public class Coche {
 	     * @param aerodinamica
 	     * @param probRotura
 	     */
-	    public Coche(String nombre, String abreviado, String escuderia, double velocidad, double aceleracion, double aerodinamica, double probRotura, double neumaticos, Image imagen, int paradasBoxes) {
-	        this.nom_piloto = nombre;
-	        this.abreviado = abreviado;
-	        this.escuderia = escuderia;
-	        this.velocidad = velocidad;
-	        this.aceleracion = aceleracion;
-	        this.aerodinamica = aerodinamica;
-	        this.prob_rotura = probRotura;
-	        this.neumaticos = neumaticos;
+	    
+	    public Coche(String nom_piloto, String abreviado, String escuderia,
+				double velocidad, double aceleracion, double aerodinamica, double prob_rotura, double neumaticos,
+				Image imagen, int paradasBoxes) {
+			this.nom_piloto = nom_piloto;
+			this.abreviado = abreviado;
+			this.escuderia = escuderia;
+			this.velocidad = velocidad;
+			this.aceleracion = aceleracion;
+			this.aerodinamica = aerodinamica;
+			this.prob_rotura = prob_rotura;
+			this.neumaticos = neumaticos;
 			this.imagen = imagen;
 			this.paradasBoxes = paradasBoxes;
-	    }
-
-		public int getParadasBoxes() {
-			return paradasBoxes;
+			//this.nom_usuario= nom_usuario;
+			this.tiempo = tiempo;
+			this.s = s;
 		}
-
-		public void setParadasBoxes(int paradasBoxes) {
-			this.paradasBoxes = paradasBoxes;
-		}
+	   
 
 		public String getNom_piloto() {
-				return nom_piloto;
-			}
+			return nom_piloto;
+		}
+
+		
 
 		public void setNom_piloto(String nom_piloto) {
 			this.nom_piloto = nom_piloto;
+		}
+
+		public String getAbreviado() {
+			return abreviado;
+		}
+
+		public void setAbreviado(String abreviado) {
+			this.abreviado = abreviado;
+		}
+
+		public String getEscuderia() {
+			return escuderia;
+		}
+
+		public void setEscuderia(String escuderia) {
+			this.escuderia = escuderia;
+		}
+
+		public double getVelocidad() {
+			return velocidad;
+		}
+
+		public void setVelocidad(double velocidad) {
+			this.velocidad = velocidad;
+		}
+
+		public double getAceleracion() {
+			return aceleracion;
+		}
+
+		public void setAceleracion(double aceleracion) {
+			this.aceleracion = aceleracion;
+		}
+
+		public double getAerodinamica() {
+			return aerodinamica;
+		}
+
+		public void setAerodinamica(double aerodinamica) {
+			this.aerodinamica = aerodinamica;
 		}
 
 		public double getProb_rotura() {
@@ -102,6 +145,14 @@ public class Coche {
 			this.prob_rotura = prob_rotura;
 		}
 
+		public double getNeumaticos() {
+			return neumaticos;
+		}
+
+		public void setNeumaticos(double neumaticos) {
+			this.neumaticos = neumaticos;
+		}
+
 		public Image getImagen() {
 			return imagen;
 		}
@@ -110,61 +161,29 @@ public class Coche {
 			this.imagen = imagen;
 		}
 
-		public String getNombre() {
-				return nom_piloto;
-			}
+		public int getParadasBoxes() {
+			return paradasBoxes;
+		}
 
-	    public void setNombre(String nombre) {
-	        this.nom_piloto = nombre;
-	    }
+		public void setParadasBoxes(int paradasBoxes) {
+			this.paradasBoxes = paradasBoxes;
+		}
 
-	    public String getAbreviado() { return abreviado; }
+		public Simulacion getS() {
+			return s;
+		}
 
-	    public void setAbreviado(String abreviado) { this.abreviado = abreviado; }
+		public void setS(Simulacion s) {
+			this.s = s;
+		}
 
-	    public String getEscuderia() {
-	        return escuderia;
-	    }
+		/**public String getNom_usuario() {
+			return nom_usuario;
+		}
 
-	    public void setEscuderia(String escuderia) {
-	        this.escuderia = escuderia;
-	    }
+		public void setNom_usuario(String nom_usuario) {
+			this.nom_usuario = nom_usuario;
+		}*/
 
-	    public double getVelocidad() {
-	        return velocidad;
-	    }
-
-	    public void setVelocidad(double velocidad) {
-	        this.velocidad = velocidad;
-	    }
-
-	    public double getAceleracion() {
-	        return aceleracion;
-	    }
-
-	    public void setAceleracion(double aceleracion) {
-	        this.aceleracion = aceleracion;
-	    }
-
-	    public double getAerodinamica() {
-	        return aerodinamica;
-	    }
-
-	    public void setAerodinamica(double aerodinamica) {
-	        this.aerodinamica = aerodinamica;
-	    }
-
-	    public double getProbRotura() {
-	        return prob_rotura;
-	    }
-
-	    public void setProbRotura(double probRotura) {
-	        this.prob_rotura = probRotura;
-	    }
-
-	    public double getNeumaticos() { return neumaticos;
-	    }
-
-	    public void setNeumaticos(double neumaticos) { this.neumaticos = neumaticos;
-	    }
+		
 	}
