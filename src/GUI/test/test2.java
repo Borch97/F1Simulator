@@ -57,7 +57,7 @@ public class test2 extends javax.swing.JFrame {
         ArrayList<informacion> list = new ArrayList<informacion>();
 
         for(int i = 0;i<g.totalPilotos;i++){
-            informacion info = new informacion(i + 1,g.arrayCoche.get(i).getNombre(),g.arrayCoche.get(i).getEscuderia(),g.arrayTiempoVuelta.get(i),g.arrayTiempoVuelta.get(i),g.arrayCoche.get(i).getParadasBoxes());
+            informacion info = new informacion(i + 1,g.arrayCoche.get(i).getNom_piloto(),g.arrayCoche.get(i).getEscuderia(),g.arrayTiempoVuelta.get(i),g.arrayTiempoVuelta.get(i),g.arrayCoche.get(i).getParadasBoxes());
             list.add(info);
         }
         return list;

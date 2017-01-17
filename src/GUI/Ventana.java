@@ -86,7 +86,7 @@ public class Ventana extends JFrame implements ActionListener{
         ArrayList<testInformacion> list = new ArrayList<>();
 
         for(int i = 0;i<g.totalPilotos;i++){
-            testInformacion info = new testInformacion(i + 1,g.arrayCoche.get(i).getNombre(),g.arrayCoche.get(i).getEscuderia(),g.arrayTiempoVueltaSoloInicial.get(i).getMinutes() + ":" + g.arrayTiempoVueltaSoloInicial.get(i).getSeconds() + "," +
+            testInformacion info = new testInformacion(i + 1,g.arrayCoche.get(i).getNom_piloto(),g.arrayCoche.get(i).getEscuderia(),g.arrayTiempoVueltaSoloInicial.get(i).getMinutes() + ":" + g.arrayTiempoVueltaSoloInicial.get(i).getSeconds() + "," +
                     g.arrayTiempoVueltaSoloInicial.get(i).getMilliseconds(),g.arrayDiferenciaTiempoVuelta.get(i).getMinutes() + ":"
                     + g.arrayDiferenciaTiempoVuelta.get(i).getSeconds() + "," + g.arrayDiferenciaTiempoVuelta.get(i).getMilliseconds(),g.arrayCoche.get(i).getParadasBoxes());
             list.add(info);

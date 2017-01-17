@@ -378,42 +378,61 @@ public class GestorBD{
     
     */
     
-    /*public void guardarDatosCoche ( Piloto pPiloto )
+   /** public void guardarDatosCoche ( Piloto pPiloto )
     {
     	
-    }  */
+    }  
+    */
     
     
     //enviar por parametros los datos de un coche
-    /*public void guardarDatosCoche ( Coche pCoche )
+    public void guardarDatosCoche ( Coche pCoche )
     {
     	
-    	String nom = pCoche.getNombre();
-    	int nive = pCoche.
+    	String pilo = pCoche.getNom_piloto();
+    	String abre = pCoche.getAbreviado();
+    	String escu = pCoche.getEscuderia();
+    	double velo = pCoche.getVelocidad();
+    	double acel = pCoche.getAceleracion();
+    	double aero = pCoche.getAerodinamica(); 
+    	double rotu = pCoche.getProb_rotura();
+    	double neum = pCoche.getNeumaticos();
+    	//String usua = pCoche.getNom_usuario();
     	
     	try
     	{
-    		//Poner  como los datos del add de arriba??
+    		//Poner  como los datos del add de arriba
 	    	String q = "select nom_piloto,abreviado,escuderia, velocidad, aceleracion, aerodinamica,"
-	    			+ "prob_rotura,neumaticos from Coche where nom_piloto = '" + nom + "' AND Nivel = " + nivel;
+	    			+ "prob_rotura,neumaticos,nom_usuario from Coche where nom_piloto = '" + pilo + "'";
 	    	
 	    	ResultSet resultado = consultar( q );
 	    	
 	    	//insertar el coche porque es nuevo
 	    	if( resultado.next() == false )
 	    	{
-	    		String ins = "INSERT INTO Puntuacion ('Nombre','Tiempo','Nivel') VALUES ('"+pNombre+"'," + pTiempo + "," + pNivel +")";    	
+	    		String ins = "INSERT INTO Coche ('nom_piloto','abreviado','escuderia',"
+	    				+ "'velocidad','aceleracion','aerodinamica',"
+	    				+ "'prob_rotura','neumaticos','nom_usuario') VALUES ('"+pilo+"','"+abre+"','"+escu+"'," + velo + "," + acel +"," + aero +"," + rotu +"," + neum +"')";    	
 	    		insertar( ins );
 	    	}
 	    	else
 	    	{
 	    		while( resultado.next() )
 		    	{
-		    		String nom = resultado.getString("Nombre");
+	    			String pilo1 = resultado.getString("nom_piloto");
+	    	    	String abre1 = resultado.getString("abreviado");
+	    	    	String escu1 = resultado.getString("escuderia");
+	    	    	double velo1 = resultado.getDouble("velocidad");
+	    	    	double acel1 = resultado.getDouble("aceleracion");
+	    	    	double aero1 = resultado.getDouble("aerodinamica");
+	    	    	double rotu1 = resultado.getDouble("prob_rotura");
+	    	    	double neum1 = resultado.getDouble("neumaticos");
+	    	    	String usua1 = resultado.getString("nom_usuario");
+		    		/**String nom = resultado.getString("Nombre");
 		    		int t = resultado.getInt("Tiempo");
 		    		int n = resultado.getInt("Nivel");
-		    		
-		    		if ( pTiempo < t )
+		    		*/
+		    		/**if ( pTiempo < t )
 		    		{
 		    			System.out.println("POR AQUI");
 		    			
@@ -421,7 +440,7 @@ public class GestorBD{
 		    					+ " WHERE Nombre = '" + nom + "' AND Nivel = " + n;	
 		    			
 		    			sentencia.executeUpdate( upd );
-		    		}
+		    		}*/
 		    	}    	
 	    	}
     	}
@@ -429,7 +448,7 @@ public class GestorBD{
     	{
     		ex.printStackTrace();
     	}
-    }*/
+    }
 
     /**
     public void visualizarDatosCoches()

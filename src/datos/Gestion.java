@@ -39,7 +39,7 @@ public class Gestion {
         int pos = 0;
         int i = 0;
         for (Coche c : arrayCoche){
-            if(c.getNombre() == nombre){
+            if(c.getNom_piloto() == nombre){
                 pos = i;
                 break;
             }
@@ -94,10 +94,10 @@ public class Gestion {
         if(arrayCoche.isEmpty()) {
             for (int j = totalPilotos; j > 0; j--) {
                 cocheComprobar = creacionPiloto();
-                while ((containsElement(arrayCoche, cocheComprobar.getNombre())) || contains2Elements(arrayCoche, cocheComprobar.getEscuderia())) {
+                while ((containsElement(arrayCoche, cocheComprobar.getNom_piloto())) || contains2Elements(arrayCoche, cocheComprobar.getEscuderia())) {
                     cocheComprobar = creacionPiloto();
                 }
-                cocheComprobar.setAbreviado(cocheComprobar.getNombre().substring(0, 4));
+                cocheComprobar.setAbreviado(cocheComprobar.getNom_piloto().substring(0, 4));
                 arrayCoche.add(cocheComprobar);
             }
         }
@@ -120,7 +120,7 @@ public class Gestion {
         int cont = 0;
         boolean contains = false;
         for (Coche coche: arrayCoche) {
-            if(coche.getNombre().equals(nombre)){
+            if(coche.getNom_piloto().equals(nombre)){
                 cont++;
             }
         }
@@ -298,12 +298,12 @@ public class Gestion {
         //g.arrayCircuito.add(m);
         g.creacionAI();
         for (Coche coche: g.arrayCoche) {
-            System.out.println("Nombre: " + coche.getNombre() + " Escuderia: "+ coche.getEscuderia() + " Velocidad : " + coche.getVelocidad() + " Aceleracion : " + coche.getAceleracion() + " Aerodinamica: " + coche.getAerodinamica() + " Probabilidad Rotura: " + coche.getProbRotura());
+            System.out.println("Nombre: " + coche.getNom_piloto() + " Escuderia: "+ coche.getEscuderia() + " Velocidad : " + coche.getVelocidad() + " Aceleracion : " + coche.getAceleracion() + " Aerodinamica: " + coche.getAerodinamica() + " Probabilidad Rotura: " + coche.getProb_rotura());
         }
         g.mejoraIAExponencial(g.arrayCoche, 1.08);
         System.out.println("===============================================================================================\n");
         for (Coche coche: g.arrayCoche) {
-            System.out.println("Nombre: " + coche.getNombre() + " Escuderia: "+ coche.getEscuderia() + " Velocidad : " + coche.getVelocidad() + " Aceleracion : " + coche.getAceleracion() + " Aerodinamica: " + coche.getAerodinamica() + " Probabilidad Rotura: " + coche.getProbRotura());
+            System.out.println("Nombre: " + coche.getNom_piloto() + " Escuderia: "+ coche.getEscuderia() + " Velocidad : " + coche.getVelocidad() + " Aceleracion : " + coche.getAceleracion() + " Aerodinamica: " + coche.getAerodinamica() + " Probabilidad Rotura: " + coche.getProb_rotura());
         }
         //prueba
     }
