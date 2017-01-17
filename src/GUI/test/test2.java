@@ -23,7 +23,7 @@ public class test2 extends javax.swing.JFrame {
         g.creacionAI();
         Circuito barcelona = new Circuito("Barcelona", "Espanya", 50, 50.0,"/pictures/test1.jpg", 82648, 85648);
         g.arrayCircuito.add(barcelona);
-        s.simulacionVueltas(g.arrayCircuito,0,g.arrayCoche,g.arrayTiempoVuelta,g.arrayTiempoVueltaSoloInicial,g.posPiloto);
+        s.simulacionVueltas(g.arrayCircuito,0,g.arrayCoche,g.arrayTiempoVuelta,g.arrayTiempoVueltaSoloInicial,g.posPiloto, true);
         initComponents();
 
         // use the addRowToJTable
@@ -57,7 +57,7 @@ public class test2 extends javax.swing.JFrame {
         ArrayList<informacion> list = new ArrayList<informacion>();
 
         for(int i = 0;i<g.totalPilotos;i++){
-            informacion info = new informacion(i + 1,g.arrayCoche.get(i).getNombre(),g.arrayCoche.get(i).getEscuderia(),g.arrayTiempoVuelta.get(i),g.arrayTiempoVuelta.get(i),g.arrayCoche.get(i).getParadasBoxes());
+            informacion info = new informacion(i + 1,g.arrayCoche.get(i).getNom_piloto(),g.arrayCoche.get(i).getEscuderia(),g.arrayTiempoVuelta.get(i),g.arrayTiempoVuelta.get(i),g.arrayCoche.get(i).getParadasBoxes());
             list.add(info);
         }
         return list;

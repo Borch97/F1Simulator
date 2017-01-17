@@ -1,6 +1,8 @@
 package GUI.test;
 
 
+import datos.Rango;
+
 import java.awt.*;
 
 public class testInformacion {
@@ -10,9 +12,9 @@ public class testInformacion {
         private String imagen;
         private String tiempo;
         private String Diferencia;
-        private int paradasBoxes;
+        private String paradasBoxes;
 
-        public testInformacion(int pos,String nombre, String imagen, String tiempo, String diferencia, int paradasBoxes) {
+        public testInformacion(int pos,String nombre, String imagen, String tiempo, String diferencia, String paradasBoxes) {
             this.pos = pos;
             this.nombre = nombre;
             this.imagen = imagen;
@@ -59,11 +61,11 @@ public class testInformacion {
             Diferencia = diferencia;
         }
 
-        public int getParadasBoxes() {
+        public String getParadasBoxes() {
             return paradasBoxes;
         }
 
-        public void setParadasBoxes(int  paradasBoxes) {
+        public void setParadasBoxes(String  paradasBoxes) {
             this.paradasBoxes = paradasBoxes;
         }
     }
