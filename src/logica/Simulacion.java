@@ -196,8 +196,10 @@ public class Simulacion{
 
     public void comprobacionDiferenciasArray(ArrayList<Coche> pilotos, ArrayList<Rango> diferencia){
         for(int i = 0;i<pilotos.size();i++){
-            if(i<pilotos.size() - 1)
-                diferencia.add(comprobarDiferencias(pilotos.get(i).getTiempo(),pilotos.get(i + 1).getTiempo()));
+            if(i == 0)
+                diferencia.add(new Rango(0,0,0));
+            else
+                diferencia.add(comprobarDiferencias(pilotos.get(i - 1).getTiempo(),pilotos.get(i).getTiempo()));
         }
 
     }

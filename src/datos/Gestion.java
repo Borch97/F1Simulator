@@ -227,34 +227,37 @@ public class Gestion {
             masPequenio = i; // primer �ndice del resto del arreglo
 
             // itera para buscar el �ndice del elemento m�s peque�o
-            for (int indice = i + 1; indice < arrayCoche.size(); indice++)
-                if (arrayCoche.get(indice).getTiempo() == arrayCoche.get(masPequenio).getTiempo()) {
-                    if (arrayCoche.get(indice).getTiempo().getMinutes() < arrayCoche.get(masPequenio).getTiempo().getMinutes())
-                        masPequenio = indice;
-                } else if (arrayCoche.get(indice).getTiempo().getSeconds() < arrayCoche.get(masPequenio).getTiempo().getSeconds())
+            for (int indice = i + 1; indice < arrayCoche.size(); indice++) {
+                if (arrayCoche.get(indice).getTiempo().equals(arrayCoche.get(masPequenio).getTiempo()))
+                    break;
+                if (arrayCoche.get(indice).getTiempo().getMinutes() < arrayCoche.get(masPequenio).getTiempo().getMinutes())
                     masPequenio = indice;
-                  else if (arrayCoche.get(indice).getTiempo().getMilliseconds() < arrayCoche.get(masPequenio).getTiempo().getMilliseconds())
+                else if (((arrayCoche.get(indice).getTiempo().getMinutes() == (arrayCoche.get(masPequenio).getTiempo().getMinutes())) && (arrayCoche.get(indice).getTiempo().getSeconds() < arrayCoche.get(masPequenio).getTiempo().getSeconds())))
                     masPequenio = indice;
+                else if (((arrayCoche.get(indice).getTiempo().getMinutes() == (arrayCoche.get(masPequenio).getTiempo().getMinutes())) && (arrayCoche.get(indice).getTiempo().getSeconds() == (arrayCoche.get(masPequenio).getTiempo().getSeconds())) && (arrayCoche.get(indice).getTiempo().getMilliseconds() < arrayCoche.get(masPequenio).getTiempo().getMilliseconds())))
+                    masPequenio = indice;
+            }
 
             intercambiar(i, masPequenio, arrayTiempoVueltaSoloInicial, arrayTiempoVuelta, arrayCoche, arrayDiferenciaTiempoVuelta); // intercambia el elemento m�s peque�o en la posici�n
-        } // fin de for exterior
-    }
+        }
+    }// fin de for exterior
+
 
     // m�todo ayudante para intercambiar los valores de dos elementos
-    public void intercambiar( int primero, int segundo, ArrayList<Rango> arrayTiempoVueltaSoloInicial, ArrayList<String> arrayTiempoVuelta, ArrayList<Coche> arrayCoche, ArrayList<Rango> arrayDiferenciaTiempoVuelta)
+    public void intercambiar( int primero, int segundo, ArrayList<Rango> arrayTiempoVueltaSoloInicial, ArrayList<String> arrayTiempoVuelta, ArrayList<Coche> arrayCoche, ArrayList<Rango> arrayDiferenciaTiempo)
     {
         Rango temporal = arrayTiempoVueltaSoloInicial.get(primero); // almacena primero en temporal
         String temporal1 = arrayTiempoVuelta.get(primero);
         Coche temporal2 = arrayCoche.get(primero);
-        Rango temporal3 = arrayDiferenciaTiempoVuelta.get(primero);
+        Rango temporal3 = arrayDiferenciaTiempo.get(primero);
         arrayTiempoVueltaSoloInicial.set(primero,arrayTiempoVueltaSoloInicial.get(segundo)); // sustituye primero con segundo
         arrayTiempoVuelta.set(primero,arrayTiempoVuelta.get(segundo));
         arrayCoche.set(primero,arrayCoche.get(segundo));
-        arrayDiferenciaTiempoVuelta.set(primero, arrayDiferenciaTiempoVuelta.get(segundo));
+        arrayDiferenciaTiempo.set(primero, arrayDiferenciaTiempo.get(segundo));
         arrayTiempoVueltaSoloInicial.set(segundo,temporal); // coloca temporal en segundo
         arrayTiempoVuelta.set(segundo,temporal1);
         arrayCoche.set(segundo, temporal2);
-        arrayDiferenciaTiempoVuelta.set(segundo,temporal3);
+        arrayDiferenciaTiempo.set(segundo,temporal3);
     } // fin del m�todo intercambiar
 
     public void reordenarIndices(ArrayList<String> arrayTiempoVuelta){

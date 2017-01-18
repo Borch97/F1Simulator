@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -47,6 +49,7 @@ public class Ventana extends JFrame implements ActionListener{
     private static HashMap<Object,Rectangle> tamComponentes = new HashMap<>();
     TableModel tableModel = new informacionTableModel(g.informacionTabla);
     DefaultTableModel model;
+    private int seleccion;
 
     public Ventana() {
         super();                    // usamos el contructor de la clase padre JFrame
@@ -70,7 +73,7 @@ public class Ventana extends JFrame implements ActionListener{
         g.creacionAI();
         Circuito barcelona = new Circuito("Barcelona", "Espanya", 50, 50.0,"/pictures/test1.jpg", 82648, 85648);
         g.arrayCircuito.add(barcelona);
-        s.simulacionVueltas(g.arrayCircuito,0,g.arrayCoche,g.arrayTiempoVuelta,g.arrayTiempoVueltaSoloInicial,g.posPiloto);
+        s.simulacionVueltas(g.arrayCircuito,0,g.arrayCoche,g.arrayTiempoVuelta,g.arrayTiempoVueltaSoloInicial,g.posPiloto, true);
         /*int cont = 0;
         Rango r;
         while (cont< g.totalPilotos) {
@@ -86,9 +89,9 @@ public class Ventana extends JFrame implements ActionListener{
         ArrayList<testInformacion> list = new ArrayList<>();
 
         for(int i = 0;i<g.totalPilotos;i++){
-            testInformacion info = new testInformacion(i + 1,g.arrayCoche.get(i).getNombre(),g.arrayCoche.get(i).getEscuderia(),g.arrayTiempoVueltaSoloInicial.get(i).getMinutes() + ":" + g.arrayTiempoVueltaSoloInicial.get(i).getSeconds() + "," +
-                    g.arrayTiempoVueltaSoloInicial.get(i).getMilliseconds(),g.arrayDiferenciaTiempoVuelta.get(i).getMinutes() + ":"
-                    + g.arrayDiferenciaTiempoVuelta.get(i).getSeconds() + "," + g.arrayDiferenciaTiempoVuelta.get(i).getMilliseconds(),g.arrayCoche.get(i).getParadasBoxes());
+            testInformacion info = new testInformacion(i + 1,g.arrayCoche.get(i).getNom_piloto(),g.arrayCoche.get(i).getEscuderia(),g.arrayTiempoVueltaSoloInicial.get(i).getMinutes() + ":" + g.arrayTiempoVueltaSoloInicial.get(i).getSeconds() + "," +
+                    g.arrayTiempoVueltaSoloInicial.get(i).getMilliseconds()," + " + g.arrayDiferenciaTiempoVuelta.get(i).getSeconds() + "," + g.arrayDiferenciaTiempoVuelta.get(i).getMilliseconds(),
+                    g.arrayCoche.get(i).getTiempo().getMinutes() + ":" + g.arrayCoche.get(i).getTiempo().getSeconds() + "," + g.arrayCoche.get(i).getTiempo().getMilliseconds());//g.arrayCoche.get(i).getParadasBoxes());
             list.add(info);
         }
         return list;
@@ -223,6 +226,12 @@ public class Ventana extends JFrame implements ActionListener{
                 clasificacionVueltaDiferencia.setVisible(false);
             }
         });
+        tablaClasificacion.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            public void valueChanged(ListSelectionEvent event) {
+                seleccion = tablaClasificacion.getSelectedRow();
+            }
+        });
+
         // adicionamos los componentes a la ventana
         panelPrincipal.add(panelCentral, BorderLayout.CENTER);
         panelPrincipal.add(panelTop, BorderLayout.NORTH);
@@ -308,14 +317,14 @@ public class Ventana extends JFrame implements ActionListener{
         });
         V.getContentPane().add( V.panelPrincipal, BorderLayout.CENTER );  // El panel ocupa siempre toda la ventana y se reescala con ella
         V.setVisible( true );
-        while(true){
+       /* while(true){
             V.o.incRotacion(0.01);
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
 
     }
     class hilo implements Runnable{
@@ -336,21 +345,27 @@ public class Ventana extends JFrame implements ActionListener{
             while(cont< g.arrayCircuito.get(0).getVueltas() + 1) {
                 vueltas.setText((g.arrayCircuito.get(0).getVueltas() - cont) + "/" + g.arrayCircuito.get(0).getVueltas());
                 cont++;
+                if(tablaClasificacion.getSelectedRow() == -1)
+                    seleccion = 0;
+                else
+                    seleccion = tablaClasificacion.getSelectedRow();
                 g.arrayTiempoVuelta.clear();
                 g.arrayTiempoVueltaSoloInicial.clear();
                 //TODO posicion circuito
-                s.simulacionVueltas(g.arrayCircuito, 0, g.arrayCoche, g.arrayTiempoVuelta, g.arrayTiempoVueltaSoloInicial, g.posPiloto);
-                g.ordenar(g.arrayTiempoVueltaSoloInicial, g.arrayTiempoVuelta,g.arrayCoche);
+                /*s.simulacionVueltas(g.arrayCircuito, 0, g.arrayCoche, g.arrayTiempoVuelta, g.arrayTiempoVueltaSoloInicial, g.posPiloto, false);
+                s.comprobacionDiferenciasArray(g.arrayCoche,g.arrayDiferenciaTiempo);
+                g.ordenarPorTiempoTotal(g.arrayTiempoVueltaSoloInicial, g.arrayTiempoVuelta,g.arrayCoche, g.arrayDiferenciaTiempo);
                 g.reordenarIndices(g.arrayTiempoVuelta);
-                s.comprobacionDiferenciasArray(g.arrayCoche,g.arrayDiferenciaTiempoVuelta);
                 //g.stringArrayOrdenado(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVuelta,g.posPiloto);
                 g.arrayTiempoVueltaSoloCopia.clear();
                 g.copiarArray(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVueltaSoloCopia);
-                g.arrayTiempoVuelta.clear();
-                s.simulacionVueltas(g.arrayCircuito,0,g.arrayCoche,g.arrayTiempoVuelta, g.arrayTiempoVueltaSoloInicial, g.posPiloto);
-                g.ordenar(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVuelta,g.arrayCoche);
+                g.arrayTiempoVuelta.clear();*/
+                s.simulacionVueltas(g.arrayCircuito,0,g.arrayCoche,g.arrayTiempoVuelta, g.arrayTiempoVueltaSoloInicial, g.posPiloto, true);
+                s.comprobacionDiferenciasArray(g.arrayCoche,g.arrayDiferenciaTiempo);
+                g.arrayDiferenciaTiempoVuelta.clear();
+                g.copiarArray(g.arrayDiferenciaTiempo,g.arrayDiferenciaTiempoVuelta);
+                g.ordenarPorTiempoTotal(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVuelta,g.arrayCoche, g.arrayDiferenciaTiempoVuelta);
                 g.reordenarIndices(g.arrayTiempoVuelta);
-                s.comprobacionDiferenciasArray(g.arrayCoche,g.arrayDiferenciaTiempoVuelta);
                 //g.stringArrayOrdenado(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVuelta,g.posPiloto);
                 //s.calcularDiferencia(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVueltaSoloCopia,g.arrayDiferenciaTiempoVuelta);
                 listModelVuelta.removeAllElements();
@@ -361,10 +376,10 @@ public class Ventana extends JFrame implements ActionListener{
                 clasificacionVueltaDiferencia.setModel(listModelDiferenciaVueltas);
                 s.gestionNeumaticos(g.arrayCoche);
                 //TODO
-                progressBarUR.setValue((int)g.arrayCoche.get(0).getNeumaticos());
-                progressBarUL.setValue((int)g.arrayCoche.get(0).getNeumaticos());
-                progressBarDR.setValue((int)g.arrayCoche.get(0).getNeumaticos());
-                progressBarDL.setValue((int)g.arrayCoche.get(0).getNeumaticos());
+                progressBarUR.setValue((int)g.arrayCoche.get(seleccion).getNeumaticos());
+                progressBarUL.setValue((int)g.arrayCoche.get(seleccion).getNeumaticos());
+                progressBarDR.setValue((int)g.arrayCoche.get(seleccion).getNeumaticos());
+                progressBarDL.setValue((int)g.arrayCoche.get(seleccion).getNeumaticos());
                 s.paradaBoxesIA(g.arrayCircuito, g.arrayCoche, g.arrayTiempoVuelta, g.arrayTiempoVueltaSoloInicial, g.posPiloto);
                 //g.recopilarInformacion(g.informacionTabla);
                 updateModel();
