@@ -15,6 +15,9 @@ import java.awt.Dimension;
 
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import datos.Gestion;
+
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -24,6 +27,8 @@ import java.awt.event.WindowEvent;
 public class VentanaUsuario {
 
 	private JFrame frame;
+	
+	Gestion g = new Gestion();
 
 	/**
 	 * Launch the application.
@@ -65,7 +70,7 @@ public class VentanaUsuario {
 				}
 			}
 		});
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaUsuario.class.getResource("/pictures/sun.png")));
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaUsuario.class.getResource("/pictures/fc3b3rmula-1.jpg")));
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -74,8 +79,8 @@ public class VentanaUsuario {
 		JButton btnNewButton = new JButton("Nuevo Usuario");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				
+				String m = JOptionPane.showInputDialog("Introduzca el nombre del nuevo usuario");
+				m = g.variableUsuario;
 			}
 		});
 		btnNewButton.setBounds(159, 64, 130, 23);
@@ -119,8 +124,5 @@ public class VentanaUsuario {
 		
 	}
 	
-	public static void nuevoUsuario(){
-		String m = JOptionPane.showInputDialog("Introduzca el nombre del nuevo usuario");
-		//int e = Integer.parseInt(JOptionPane.showInputDialog("..."));
-	}
+	
 }

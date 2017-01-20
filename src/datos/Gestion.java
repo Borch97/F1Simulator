@@ -26,8 +26,8 @@ public class Gestion {
     public String[] columnNames = {"Posición", "Nombre", "Coche", "Tiempo", "Diferencia", "P. Boxes"};
     public ArrayList<informacionTabla> informacionTabla = new ArrayList<>();
     public ArrayList<Rango> arrayDiferenciaTiempo = new ArrayList<>();
-
-
+    //poner el nombre final a este String para crear su variable en la base de datos
+    public String variableUsuario;
     //Obtener nombre y escuderia de la base de datos
     
     public Gestion()
