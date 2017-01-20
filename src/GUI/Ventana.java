@@ -50,6 +50,9 @@ public class Ventana extends JFrame implements ActionListener{
     TableModel tableModel = new informacionTableModel(g.informacionTabla);
     DefaultTableModel model;
     private int seleccion;
+    private int temp = 0;
+    private ListSelectionModel selectionModel;
+
 
     public Ventana() {
         super();                    // usamos el contructor de la clase padre JFrame
@@ -90,8 +93,7 @@ public class Ventana extends JFrame implements ActionListener{
 
         for(int i = 0;i<g.totalPilotos;i++){
             testInformacion info = new testInformacion(i + 1,g.arrayCoche.get(i).getNom_piloto(),g.arrayCoche.get(i).getEscuderia(),g.arrayTiempoVueltaSoloInicial.get(i).getMinutes() + ":" + g.arrayTiempoVueltaSoloInicial.get(i).getSeconds() + "," +
-                    g.arrayTiempoVueltaSoloInicial.get(i).getMilliseconds()," + " + g.arrayDiferenciaTiempoVuelta.get(i).getSeconds() + "," + g.arrayDiferenciaTiempoVuelta.get(i).getMilliseconds(),
-                    g.arrayCoche.get(i).getTiempo().getMinutes() + ":" + g.arrayCoche.get(i).getTiempo().getSeconds() + "," + g.arrayCoche.get(i).getTiempo().getMilliseconds());//g.arrayCoche.get(i).getParadasBoxes());
+                    g.arrayTiempoVueltaSoloInicial.get(i).getMilliseconds()," + " + g.arrayDiferenciaTiempoVuelta.get(i).getSeconds() + "," + g.arrayDiferenciaTiempoVuelta.get(i).getMilliseconds(),g.arrayCoche.get(i).getParadasBoxes());
             list.add(info);
         }
         return list;
@@ -140,6 +142,7 @@ public class Ventana extends JFrame implements ActionListener{
         //panelCentral.setOpaque(true);
         fV = new fondoVentana(Color.gray);
         tablaClasificacion = new JTable();
+        selectionModel = tablaClasificacion.getSelectionModel();
         circuitoFoto = new ImageIcon(this.getClass().getResource(g.arrayCircuito.get(0).getFotoCircuito())).getImage();
         listModelVuelta = listModelDiferenciaVueltas = new DefaultListModel();
         modeloJlist(g.arrayTiempoVuelta, listModelVuelta);
@@ -228,7 +231,15 @@ public class Ventana extends JFrame implements ActionListener{
         });
         tablaClasificacion.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
             public void valueChanged(ListSelectionEvent event) {
-                seleccion = tablaClasificacion.getSelectedRow();
+                if(tablaClasificacion.getSelectedRow() == -1) {
+                    seleccion = 0;
+                    selectionModel.setSelectionInterval(temp, temp);
+                }
+                else if(tablaClasificacion.getSelectedRow() >= 0 && tablaClasificacion.getSelectedRow()<g.totalPilotos) {
+                    seleccion = tablaClasificacion.getSelectedRow();
+                    temp = seleccion;
+                    selectionModel.setSelectionInterval(seleccion, seleccion);
+                }
             }
         });
 
@@ -345,10 +356,6 @@ public class Ventana extends JFrame implements ActionListener{
             while(cont< g.arrayCircuito.get(0).getVueltas() + 1) {
                 vueltas.setText((g.arrayCircuito.get(0).getVueltas() - cont) + "/" + g.arrayCircuito.get(0).getVueltas());
                 cont++;
-                if(tablaClasificacion.getSelectedRow() == -1)
-                    seleccion = 0;
-                else
-                    seleccion = tablaClasificacion.getSelectedRow();
                 g.arrayTiempoVuelta.clear();
                 g.arrayTiempoVueltaSoloInicial.clear();
                 //TODO posicion circuito

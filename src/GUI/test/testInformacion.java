@@ -12,9 +12,9 @@ public class testInformacion {
         private String imagen;
         private String tiempo;
         private String Diferencia;
-        private String paradasBoxes;
+        private int paradasBoxes;
 
-        public testInformacion(int pos,String nombre, String imagen, String tiempo, String diferencia, String paradasBoxes) {
+        public testInformacion(int pos,String nombre, String imagen, String tiempo, String diferencia, int paradasBoxes) {
             this.pos = pos;
             this.nombre = nombre;
             this.imagen = imagen;
@@ -61,11 +61,11 @@ public class testInformacion {
             Diferencia = diferencia;
         }
 
-        public String getParadasBoxes() {
+        public int getParadasBoxes() {
             return paradasBoxes;
         }
 
-        public void setParadasBoxes(String  paradasBoxes) {
+        public void setParadasBoxes(int  paradasBoxes) {
             this.paradasBoxes = paradasBoxes;
         }
     }
