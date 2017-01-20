@@ -151,9 +151,9 @@ public class Simulacion{
     //TODO revisar
     public void paradaBoxesIA(ArrayList<Circuito> circuito, ArrayList<Coche> piloto, ArrayList<String> tiempoVuelta, ArrayList<Rango> tiempos, ArrayList<String> posPilotos){
        for(int i = 0; i< piloto.size();i++){
-           int aleatorio = aleatorio(1,100);
+           int aleatorio = aleatorio(1,10);
            if(piloto.get(i).getNeumaticos()>=50){
-               if(aleatorio < 20){
+               if(aleatorio < 1){
                    System.out.println("El piloto " + piloto.get(i).getNom_piloto() + " ha realizado su parada con mas de 50 % de neumaticos");
                    piloto.get(i).setNeumaticos(100);
                    simulacionVueltas(circuito, 0, piloto, tiempoVuelta, tiempos, posPilotos, false);
@@ -161,7 +161,7 @@ public class Simulacion{
                }
            }
            else if(piloto.get(i).getNeumaticos()< 50 && piloto.get(i).getNeumaticos()>=25){
-               if(aleatorio < 50){
+               if(aleatorio < 5){
                    System.out.println("El piloto " + piloto.get(i).getNom_piloto() + " ha realizado su parada con mas de 25 % y menos de 50% de neumaticos");
                    piloto.get(i).setNeumaticos(100);
                    simulacionVueltas(circuito, 0, piloto, tiempoVuelta, tiempos, posPilotos, false);
@@ -169,7 +169,7 @@ public class Simulacion{
                }
            }
            else if(piloto.get(i).getNeumaticos()<25){
-               if(aleatorio < 80){
+               if(aleatorio < 8){
                    System.out.println("El piloto " + piloto.get(i).getNom_piloto() + " ha realizado su parada con menos de 25 % de neumaticos");
                    piloto.get(i).setNeumaticos(100);
                    simulacionVueltas(circuito, 0, piloto, tiempoVuelta, tiempos, posPilotos, false);
