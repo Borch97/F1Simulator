@@ -5,13 +5,20 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+
+import datos.Usuario;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
+import javax.swing.JLabel;
+import javax.swing.JTable;
 
 public class VentanaMenu {
 
 	private JFrame frame;
+	private JTable table;
+	Usuario u = new Usuario();
 
 	/**
 	 * Launch the application.
@@ -51,7 +58,15 @@ public class VentanaMenu {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnIrACarrera.setBounds(335, 227, 89, 23);
+		btnIrACarrera.setBounds(299, 227, 125, 23);
 		frame.getContentPane().add(btnIrACarrera);
+		
+		JLabel lblDinero = new JLabel("DINERO: "+Integer.toString(u.getDinero()));
+		lblDinero.setBounds(105, 31, 209, 14);
+		frame.getContentPane().add(lblDinero);
+		
+		table = new JTable();
+		table.setBounds(41, 89, 154, 146);
+		frame.getContentPane().add(table);
 	}
 }

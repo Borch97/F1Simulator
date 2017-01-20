@@ -9,6 +9,11 @@ public class Usuario {
 		this.nom_usuario = nom_usuario;
 		this.dinero = dinero;
 	}
+	
+	public Usuario() {
+		this.nom_usuario = "prueba";
+		this.dinero = 0;
+	}
 
 	public String getNom_usuario() {
 		return nom_usuario;
