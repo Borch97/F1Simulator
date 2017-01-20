@@ -341,6 +341,8 @@ public class GestorBD{
     {
     	String q = "select * from Coche";
     	
+    	//select * from coche where usuario like " + nom ;
+    	
     	ResultSet resultado = consultar( q );
     
     	ArrayList<Coche> coche = new ArrayList<>();
@@ -423,8 +425,10 @@ public class GestorBD{
 	    	    	String abre1 = resultado.getString("abreviado");
 	    	    	String escu1 = resultado.getString("escuderia");
 	    	    	double velo1 = resultado.getDouble("velocidad");
+	    	    	
 	    	    	double acel1 = resultado.getDouble("aceleracion");
 	    	    	double aero1 = resultado.getDouble("aerodinamica");
+	    	    	
 	    	    	double rotu1 = resultado.getDouble("prob_rotura");
 	    	    	double neum1 = resultado.getDouble("neumaticos");
 	    	    	String usua1 = resultado.getString("nom_usuario");
@@ -436,7 +440,7 @@ public class GestorBD{
 		    		{
 		    			System.out.println("POR AQUI");
 		    			
-		    			String upd = "UPDATE Puntuacion SET Tiempo = " + pTiempo 
+		    			String upd = "UPDATE coche SET aceleracion = " + pTiempo 
 		    					+ " WHERE Nombre = '" + nom + "' AND Nivel = " + n;	
 		    			
 		    			sentencia.executeUpdate( upd );
