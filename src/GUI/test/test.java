@@ -40,7 +40,7 @@ public class test {
         titel.add("P.Boxes");
 
         g.creacionAI();
-        Circuito barcelona = new Circuito("Barcelona", "Espanya", 50, 50.0,"/pictures/test1.jpg", 82648, 85648);
+        Circuito barcelona = new Circuito("Barcelona", "Espanya", 50, 50.0,"/pictures/test1.jpg", 82648, 85648, 0);
         g.arrayCircuito.add(barcelona);
         s.simulacionVueltas(g.arrayCircuito,0,g.arrayCoche,g.arrayTiempoVuelta,g.arrayTiempoVueltaSoloInicial,g.posPiloto, true);
         addRows(g.arrayCoche,g.arrayTiempoVuelta);

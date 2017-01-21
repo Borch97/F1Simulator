@@ -236,7 +236,7 @@ public class Simulacion{
     //TODO
     //Temporal
     public Circuito crearCircuito(){
-       return  new Circuito("Barcelona", "Espanya", 50, 50.0,"./pictures/Melbourne.png", 82648, 85648);
+       return  new Circuito("Barcelona", "Espanya", 50, 50.0,"./pictures/Melbourne.png", 82648, 85648, 0);
     }
 
 
@@ -258,7 +258,7 @@ public class Simulacion{
         Gestion g = new Gestion();
         g.creacionAI();
         
-        Circuito barcelona = new Circuito("Barcelona", "Espanya", 50, 50.0,"./pictures/Melbourne.png", 82648, 85648);
+        Circuito barcelona = new Circuito("Barcelona", "Espanya", 50, 50.0,"./pictures/Melbourne.png", 82648, 85648, 0);
         
         int cont = 0;
         Rango r;
