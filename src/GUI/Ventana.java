@@ -29,8 +29,8 @@ import javax.swing.table.TableModel;
  */
 public class Ventana extends JFrame implements ActionListener{
 
-    private JPanel panelPrincipal, panelTop, panelCentral, panelIzquierda, panelNeumaticos, panelNeumaticosArriba, panelNeumaticosAbajo, panelCircuito, panelTiempo;
-    private JLabel texto, vueltas, neumaticos;           // etiqueta o texto no editable
+    private JPanel panelPrincipal, panelTop, panelCentral, panelIzquierda, panelNeumaticos, panelNeumaticosArriba, panelNeumaticosAbajo, panelCircuito, panelTiempo, panelInformacion, panelBoxes;
+    private JLabel texto, vueltas, neumaticos, informacionCircuito1, informacionCircuito2, informacionCircuito3;           // etiqueta o texto no editable
     private JTextField caja;        // caja de texto, para insertar datos
     private JButton boton, bDiferencia, boxes;
     private JTable tablaClasificacion;
@@ -121,6 +121,8 @@ public class Ventana extends JFrame implements ActionListener{
         panelNeumaticosAbajo = new JPanel();
         panelCircuito = new JPanel();
         panelTiempo = new JPanel();
+        panelInformacion = new JPanel();
+        panelBoxes = new JPanel();
         panelPrincipal.setLayout(new BorderLayout());
         panelTop.setLayout(new BorderLayout());
         panelCentral.setLayout(new BorderLayout());
@@ -130,6 +132,8 @@ public class Ventana extends JFrame implements ActionListener{
         panelNeumaticosAbajo.setLayout(new BorderLayout());
         panelCircuito.setLayout(new BorderLayout());
         panelTiempo.setLayout(null);
+        panelInformacion.setLayout(null);
+        panelBoxes.setLayout(null);
         //panelCentral.setOpaque(true);
         fV = new fondoVentana(Color.gray);
         tablaClasificacion = new JTable();
@@ -143,6 +147,12 @@ public class Ventana extends JFrame implements ActionListener{
         neumaticos = new JLabel(new ImageIcon(this.getClass().getResource("/pictures/neumaticos.png")));
         clasificacionVuelta = new JList(listModelVuelta);
         clasificacionVueltaDiferencia = new JList(listModelDiferenciaVueltas);
+        informacionCircuito1 = new JLabel("Nombre: " + Gestion.g.arrayCircuito.get(Gestion.g.contCircuito).getNom_circuito());
+        informacionCircuito1.setBounds(80,60,200,20);
+        informacionCircuito2 = new JLabel("Pais: " + Gestion.g.arrayCircuito.get(Gestion.g.contCircuito).getPais());
+        informacionCircuito2.setBounds(80,100,200,20);
+        informacionCircuito3 = new JLabel("Prob. Lluvia: " + Gestion.g.arrayCircuito.get(Gestion.g.contCircuito).getPro_lluvia());
+        informacionCircuito3.setBounds(80,140,200,20);
         caja = new JTextField();
         boton = new JButton();
         boxes = new JButton();
@@ -153,9 +163,11 @@ public class Ventana extends JFrame implements ActionListener{
 
         // configuramos los componentes
 
-        String[] columnNames = {"Posición", "Nombre", "Coche", "Tiempo", "Diferencia", "P. Boxes"};
+        String[] columnNames = {"Posicion", "Nombre", "Coche", "Tiempo", "Diferencia", "P. Boxes"};
         model = new DefaultTableModel(columnNames, 0);
         tablaClasificacion.setModel(model);
+        tablaClasificacion.setBackground(new Color(185,185,185));
+        tablaClasificacion.setGridColor(new Color(0,128,0));
         JScrollPane skrol = new JScrollPane(tablaClasificacion);
 
 
@@ -232,12 +244,12 @@ public class Ventana extends JFrame implements ActionListener{
         bDiferencia.setText("Diferencia/Tiempos");
         bDiferencia.setBackground(new Color(0,0,0,0));
         bDiferencia.setOpaque(false);
-        o.setHorizontalAlignment(SwingConstants.CENTER);
-        o.setBounds(80,400,128,128);
         boxes.setBounds((boton.getX() + bDiferencia.getX())/ 2,(int)screenSize.getHeight() - 100,150,30);
         boxes.setText("Boxes");
         boxes.setOpaque(false);
         boxes.setBackground(new Color(0,0,0,0));
+        panelTiempo.setBounds(80,700,128,128);
+        panelInformacion.setBounds(0,0,400,350);
         bDiferencia.addActionListener(e -> {
             if(clasificacionVuelta.isVisible()) {
                 clasificacionVuelta.setVisible(false);
@@ -271,18 +283,24 @@ public class Ventana extends JFrame implements ActionListener{
         panelNeumaticos.add(panelNeumaticosArriba, BorderLayout.NORTH);
         panelNeumaticos.add(panelNeumaticosAbajo, BorderLayout.SOUTH);
         panelIzquierda.add(panelNeumaticos, BorderLayout.SOUTH);
-        panelIzquierda.add(panelCircuito, BorderLayout.BEFORE_FIRST_LINE);
-        panelIzquierda.add(panelTiempo, BorderLayout.CENTER);
+        panelCircuito.add(panelTiempo);
+        panelCircuito.add(panelInformacion);
+        panelIzquierda.add(panelCircuito, BorderLayout.CENTER);
         //panelCentral.add(tablaClasificacion.getTableHeader(), BorderLayout.PAGE_START);
         panelCentral.add(skrol, BorderLayout.CENTER);
+        panelCentral.add(panelBoxes, BorderLayout.SOUTH);
+
         //panelCentral.add(vueltas,BorderLayout.CENTER);
         //panelIzquierda.add(texto, BorderLayout.NORTH);
 
         //this.add(caja);
         //panelPrincipal.add(boton);
         panelTop.add(vueltas, BorderLayout.CENTER);
+        panelInformacion.add(informacionCircuito1);
+        panelInformacion.add(informacionCircuito2);
+        panelInformacion.add(informacionCircuito3);
         panelCircuito.add(texto, BorderLayout.CENTER);
-        panelTiempo.add(o);
+        panelTiempo.add(o, BorderLayout.CENTER);
         //panelPrincipal.add(clasificacionVuelta);
         //this.add(clasificacionVueltaDiferencia);
         //panelPrincipal.add(bDiferencia);
