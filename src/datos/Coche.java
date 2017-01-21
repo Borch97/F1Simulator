@@ -18,7 +18,7 @@ public class Coche {
 	    protected double neumaticos;
 		protected Image imagen;
 		protected int paradasBoxes;
-	//	protected String nom_usuario;
+		protected String nom_usuario;
 
 	    //
 	    protected Rango tiempo;
@@ -70,7 +70,7 @@ public class Coche {
 	    
 	    public Coche(String nom_piloto, String abreviado, String escuderia,
 				double velocidad, double aceleracion, double aerodinamica, double prob_rotura, double neumaticos,
-				Image imagen, int paradasBoxes) {
+				Image imagen, int paradasBoxes, String nom_usuario) {
 			this.nom_piloto = nom_piloto;
 			this.abreviado = abreviado;
 			this.escuderia = escuderia;
@@ -81,7 +81,7 @@ public class Coche {
 			this.neumaticos = neumaticos;
 			this.imagen = imagen;
 			this.paradasBoxes = paradasBoxes;
-			//this.nom_usuario= nom_usuario;
+			this.nom_usuario= nom_usuario;
 			this.tiempo = tiempo;
 			this.s = s;
 		}
@@ -91,7 +91,9 @@ public class Coche {
 			return nom_piloto;
 		}
 
-		
+		public String getNom_usuario() {return nom_usuario;}
+
+		public void setNom_usuario(String nom_usuario) {this.nom_usuario = nom_usuario;}
 
 		public void setNom_piloto(String nom_piloto) {
 			this.nom_piloto = nom_piloto;

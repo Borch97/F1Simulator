@@ -81,6 +81,8 @@ public class VentanaUsuario {
 			public void actionPerformed(ActionEvent arg0) {
 				String m = JOptionPane.showInputDialog("Introduzca el nombre del nuevo usuario");
 				m = g.variableUsuario;
+				g.creacionPartidaNueva();
+
 			}
 		});
 		btnNewButton.setBounds(159, 64, 130, 23);

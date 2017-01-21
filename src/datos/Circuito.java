@@ -15,6 +15,7 @@ public class Circuito {
 	    protected String foto_circ;
 	    protected  int rango_tinicial;
 	    protected int rango_tfinal;
+		protected int posicionCircuito;
 
 
 	    /**
@@ -36,7 +37,7 @@ public class Circuito {
 	     * @param rangoTiempoInicial
 	     * @param rangoTiempoFinal
 	     */
-	    public Circuito(String nombre, String pais, int vueltas, double probLluvia, String fotoCircuito, int rangoTiempoInicial, int rangoTiempoFinal) {
+	    public Circuito(String nombre, String pais, int vueltas, double probLluvia, String fotoCircuito, int rangoTiempoInicial, int rangoTiempoFinal, int posicionCircuito) {
 	        this.nom_circuito = nombre;
 	        this.pais = pais;
 	        this.num_vueltas = vueltas;
@@ -44,11 +45,40 @@ public class Circuito {
 	        this.foto_circ = fotoCircuito;
 	        this.rango_tinicial = rangoTiempoInicial;
 	        this.rango_tfinal = rangoTiempoFinal;
+			this.posicionCircuito = posicionCircuito;
 	    }
 
-	    public String getNombre() {
-	        return nom_circuito;
-	    }
+		public String getNom_circuito() {return nom_circuito;}
+
+		public void setNom_circuito(String nom_circuito) {this.nom_circuito = nom_circuito;}
+
+		public int getNum_vueltas() {return num_vueltas;}
+
+		public void setNum_vueltas(int num_vueltas) {this.num_vueltas = num_vueltas;}
+
+		public double getPro_lluvia() {return pro_lluvia;}
+
+		public void setPro_lluvia(double pro_lluvia) {this.pro_lluvia = pro_lluvia;}
+
+		public String getFoto_circ() {return foto_circ;}
+
+		public void setFoto_circ(String foto_circ) {this.foto_circ = foto_circ;}
+
+		public int getRango_tinicial() {return rango_tinicial;}
+
+		public void setRango_tinicial(int rango_tinicial) {this.rango_tinicial = rango_tinicial;}
+
+		public int getRango_tfinal() {return rango_tfinal;}
+
+		public void setRango_tfinal(int rango_tfinal) {this.rango_tfinal = rango_tfinal;}
+
+		public int getPosicionCircuito() {return posicionCircuito;}
+
+		public void setPosicionCircuito(int posicionCircuito) {this.posicionCircuito = posicionCircuito;}
+
+		public String getNombre() {
+				return nom_circuito;
+			}
 
 	    public void setNombre(String nombre) {
 	        this.nom_circuito = nombre;

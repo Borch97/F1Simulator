@@ -1,27 +1,14 @@
  package datos;
 
-public class Usuario {
-	
-	protected String nom_usuario;
+public class Usuario extends Coche {
+
 	protected int dinero;
 	
-	public Usuario(String nom_usuario, int dinero) {
-		this.nom_usuario = nom_usuario;
+	public Usuario(int dinero) {
 		this.dinero = dinero;
 	}
-	
-	public Usuario() {
-		this.nom_usuario = "prueba";
-		this.dinero = 0;
-	}
 
-	public String getNom_usuario() {
-		return nom_usuario;
-	}
-
-	public void setNom_usuario(String nom_usuario) {
-		this.nom_usuario = nom_usuario;
-	}
+	public Usuario(){}
 
 	public int getDinero() {
 		return dinero;
@@ -30,6 +17,11 @@ public class Usuario {
 	public void setDinero(int dinero) {
 		this.dinero = dinero;
 	}
+
+
+    public static void main(String[] args){
+        Usuario u = new Usuario();
+    }
 	
 	
 	

@@ -12,7 +12,7 @@ import BD.GestorBD;
 
 public class Gestion {
 
-    public final int totalPilotos = 9;
+    public final int totalPilotos = 10;
     public ArrayList<Coche> arrayCoche = new ArrayList<>();
     public ArrayList<Circuito> arrayCircuito = new ArrayList<>();
     public ArrayList<String> arrayNombres; //= new ArrayList<>(Arrays.asList("Hamilton", "Vettel", "Verstappen", "Alonso", "Button", "Sainz", "Massa", "Rosberg", "Ricciardo", "Perez", "Bottas"));
@@ -68,6 +68,10 @@ public class Gestion {
         return random.nextInt(max - min +1) + min;
     }
 
+    public void creacionPartidaNueva(){
+        creacionUsuario();
+        creacionAI();
+    }
     //Crea un piloto nuevo completamente aleatorio
 
     /**
@@ -78,10 +82,15 @@ public class Gestion {
     	
     	String nombrepiloto = arrayNombres.get(aleatorio(0, arrayNombres.size() - 1));
 		String nombreescuderia = arrayEscuderias.get(aleatorio(0, arrayEscuderias.size() - 1));
+        String nombreUsuario = variableUsuario;
         //TODO añadir imagen coche
 		return new Coche(nombrepiloto, " ", nombreescuderia, aleatorio(0, 10), aleatorio(0, 10), aleatorio(0, 10), 0,
-				100, null, 0);
+				100, null, 0, variableUsuario);
     	// return new Coche(arrayNombres.get(aleatorio(0, arrayNombres.size() - 1))," ", arrayEscuderias.get(aleatorio(0, arrayEscuderias.size() - 1)), aleatorio(0, 10), aleatorio(0, 10), aleatorio(0, 10), 0, 100);
+    }
+
+    public Coche creacionUsuario(){
+        return new Coche(variableUsuario, variableUsuario.substring(0,4),arrayEscuderias.get(aleatorio(0, arrayEscuderias.size() - 1)), 0,0,0,0,100,null,0,variableUsuario);
     }
     //Metodo que se encarga de crear automaticamente todos los otros pilotos del modo carrera
 
@@ -93,7 +102,7 @@ public class Gestion {
         // while(arrayCoche.isEmpty() || arrayCoche.size()<totalPilotos) {
               Coche cocheComprobar;
         if(arrayCoche.isEmpty()) {
-            for (int j = totalPilotos; j > 0; j--) {
+            for (int j = totalPilotos - 1; j > 0; j--) {
                 cocheComprobar = creacionPiloto();
                 while ((containsElement(arrayCoche, cocheComprobar.getNom_piloto())) || contains2Elements(arrayCoche, cocheComprobar.getEscuderia())) {
                     cocheComprobar = creacionPiloto();
