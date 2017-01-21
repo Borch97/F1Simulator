@@ -74,17 +74,7 @@ public class Ventana extends JFrame implements ActionListener{
     //TODO
     public void test(){
         g.creacionAI();
-        Circuito barcelona = new Circuito("Barcelona", "Espanya", 50, 50.0,"/pictures/test1.jpg", 82648, 85648, 0);
-        g.arrayCircuito.add(barcelona);
         //s.simulacionVueltas(g.arrayCircuito,0,g.arrayCoche,g.arrayTiempoVuelta,g.arrayTiempoVueltaSoloInicial,g.posPiloto, true);
-        /*int cont = 0;
-        Rango r;
-        while (cont< g.totalPilotos) {
-            r = s.tiempoVueltaInicial((int)barcelona.getRangoTiempoInicial(), (int)barcelona.getRangoTiempoFinal(),
-                    g.arrayCoche.get(cont).getVelocidad(), g.arrayCoche.get(cont).getAceleracion(), g.arrayCoche.get(cont).getAerodinamica() );
-            g.arrayTiempoVuelta.add((cont + 1)  + ".-" + g.arrayCoche.get(cont).getAbreviado() + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
-            cont++;
-        }*/
     }
 
     public ArrayList listPilots()
@@ -397,6 +387,7 @@ public class Ventana extends JFrame implements ActionListener{
                 }
             }
             g.mejoraIAExponencial(g.arrayCoche, 1.08);
+            g.contCircuito++;
         }
     }
 }

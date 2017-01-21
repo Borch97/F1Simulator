@@ -28,12 +28,14 @@ public class Gestion {
     public ArrayList<Rango> arrayDiferenciaTiempo = new ArrayList<>();
     //poner el nombre final a este String para crear su variable en la base de datos
     public String variableUsuario;
+    public int contCircuito = 0;
     //Obtener nombre y escuderia de la base de datos
     
     public Gestion()
     {
     	arrayNombres = GestorBD.getInstance().obtenerInfoPilotos();
     	arrayEscuderias = GestorBD.getInstance().obtenerInfoEscuderias();
+        arrayCircuito = GestorBD.getInstance().obtenerInfoCircuito();
     }
 
     public int buscarPiloto(ArrayList<Coche> arrayCoche, String nombre){
