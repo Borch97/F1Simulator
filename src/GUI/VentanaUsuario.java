@@ -1,7 +1,6 @@
 package GUI;
 
-import java.awt.EventQueue;
-import java.awt.Graphics;
+import java.awt.*;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -10,25 +9,18 @@ import javax.swing.JButton;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import datos.Gestion;
+import logica.Simulacion;
 
-import java.awt.Toolkit;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
-public class VentanaUsuario {
+public class VentanaUsuario extends JFrame{
 
 	private JFrame frame;
-	
-	Gestion g = new Gestion();
+
 
 	/**
 	 * Launch the application.
@@ -80,8 +72,17 @@ public class VentanaUsuario {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String m = JOptionPane.showInputDialog("Introduzca el nombre del nuevo usuario");
-				m = g.variableUsuario;
-				g.creacionPartidaNueva();
+                while(m.length()<4) {
+                    JOptionPane.showMessageDialog(frame,"El nombre de usuario tiene que tener al menos 4 caracteres","Inane warning",JOptionPane.WARNING_MESSAGE);
+                    m = JOptionPane.showInputDialog("Introduzca el nombre del nuevo usuario");
+                }
+				Gestion.g.variableUsuario = m;
+                Gestion.g.creacionPartidaNueva();
+                Simulacion.s.simulacionVueltas(Gestion.g.arrayCircuito,0,Gestion.g.arrayCoche,Gestion.g.arrayTiempoVuelta,Gestion.g.arrayTiempoVueltaSoloInicial,Gestion.g.posPiloto, true);
+                /*VentanaMenu vm = new VentanaMenu();
+                vm.setVisible(true);*/
+                Ventana v = new Ventana();
+                v.setVisible(true);
 
 			}
 		});

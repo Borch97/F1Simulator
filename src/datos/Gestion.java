@@ -12,6 +12,7 @@ import BD.GestorBD;
 
 public class Gestion {
 
+    public static Gestion g = new Gestion();
     public final int totalPilotos = 10;
     public ArrayList<Coche> arrayCoche = new ArrayList<>();
     public ArrayList<Circuito> arrayCircuito = new ArrayList<>();
@@ -91,8 +92,9 @@ public class Gestion {
     	// return new Coche(arrayNombres.get(aleatorio(0, arrayNombres.size() - 1))," ", arrayEscuderias.get(aleatorio(0, arrayEscuderias.size() - 1)), aleatorio(0, 10), aleatorio(0, 10), aleatorio(0, 10), 0, 100);
     }
 
-    public Coche creacionUsuario(){
-        return new Coche(variableUsuario, variableUsuario.substring(0,4),arrayEscuderias.get(aleatorio(0, arrayEscuderias.size() - 1)), 0,0,0,0,100,null,0,variableUsuario);
+    public void creacionUsuario(){
+        Coche c = new Coche(variableUsuario,variableUsuario.substring(0,4),arrayEscuderias.get(aleatorio(0, arrayEscuderias.size() - 1)), 0,0,0,0,100,null,0,variableUsuario);
+        arrayCoche.add(c);
     }
     //Metodo que se encarga de crear automaticamente todos los otros pilotos del modo carrera
 
@@ -103,7 +105,7 @@ public class Gestion {
     public void creacionAI(){
         // while(arrayCoche.isEmpty() || arrayCoche.size()<totalPilotos) {
               Coche cocheComprobar;
-        if(arrayCoche.isEmpty()) {
+        if(arrayCoche.isEmpty() || arrayCoche.get(0).getNom_piloto().equals(variableUsuario)) {
             for (int j = totalPilotos - 1; j > 0; j--) {
                 cocheComprobar = creacionPiloto();
                 while ((containsElement(arrayCoche, cocheComprobar.getNom_piloto())) || contains2Elements(arrayCoche, cocheComprobar.getEscuderia())) {

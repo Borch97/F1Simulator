@@ -29,7 +29,7 @@ import javax.swing.table.TableModel;
  */
 public class Ventana extends JFrame implements ActionListener{
 
-    private JPanel panelPrincipal, panelTop, panelCentral, panelIzquierda, panelNeumaticos, panelNeumaticosArriba, panelNeumaticosAbajo;
+    private JPanel panelPrincipal, panelTop, panelCentral, panelIzquierda, panelNeumaticos, panelNeumaticosArriba, panelNeumaticosAbajo, panelCircuito, panelTiempo;
     private JLabel texto, vueltas, neumaticos;           // etiqueta o texto no editable
     private JTextField caja;        // caja de texto, para insertar datos
     private JButton boton, bDiferencia, boxes;
@@ -41,13 +41,12 @@ public class Ventana extends JFrame implements ActionListener{
     private Image circuitoFoto;
     private int cont = 0;
     hilo hilo1 = null;
-    Simulacion s = new Simulacion();
-    Gestion g = new Gestion();
+    Thread hiloRotacion = new Thread(new hiloRotacion());
     DefaultListModel listModelVuelta, listModelDiferenciaVueltas;
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private static Rectangle tamanyoPanel = null;
     private static HashMap<Object,Rectangle> tamComponentes = new HashMap<>();
-    TableModel tableModel = new informacionTableModel(g.informacionTabla);
+    TableModel tableModel = new informacionTableModel(Gestion.g.informacionTabla);
     DefaultTableModel model;
     private int seleccion;
     private int temp = 0;
@@ -62,7 +61,7 @@ public class Ventana extends JFrame implements ActionListener{
     }
 
     private void configurarVentana() {
-        this.setTitle("Esta Es Una Ventana");                   // colocamos titulo a la ventana
+        this.setTitle("Progreso de la carrera");                   // colocamos titulo a la ventana
         this.setSize(screenSize);//(int) screenSize.getWidth(),(int)screenSize.getHeight()); // colocamos tamanio a la ventana (ancho, alto)
         this.setLocationRelativeTo(null);                       // centramos la ventana en la pantalla
         this.setResizable(true);                               // hacemos que la ventana no sea redimiensionable
@@ -73,17 +72,16 @@ public class Ventana extends JFrame implements ActionListener{
 
     //TODO
     public void test(){
-        g.creacionAI();
-        //s.simulacionVueltas(g.arrayCircuito,0,g.arrayCoche,g.arrayTiempoVuelta,g.arrayTiempoVueltaSoloInicial,g.posPiloto, true);
+        Simulacion.s.simulacionVueltas(Gestion.g.arrayCircuito,0,Gestion.g.arrayCoche,Gestion.g.arrayTiempoVuelta,Gestion.g.arrayTiempoVueltaSoloInicial,Gestion.g.posPiloto, true);
     }
 
     public ArrayList listPilots()
     {
         ArrayList<testInformacion> list = new ArrayList<>();
 
-        for(int i = 0;i<g.totalPilotos;i++){
-            testInformacion info = new testInformacion(i + 1,g.arrayCoche.get(i).getNom_piloto(),g.arrayCoche.get(i).getEscuderia(),g.arrayTiempoVueltaSoloInicial.get(i).getMinutes() + ":" + g.arrayTiempoVueltaSoloInicial.get(i).getSeconds() + "," +
-                    g.arrayTiempoVueltaSoloInicial.get(i).getMilliseconds()," + " + g.arrayDiferenciaTiempoVuelta.get(i).getSeconds() + "," + g.arrayDiferenciaTiempoVuelta.get(i).getMilliseconds(),g.arrayCoche.get(i).getParadasBoxes());
+        for(int i = 0;i<Gestion.g.totalPilotos;i++){
+            testInformacion info = new testInformacion(i + 1,Gestion.g.arrayCoche.get(i).getNom_piloto(),Gestion.g.arrayCoche.get(i).getEscuderia(),Gestion.g.arrayTiempoVueltaSoloInicial.get(i).getMinutes() + ":" + Gestion.g.arrayTiempoVueltaSoloInicial.get(i).getSeconds() + "," +
+                    Gestion.g.arrayTiempoVueltaSoloInicial.get(i).getMilliseconds()," + " + Gestion.g.arrayDiferenciaTiempoVuelta.get(i).getSeconds() + "," + Gestion.g.arrayDiferenciaTiempoVuelta.get(i).getMilliseconds(),Gestion.g.arrayCoche.get(i).getParadasBoxes());
             list.add(info);
         }
         return list;
@@ -114,7 +112,6 @@ public class Ventana extends JFrame implements ActionListener{
     }
     private void inicializarComponentes() {
         // creamos los componentes
-        test();
         panelPrincipal = new JPanel();
         panelTop = new JPanel();
         panelCentral = new JPanel();
@@ -122,6 +119,8 @@ public class Ventana extends JFrame implements ActionListener{
         panelNeumaticos = new JPanel();
         panelNeumaticosArriba = new JPanel();
         panelNeumaticosAbajo = new JPanel();
+        panelCircuito = new JPanel();
+        panelTiempo = new JPanel();
         panelPrincipal.setLayout(new BorderLayout());
         panelTop.setLayout(new BorderLayout());
         panelCentral.setLayout(new BorderLayout());
@@ -129,13 +128,15 @@ public class Ventana extends JFrame implements ActionListener{
         panelNeumaticos.setLayout(new BorderLayout());
         panelNeumaticosArriba.setLayout(new BorderLayout());
         panelNeumaticosAbajo.setLayout(new BorderLayout());
+        panelCircuito.setLayout(new BorderLayout());
+        panelTiempo.setLayout(null);
         //panelCentral.setOpaque(true);
         fV = new fondoVentana(Color.gray);
         tablaClasificacion = new JTable();
         selectionModel = tablaClasificacion.getSelectionModel();
-        circuitoFoto = new ImageIcon(this.getClass().getResource(g.arrayCircuito.get(0).getFotoCircuito())).getImage();
+        circuitoFoto = new ImageIcon(this.getClass().getResource(Gestion.g.arrayCircuito.get(Gestion.g.contCircuito).getFoto_circ())).getImage();
         listModelVuelta = listModelDiferenciaVueltas = new DefaultListModel();
-        modeloJlist(g.arrayTiempoVuelta, listModelVuelta);
+        modeloJlist(Gestion.g.arrayTiempoVuelta, listModelVuelta);
         vueltas = new JLabel();
         vueltas.setHorizontalAlignment(JLabel.CENTER);
         vueltas.setVerticalAlignment(JLabel.CENTER);
@@ -147,6 +148,7 @@ public class Ventana extends JFrame implements ActionListener{
         boxes = new JButton();
         bDiferencia = new JButton();
         texto = new JLabel(new ImageIcon(circuitoFoto));
+        texto.setSize(320,200);
         progressBarUR = progressBarUL = progressBarDR = progressBarDL = new JProgressBar();
 
         // configuramos los componentes
@@ -157,9 +159,34 @@ public class Ventana extends JFrame implements ActionListener{
         JScrollPane skrol = new JScrollPane(tablaClasificacion);
 
 
-        g.inicializarArray(g.arrayDiferenciaTiempoVuelta);
+        /*this.addWindowListener( new WindowAdapter() {
+            @Override
+            public void windowActivated(WindowEvent e) {  // Al activarse la ventana almacenamos el tamaño del panel
+                tamanyoPanel = this.panelPrincipal.getBounds();
+                for (Component c : this.panelPrincipal.getComponents()) {
+                    tamComponentes.put( c, c.getBounds() );  // Guardamos el tamaño y posición inicial de cada componente para luego escalarlo con él
+                }
+            }
+        });
+        this.panelPrincipal.addComponentListener( new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {  // Al redimensionarse el panel, reajustamos sus componentes
+                if (this.panelPrincipal!=null && tamanyoPanel!=null) {
+                    double escalaX = this.panelPrincipal.getWidth() / tamanyoPanel.getWidth();   // Nueva escala X
+                    double escalaY = this.panelPrincipal.getHeight() / tamanyoPanel.getHeight(); // Nueva escala Y
+                    for (Component c : this.panelPrincipal.getComponents()) {
+                        Rectangle tamanyoInicial = tamComponentes.get( c );
+                        if (c!=null) {
+                            c.setSize( new Dimension( (int) (tamanyoInicial.getWidth()*escalaX), (int)(tamanyoInicial.getHeight()*escalaY) ) );
+                            c.setLocation( (int) (tamanyoInicial.getX()*escalaX), (int)(tamanyoInicial.getY()*escalaY) );
+                        }
+                    }
+                }
+            }
+        });*/
+        this.getContentPane().add( this.panelPrincipal, BorderLayout.CENTER );
+        Gestion.g.inicializarArray(Gestion.g.arrayDiferenciaTiempoVuelta);
         panelPrincipal.setSize(screenSize);
-        o.setBounds(1620,100,128,128);
         neumaticos.setSize(181,272);
         neumaticos.setBounds(1600,370,181,272);
         vueltas.setText(" 50 " + " / " + " 50 ");
@@ -194,7 +221,7 @@ public class Ventana extends JFrame implements ActionListener{
         clasificacionVueltaDiferencia.setBounds(20,90,200,300);
         clasificacionVueltaDiferencia.setForeground(Color.BLACK);
         clasificacionVueltaDiferencia.setOpaque(false);
-        this.setIconImage(new ImageIcon(this.getClass().getResource(g.arrayCircuito.get(0).getFotoCircuito())).getImage());
+        this.setIconImage(new ImageIcon(this.getClass().getResource(Gestion.g.arrayCircuito.get(0).getFotoCircuito())).getImage());
         //caja.setBounds(150, 50, 100, 25);   // colocamos posicion y tamanio a la caja (x, y, ancho, alto)
         boton.setText("Comenzar carrera");   // colocamos un texto al boton
         boton.setBounds((int)(screenSize.getWidth()/2)/2,(int)screenSize.getHeight() - 100, 150, 30);  // colocamos posicion y tamanio al boton (x, y, ancho, alto)
@@ -205,6 +232,8 @@ public class Ventana extends JFrame implements ActionListener{
         bDiferencia.setText("Diferencia/Tiempos");
         bDiferencia.setBackground(new Color(0,0,0,0));
         bDiferencia.setOpaque(false);
+        o.setHorizontalAlignment(SwingConstants.CENTER);
+        o.setBounds(80,400,128,128);
         boxes.setBounds((boton.getX() + bDiferencia.getX())/ 2,(int)screenSize.getHeight() - 100,150,30);
         boxes.setText("Boxes");
         boxes.setOpaque(false);
@@ -225,14 +254,16 @@ public class Ventana extends JFrame implements ActionListener{
                     seleccion = 0;
                     selectionModel.setSelectionInterval(temp, temp);
                 }
-                else if(tablaClasificacion.getSelectedRow() >= 0 && tablaClasificacion.getSelectedRow()<g.totalPilotos) {
+                else if(tablaClasificacion.getSelectedRow() >= 0 && tablaClasificacion.getSelectedRow()<Gestion.g.totalPilotos) {
                     seleccion = tablaClasificacion.getSelectedRow();
                     temp = seleccion;
                     selectionModel.setSelectionInterval(seleccion, seleccion);
                 }
             }
         });
-
+       /* DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+        tablaClasificacion.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );*/
         // adicionamos los componentes a la ventana
         panelPrincipal.add(panelCentral, BorderLayout.CENTER);
         panelPrincipal.add(panelTop, BorderLayout.NORTH);
@@ -240,6 +271,8 @@ public class Ventana extends JFrame implements ActionListener{
         panelNeumaticos.add(panelNeumaticosArriba, BorderLayout.NORTH);
         panelNeumaticos.add(panelNeumaticosAbajo, BorderLayout.SOUTH);
         panelIzquierda.add(panelNeumaticos, BorderLayout.SOUTH);
+        panelIzquierda.add(panelCircuito, BorderLayout.BEFORE_FIRST_LINE);
+        panelIzquierda.add(panelTiempo, BorderLayout.CENTER);
         //panelCentral.add(tablaClasificacion.getTableHeader(), BorderLayout.PAGE_START);
         panelCentral.add(skrol, BorderLayout.CENTER);
         //panelCentral.add(vueltas,BorderLayout.CENTER);
@@ -248,6 +281,8 @@ public class Ventana extends JFrame implements ActionListener{
         //this.add(caja);
         //panelPrincipal.add(boton);
         panelTop.add(vueltas, BorderLayout.CENTER);
+        panelCircuito.add(texto, BorderLayout.CENTER);
+        panelTiempo.add(o);
         //panelPrincipal.add(clasificacionVuelta);
         //this.add(clasificacionVueltaDiferencia);
         //panelPrincipal.add(bDiferencia);
@@ -259,6 +294,8 @@ public class Ventana extends JFrame implements ActionListener{
         //panelPrincipal.add(o);
         panelTop.add(boton, BorderLayout.WEST);
         //panelPrincipal.add(texto);
+        hiloRotacion.start();
+
     }
 
 
@@ -282,6 +319,8 @@ public class Ventana extends JFrame implements ActionListener{
 
         return crearHilo;
     }
+
+
 
 
     public void modeloJlist(ArrayList<String> tiempoVuelta, DefaultListModel listModel){
@@ -318,14 +357,14 @@ public class Ventana extends JFrame implements ActionListener{
         });
         V.getContentPane().add( V.panelPrincipal, BorderLayout.CENTER );  // El panel ocupa siempre toda la ventana y se reescala con ella
         V.setVisible( true );
-       /* while(true){
+        while(true){
             V.o.incRotacion(0.01);
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }*/
+        }
 
     }
     class hilo implements Runnable{
@@ -343,11 +382,11 @@ public class Ventana extends JFrame implements ActionListener{
          */
         @Override
         public void run() {
-            while(cont< g.arrayCircuito.get(0).getVueltas() + 1) {
-                vueltas.setText((g.arrayCircuito.get(0).getVueltas() - cont) + "/" + g.arrayCircuito.get(0).getVueltas());
+            while(cont< Gestion.g.arrayCircuito.get(0).getVueltas() + 1) {
+                vueltas.setText((Gestion.g.arrayCircuito.get(Gestion.g.contCircuito).getVueltas() - cont) + "/" + Gestion.g.arrayCircuito.get(Gestion.g.contCircuito).getVueltas());
                 cont++;
-                g.arrayTiempoVuelta.clear();
-                g.arrayTiempoVueltaSoloInicial.clear();
+                Gestion.g.arrayTiempoVuelta.clear();
+                Gestion.g.arrayTiempoVueltaSoloInicial.clear();
                 //TODO posicion circuito
                 /*s.simulacionVueltas(g.arrayCircuito, 0, g.arrayCoche, g.arrayTiempoVuelta, g.arrayTiempoVueltaSoloInicial, g.posPiloto, false);
                 s.comprobacionDiferenciasArray(g.arrayCoche,g.arrayDiferenciaTiempo);
@@ -357,27 +396,27 @@ public class Ventana extends JFrame implements ActionListener{
                 g.arrayTiempoVueltaSoloCopia.clear();
                 g.copiarArray(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVueltaSoloCopia);
                 g.arrayTiempoVuelta.clear();*/
-                s.simulacionVueltas(g.arrayCircuito,0,g.arrayCoche,g.arrayTiempoVuelta, g.arrayTiempoVueltaSoloInicial, g.posPiloto, true);
-                s.comprobacionDiferenciasArray(g.arrayCoche,g.arrayDiferenciaTiempo);
-                g.arrayDiferenciaTiempoVuelta.clear();
-                g.copiarArray(g.arrayDiferenciaTiempo,g.arrayDiferenciaTiempoVuelta);
-                g.ordenarPorTiempoTotal(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVuelta,g.arrayCoche, g.arrayDiferenciaTiempoVuelta);
-                g.reordenarIndices(g.arrayTiempoVuelta);
+                Simulacion.s.simulacionVueltas(Gestion.g.arrayCircuito,Gestion.g.contCircuito,Gestion.g.arrayCoche,Gestion.g.arrayTiempoVuelta, Gestion.g.arrayTiempoVueltaSoloInicial, Gestion.g.posPiloto, true);
+                Simulacion.s.comprobacionDiferenciasArray(Gestion.g.arrayCoche,Gestion.g.arrayDiferenciaTiempo);
+                Gestion.g.arrayDiferenciaTiempoVuelta.clear();
+                Gestion.g.copiarArray(Gestion.g.arrayDiferenciaTiempo,Gestion.g.arrayDiferenciaTiempoVuelta);
+                Gestion.g.ordenarPorTiempoTotal(Gestion.g.arrayTiempoVueltaSoloInicial,Gestion.g.arrayTiempoVuelta,Gestion.g.arrayCoche, Gestion.g.arrayDiferenciaTiempoVuelta);
+                Gestion.g.reordenarIndices(Gestion.g.arrayTiempoVuelta);
                 //g.stringArrayOrdenado(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVuelta,g.posPiloto);
                 //s.calcularDiferencia(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVueltaSoloCopia,g.arrayDiferenciaTiempoVuelta);
                 listModelVuelta.removeAllElements();
                 listModelDiferenciaVueltas.removeAllElements();
-                modeloJlist(g.arrayTiempoVuelta, listModelVuelta);
+                modeloJlist(Gestion.g.arrayTiempoVuelta, listModelVuelta);
                 //modeloJlist(g.arrayDiferenciaTiempoVuelta,listModelDiferenciaVueltas);
                 clasificacionVuelta.setModel(listModelVuelta);
                 clasificacionVueltaDiferencia.setModel(listModelDiferenciaVueltas);
-                s.gestionNeumaticos(g.arrayCoche);
+                Simulacion.s.gestionNeumaticos(Gestion.g.arrayCoche);
                 //TODO
-                progressBarUR.setValue((int)g.arrayCoche.get(seleccion).getNeumaticos());
-                progressBarUL.setValue((int)g.arrayCoche.get(seleccion).getNeumaticos());
-                progressBarDR.setValue((int)g.arrayCoche.get(seleccion).getNeumaticos());
-                progressBarDL.setValue((int)g.arrayCoche.get(seleccion).getNeumaticos());
-                s.paradaBoxesIA(g.arrayCircuito, g.arrayCoche, g.arrayTiempoVuelta, g.arrayTiempoVueltaSoloInicial, g.posPiloto);
+                progressBarUR.setValue((int)Gestion.g.arrayCoche.get(seleccion).getNeumaticos());
+                progressBarUL.setValue((int)Gestion.g.arrayCoche.get(seleccion).getNeumaticos());
+                progressBarDR.setValue((int)Gestion.g.arrayCoche.get(seleccion).getNeumaticos());
+                progressBarDL.setValue((int)Gestion.g.arrayCoche.get(seleccion).getNeumaticos());
+                Simulacion.s.paradaBoxesIA(Gestion.g.arrayCircuito, Gestion.g.arrayCoche, Gestion.g.arrayTiempoVuelta, Gestion.g.arrayTiempoVueltaSoloInicial, Gestion.g.posPiloto);
                 //g.recopilarInformacion(g.informacionTabla);
                 updateModel();
                 try {
@@ -386,8 +425,19 @@ public class Ventana extends JFrame implements ActionListener{
                     e.printStackTrace();
                 }
             }
-            g.mejoraIAExponencial(g.arrayCoche, 1.08);
-            g.contCircuito++;
+            Gestion.g.mejoraIAExponencial(Gestion.g.arrayCoche, 1.08);
+            Gestion.g.contCircuito++;
         }
     }
-}
+    class hiloRotacion implements Runnable{
+
+        @Override
+        public void run() {
+            while(true){
+                o.incRotacion(0.01);
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {}
+        }
+    }
+}}

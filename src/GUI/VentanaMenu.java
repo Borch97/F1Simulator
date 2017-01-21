@@ -14,7 +14,7 @@ import java.awt.Toolkit;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 
-public class VentanaMenu {
+public class VentanaMenu extends JFrame{
 
 	private JFrame frame;
 	private JTable table;
@@ -52,10 +52,13 @@ public class VentanaMenu {
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+        frame.setResizable(false);
 		
 		JButton btnIrACarrera = new JButton("Ir a carrera");
 		btnIrACarrera.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				Ventana v = new Ventana();
+				v.setVisible(true);
 			}
 		});
 		btnIrACarrera.setBounds(299, 227, 125, 23);
@@ -69,4 +72,6 @@ public class VentanaMenu {
 		table.setBounds(41, 89, 154, 146);
 		frame.getContentPane().add(table);
 	}
+
+
 }

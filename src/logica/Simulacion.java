@@ -17,6 +17,7 @@ import datos.Gestion;
 
 public class Simulacion{
 
+
     //TODO
     //simulacion = tiempo aleatorio rango circuito - (media (Velocidad, aceleracion, aerodinamica))
 	//metodo probRotura
@@ -25,7 +26,7 @@ public class Simulacion{
 
 
 
-
+    public static Simulacion s = new Simulacion();
     int cont2 = 0;
     public final int totalCoches = 10;
     Gestion g = new Gestion();
