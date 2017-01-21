@@ -22,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
- * Clase Ventana
+ * Clase Ventanaa
  * Muestra la estructuta que deberia tener una Ventana en Java con la libreria
  * Swing, contiene una etiqueta, un caja de texto y un boton, que tiene la
  * accion de mostrar el texto en la caja por una ventana de mensaje.
