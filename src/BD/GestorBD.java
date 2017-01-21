@@ -13,7 +13,7 @@ public class GestorBD{
 	
 	private Connection conexion;
 	private Statement sentencia;
-	private String ruta = "Formula3.sqlite";
+	private String ruta = "Formula1.sqlite";
 	
 	private static GestorBD mGestorBD;
 	
