@@ -13,7 +13,7 @@ public class GestorBD{
 	
 	private Connection conexion;
 	private Statement sentencia;
-	private String ruta = "Formula1.sqlite";
+	private String ruta = "Formula2.sqlite";
 	
 	private static GestorBD mGestorBD;
 	
@@ -152,8 +152,9 @@ public class GestorBD{
     		String foto = pResultado.getString("foto_circ");
     		int tini = pResultado.getInt("rango_tinicial");
     		int tfin = pResultado.getInt("rango_tfinal");
+    		int pos = pResultado.getInt("posicionCircuito");
     		    		    		
-    		pCircuitos.add( new Circuito(nom,pais,vuel,lluv,foto,tini,tfin));
+    		pCircuitos.add( new Circuito(nom,pais,vuel,lluv,foto,tini,tfin,pos));
     		
     		cargarDatosCircuitosREC(pCircuitos, pResultado);
       	
@@ -223,8 +224,9 @@ public class GestorBD{
 	    		String foto = resultado.getString("foto_circ");
 	    		int tini = resultado.getInt("rango_tinicial");
 	    		int tfin = resultado.getInt("rango_tfinal");
+	    		int pos = resultado.getInt("posicionCircuito");
 	    		
-	    		circuito = new Circuito(nom,pais,vuel,lluv,foto,tini,tfin);
+	    		circuito = new Circuito(nom,pais,vuel,lluv,foto,tini,tfin,pos);
 	    				
 	    		circuitos.add( circuito );
 	    	}    		    			
