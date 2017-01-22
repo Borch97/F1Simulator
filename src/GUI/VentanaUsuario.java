@@ -19,7 +19,6 @@ import java.awt.event.*;
 
 public class VentanaUsuario extends JFrame{
 
-	private JFrame frame;
 
 
 	/**
@@ -30,7 +29,7 @@ public class VentanaUsuario extends JFrame{
 			public void run() {
 				try {
 					VentanaUsuario window = new VentanaUsuario();
-					window.frame.setVisible(true);
+					window.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -49,12 +48,11 @@ public class VentanaUsuario extends JFrame{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.addWindowListener(new WindowAdapter() {
+		this.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent arg0) {
 			
-				int r = JOptionPane.showConfirmDialog(frame, "¿Desea salir?");
+				int r = JOptionPane.showConfirmDialog(getParent(), "¿Desea salir?");
 			
 				if ( r == JOptionPane.YES_OPTION )
 				{
@@ -62,18 +60,18 @@ public class VentanaUsuario extends JFrame{
 				}
 			}
 		});
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaUsuario.class.getResource("/pictures/fc3b3rmula-1.jpg")));
-		frame.setResizable(false);
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaUsuario.class.getResource("/pictures/fc3b3rmula-1.jpg")));
+		this.setResizable(false);
+		this.setBounds(100, 100, 450, 300);
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		this.getContentPane().setLayout(null);
 		
 		JButton btnNewButton = new JButton("Nuevo Usuario");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String m = JOptionPane.showInputDialog("Introduzca el nombre del nuevo usuario");
                 while(m.length()<4) {
-                    JOptionPane.showMessageDialog(frame,"El nombre de usuario tiene que tener al menos 4 caracteres","Inane warning",JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(getParent(),"El nombre de usuario tiene que tener al menos 4 caracteres","Inane warning",JOptionPane.WARNING_MESSAGE);
                     m = JOptionPane.showInputDialog("Introduzca el nombre del nuevo usuario");
                 }
 				Gestion.g.variableUsuario = m;
@@ -81,14 +79,14 @@ public class VentanaUsuario extends JFrame{
                 Simulacion.s.simulacionVueltas(Gestion.g.arrayCircuito,0,Gestion.g.arrayCoche,Gestion.g.arrayTiempoVuelta,Gestion.g.arrayTiempoVueltaSoloInicial,Gestion.g.posPiloto, true);
                 /*VentanaMenu vm = new VentanaMenu();
                 vm.setVisible(true);*/
-                Ventana v = new Ventana();
+                VentanaMenu v = new VentanaMenu();
                 v.setVisible(true);
-				frame.setVisible(false);
+				//getParent().setVisible(false);
 
 			}
 		});
 		btnNewButton.setBounds(159, 64, 130, 23);
-		frame.getContentPane().add(btnNewButton);
+		this.getContentPane().add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Continuar");
 		btnNewButton_1.addActionListener(new ActionListener() {
@@ -99,13 +97,13 @@ public class VentanaUsuario extends JFrame{
 			}
 		});
 		btnNewButton_1.setBounds(159, 118, 130, 23);
-		frame.getContentPane().add(btnNewButton_1);
+		this.getContentPane().add(btnNewButton_1);
 		
 		JButton btnSalir = new JButton("Salir");
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			
-				int r = JOptionPane.showConfirmDialog(frame, "¿Desea salir?");
+				int r = JOptionPane.showConfirmDialog(getParent(), "¿Desea salir?");
 				
 				if ( r == JOptionPane.YES_OPTION )
 				{
@@ -115,16 +113,16 @@ public class VentanaUsuario extends JFrame{
 			}
 		});
 		btnSalir.setBounds(159, 172, 130, 23);
-		frame.getContentPane().add(btnSalir);
+		this.getContentPane().add(btnSalir);
 		
 		Panelimagen panel = new Panelimagen();
 		panel.setBounds(0, 0, 444, 271);
-		frame.getContentPane().add(panel);
+		this.getContentPane().add(panel);
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		Dimension windowSize = frame.getSize();
+		Dimension windowSize = this.getSize();
 		
-		frame.setLocation( (screenSize.width - windowSize.width)/2 , (screenSize.height - windowSize.height)/2 );
+		this.setLocation( (screenSize.width - windowSize.width)/2 , (screenSize.height - windowSize.height)/2 );
 		
 	}
 	

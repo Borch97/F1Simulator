@@ -27,6 +27,7 @@ public class Gestion {
     public ArrayList<String> posPiloto = new ArrayList<>();
     public ArrayList<String> nombreColumnas = new ArrayList<>();
     public String[] columnNames = {"Posición", "Nombre", "Coche", "Tiempo", "Diferencia", "P. Boxes"};
+    public String[] informacionClasificaion = new String[totalPilotos];
     public ArrayList<informacionTabla> informacionTabla = new ArrayList<>();
     public ArrayList<Rango> arrayDiferenciaTiempo = new ArrayList<>();
     public ArrayList<Usuario> arrayUsuario; //= new ArrayList<>();
@@ -34,6 +35,7 @@ public class Gestion {
     public String variableUsuario;
     public int contCircuito = 0;
     public int dinero = 50000;
+    public ArrayList<Coche> arrayCocheClasificacion;
     //Obtener nombre y escuderia de la base de datos
     
     public Gestion()
@@ -74,6 +76,14 @@ public class Gestion {
     public int aleatorio(int min, int max){
         Random random = new Random();
         return random.nextInt(max - min +1) + min;
+    }
+
+    public void arrayListToArray(){
+        int cont = 0;
+        for(Coche c: arrayCoche){
+            informacionClasificaion[cont] = cont + 1 + ".- " + c.getNom_piloto();
+            cont++;
+        }
     }
 
     public void creacionPartidaNueva(){
