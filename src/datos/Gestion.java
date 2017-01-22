@@ -10,6 +10,8 @@ import java.util.Random;
 
 import BD.GestorBD;
 
+import javax.swing.*;
+
 public class Gestion {
 
     public static Gestion g = new Gestion();
@@ -31,6 +33,7 @@ public class Gestion {
     //poner el nombre final a este String para crear su variable en la base de datos
     public String variableUsuario;
     public int contCircuito = 0;
+    public int dinero = 50000;
     //Obtener nombre y escuderia de la base de datos
     
     public Gestion()
@@ -85,12 +88,55 @@ public class Gestion {
         return 0;
     }
 
+    public int obtenerPosicionUsuario(){
+        for(int i = 0;i<arrayUsuario.size();i++){
+            if(arrayUsuario.get(i).getNom_piloto().equals(variableUsuario))
+                return i;
+        }
+        return 0;
+    }
+
     public void agregarDinero(){
         switch (obtenerPosicion()){
             case 0:
-                arrayU
+                arrayUsuario.get(obtenerPosicionUsuario()).setDinero(arrayUsuario.get(obtenerPosicionUsuario()).getDinero() + 110000);
+                break;
+            case 1:
+                arrayUsuario.get(obtenerPosicionUsuario()).setDinero(arrayUsuario.get(obtenerPosicionUsuario()).getDinero() + 100000);
+                break;
+            case 2:
+                arrayUsuario.get(obtenerPosicionUsuario()).setDinero(arrayUsuario.get(obtenerPosicionUsuario()).getDinero() + 90000);
+                break;
+            case 3:
+                arrayUsuario.get(obtenerPosicionUsuario()).setDinero(arrayUsuario.get(obtenerPosicionUsuario()).getDinero() + 80000);
+                break;
+            case 4:
+                arrayUsuario.get(obtenerPosicionUsuario()).setDinero(arrayUsuario.get(obtenerPosicionUsuario()).getDinero() + 70000);
+                break;
+            case 5:
+                arrayUsuario.get(obtenerPosicionUsuario()).setDinero(arrayUsuario.get(obtenerPosicionUsuario()).getDinero() + 60000);
+                break;
+            case 6:
+                arrayUsuario.get(obtenerPosicionUsuario()).setDinero(arrayUsuario.get(obtenerPosicionUsuario()).getDinero() + 50000);
+                break;
+            case 7:
+                arrayUsuario.get(obtenerPosicionUsuario()).setDinero(arrayUsuario.get(obtenerPosicionUsuario()).getDinero() + 40000);
+                break;
+            case 8:
+                arrayUsuario.get(obtenerPosicionUsuario()).setDinero(arrayUsuario.get(obtenerPosicionUsuario()).getDinero() + 30000);
+                break;
+            case 9:
+                arrayUsuario.get(obtenerPosicionUsuario()).setDinero(arrayUsuario.get(obtenerPosicionUsuario()).getDinero() + 20000);
+                break;
+            case 10:
+                arrayUsuario.get(obtenerPosicionUsuario()).setDinero(arrayUsuario.get(obtenerPosicionUsuario()).getDinero() + 10000);
+                break;
+            default:
+                break;
         }
     }
+
+
 
     //Crea un piloto nuevo completamente aleatorio
 

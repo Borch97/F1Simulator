@@ -1,16 +1,20 @@
  package datos;
 
-public class Usuario extends Coche {
+ import java.awt.*;
+
+ public class Usuario extends Coche {
 
 	protected int dinero;
-	
-	public Usuario(int dinero) {
-		this.dinero = dinero;
-	}
 
-	public Usuario(){}
+	 public Usuario(String nom_piloto, int dinero) {
+		 super(nom_piloto);
+		 this.dinero = dinero;
+		 this.nom_piloto = nom_piloto;
+	 }
 
-	public int getDinero() {
+	 public Usuario(){}
+
+	 public int getDinero() {
 		return dinero;
 	}
 

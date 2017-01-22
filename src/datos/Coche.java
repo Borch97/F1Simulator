@@ -56,6 +56,9 @@ public class Coche {
 	        prob_rotura = 0;
 
 	    }
+	    public Coche(String nom_piloto){
+			this.nom_piloto = nom_piloto;
+		}
 
 	    /**
 	     * Contructor para la creacion personalizada de un piloto
