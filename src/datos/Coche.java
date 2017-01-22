@@ -41,6 +41,7 @@ public class Coche {
 				tiempo = Simulacion.s.milisegundosConversion(t1 + t2);
 			}
 	    }
+
 	    
 	    /**
 	     * Contructor vacio con valores predeterminados

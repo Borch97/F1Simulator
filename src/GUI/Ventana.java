@@ -505,6 +505,7 @@ public class Ventana extends JFrame implements ActionListener{
             comprobarMejora();
             GestorBD.getInstance().guardarDatosUsuario(Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()));
             Gestion.g.guardarCoches();
+            Gestion.g.resetearTiempo();
             Gestion.g.resetearInformacion();
             dispose();
             VentanaMenu vm = new VentanaMenu();

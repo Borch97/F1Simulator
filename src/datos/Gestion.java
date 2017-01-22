@@ -178,6 +178,13 @@ public class Gestion {
         GestorBD.getInstance().guardarDatosCoche(c);
     }
 
+
+    public void resetearTiempo(){
+        for(Coche c: arrayCoche){
+            c.setTiempo(new Rango(0,0,0));
+        }
+    }
+
     public void guardarCoches(){
         for(Coche c : arrayCoche){
             GestorBD.getInstance().guardarDatosCoche(c);
