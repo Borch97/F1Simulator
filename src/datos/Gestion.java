@@ -27,6 +27,7 @@ public class Gestion {
     public String[] columnNames = {"Posición", "Nombre", "Coche", "Tiempo", "Diferencia", "P. Boxes"};
     public ArrayList<informacionTabla> informacionTabla = new ArrayList<>();
     public ArrayList<Rango> arrayDiferenciaTiempo = new ArrayList<>();
+    public ArrayList<Usuario> arrayUsuario = new ArrayList<>();
     //poner el nombre final a este String para crear su variable en la base de datos
     public String variableUsuario;
     public int contCircuito = 0;
@@ -75,6 +76,22 @@ public class Gestion {
         creacionUsuario();
         creacionAI();
     }
+
+    public int obtenerPosicion(){
+        for(int i = 0;i<arrayCoche.size();i++){
+            if(arrayCoche.get(i).getNom_piloto().equals(variableUsuario))
+                return i;
+        }
+        return 0;
+    }
+
+    public void agregarDinero(){
+        switch (obtenerPosicion()){
+            case 0:
+                arrayU
+        }
+    }
+
     //Crea un piloto nuevo completamente aleatorio
 
     /**

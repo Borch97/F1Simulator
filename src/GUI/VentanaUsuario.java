@@ -83,6 +83,7 @@ public class VentanaUsuario extends JFrame{
                 vm.setVisible(true);*/
                 Ventana v = new Ventana();
                 v.setVisible(true);
+				frame.setVisible(false);
 
 			}
 		});

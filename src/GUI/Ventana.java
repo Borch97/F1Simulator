@@ -51,6 +51,7 @@ public class Ventana extends JFrame implements ActionListener{
     private int seleccion;
     private int temp = 0;
     private ListSelectionModel selectionModel;
+    JFrame Frame = (JFrame) SwingUtilities.getWindowAncestor(this);
 
 
     public Ventana() {
@@ -341,6 +342,7 @@ public class Ventana extends JFrame implements ActionListener{
 
 
 
+
     public void modeloJlist(ArrayList<String> tiempoVuelta, DefaultListModel listModel){
         tiempoVuelta.forEach(listModel::addElement);
     }
@@ -445,6 +447,8 @@ public class Ventana extends JFrame implements ActionListener{
             }
             Gestion.g.mejoraIAExponencial(Gestion.g.arrayCoche, 1.08);
             Gestion.g.contCircuito++;
+
+
         }
     }
     class hiloRotacion implements Runnable{
