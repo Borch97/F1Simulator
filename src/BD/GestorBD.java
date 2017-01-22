@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import datos.Circuito;
 import datos.Coche;
+import datos.Usuario;
 
 
 public class GestorBD{
@@ -300,6 +301,39 @@ public class GestorBD{
     	}
 			
 		return escuderias;
+	}  
+ 
+ public ArrayList<Usuario> obtenerInfoUsuario(){
+		
+		String c = "select*from Usuario";
+		Usuario usuario = null;
+ 	
+ 	ResultSet resultado = consultar( c );
+ 	 
+ 	ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+ 	
+ 	try
+ 	{ 		
+ 		while( resultado.next() )
+	    	{
+ 			//cada campo de la tabla de la BD
+	    		String nom = resultado.getString("nom_usuario");
+	    		int din = resultado.getInt("dinero");
+	    		usuario = new Usuario(nom,din);
+				
+	    		usuarios.add(usuario);
+	    	}    		    			
+ 	}
+ 	catch( SQLException ex )
+ 	{
+ 		ex.printStackTrace();
+ 	}   	
+ 	finally
+ 	{
+ 		desconectar();
+ 	}
+			
+		return usuarios;
 	}  
     
     public double obtenerProbLluviaCircuito(String nomcircuito ){

@@ -29,7 +29,7 @@ public class Gestion {
     public String[] columnNames = {"Posición", "Nombre", "Coche", "Tiempo", "Diferencia", "P. Boxes"};
     public ArrayList<informacionTabla> informacionTabla = new ArrayList<>();
     public ArrayList<Rango> arrayDiferenciaTiempo = new ArrayList<>();
-    public ArrayList<Usuario> arrayUsuario = new ArrayList<>();
+    public ArrayList<Usuario> arrayUsuario; //= new ArrayList<>();
     //poner el nombre final a este String para crear su variable en la base de datos
     public String variableUsuario;
     public int contCircuito = 0;
@@ -41,6 +41,7 @@ public class Gestion {
     	arrayNombres = GestorBD.getInstance().obtenerInfoPilotos();
     	arrayEscuderias = GestorBD.getInstance().obtenerInfoEscuderias();
         arrayCircuito = GestorBD.getInstance().obtenerInfoCircuito();
+        arrayUsuario = GestorBD.getInstance().obtenerInfoUsuario();
     }
 
     public int buscarPiloto(ArrayList<Coche> arrayCoche, String nombre){
