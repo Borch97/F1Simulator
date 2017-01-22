@@ -435,13 +435,14 @@ public class GestorBD{
     	double aero = pCoche.getAerodinamica(); 
     	double rotu = pCoche.getProb_rotura();
     	double neum = pCoche.getNeumaticos();
-    	//String usua = pCoche.getNom_usuario();
+    	String usua = pCoche.getNom_usuario();
+    	int punt = pCoche.getPuntos();
     	
     	try
     	{
     		//Poner  como los datos del add de arriba
 	    	String q = "select nom_piloto,abreviado,escuderia, velocidad, aceleracion, aerodinamica,"
-	    			+ "prob_rotura,neumaticos,nom_usuario from Coche where nom_piloto = '" + pilo + "'";
+	    			+ "prob_rotura,neumaticos,nom_usuario,puntos from Coche where nom_piloto = '" + pilo + "'"+ " and nom_usuario = '"+usua+"'"  ;
 	    	
 	    	ResultSet resultado = consultar( q );
 	    	
@@ -450,7 +451,7 @@ public class GestorBD{
 	    	{
 	    		String ins = "INSERT INTO Coche ('nom_piloto','abreviado','escuderia',"
 	    				+ "'velocidad','aceleracion','aerodinamica',"
-	    				+ "'prob_rotura','neumaticos','nom_usuario') VALUES ('"+pilo+"','"+abre+"','"+escu+"'," + velo + "," + acel +"," + aero +"," + rotu +"," + neum +"')";    	
+	    				+ "'prob_rotura','neumaticos','nom_usuario') VALUES ('"+pilo+"','"+abre+"','"+escu+"'," + velo + "," + acel +"," + aero +"," + rotu +"," + neum +"," + usua +"," + punt +"')";    	
 	    		insertar( ins );
 	    	}
 	    	else
@@ -468,6 +469,7 @@ public class GestorBD{
 	    	    	double rotu1 = resultado.getDouble("prob_rotura");
 	    	    	double neum1 = resultado.getDouble("neumaticos");
 	    	    	String usua1 = resultado.getString("nom_usuario");
+	    	    	int punt1 = resultado.getInt("puntos");
 		    		/**String nom = resultado.getString("Nombre");
 		    		int t = resultado.getInt("Tiempo");
 		    		int n = resultado.getInt("Nivel");
