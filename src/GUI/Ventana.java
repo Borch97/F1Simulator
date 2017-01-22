@@ -364,29 +364,33 @@ public class Ventana extends JFrame implements ActionListener{
                         break;
                 }
             }
-            else
-                System.exit(0);
         }
         else if(Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getAceleracion() > 0 && Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getAceleracion() < 10 || Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getAerodinamica()  > 0
                 && Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getAerodinamica() < 10 || Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getVelocidad()  > 0
                 && Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getVelocidad() < 10 && Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getDinero() > Gestion.g.dinero * Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getAerodinamica()){
-            int r = JOptionPane.showConfirmDialog(getParent(), "¿Desea realizar una mejora al coche por valor de " + Gestion.g.dinero + " euros?");
-            if ( r == JOptionPane.YES_OPTION )
-            Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).setAerodinamica(Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getAerodinamica() + 1);
+            int r = JOptionPane.showConfirmDialog(getParent(), "¿Desea realizar una mejora al coche por valor de " + Gestion.g.dinero * Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getAerodinamica() + " euros?");
+            if ( r == JOptionPane.YES_OPTION ) {
+                Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).setAerodinamica(Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getAerodinamica() + 1);
+                Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).setDinero((int)(Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getDinero() - Gestion.g.dinero * Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getAerodinamica()));
+            }
         }
         else if(Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getAceleracion() > 0 && Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getAceleracion() < 10 || Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getAerodinamica()  > 0
                 && Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getAerodinamica() < 10 || Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getVelocidad()  > 0
                 && Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getVelocidad() < 10 && Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getDinero() > Gestion.g.dinero * Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getAceleracion()){
-            int r = JOptionPane.showConfirmDialog(getParent(), "¿Desea realizar una mejora al coche por valor de " + Gestion.g.dinero + " euros?");
-            if ( r == JOptionPane.YES_OPTION )
-            Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).setAceleracion(Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getAceleracion() + 1);
+            int r = JOptionPane.showConfirmDialog(getParent(), "¿Desea realizar una mejora al coche por valor de " + Gestion.g.dinero * Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getAceleracion() + " euros?");
+            if ( r == JOptionPane.YES_OPTION ) {
+                Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).setAceleracion(Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getAceleracion() + 1);
+                Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).setDinero((int)(Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getDinero() - Gestion.g.dinero * Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getAceleracion()));
+            }
         }
         else if(Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getAceleracion() > 0 && Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getAceleracion() < 10 || Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getAerodinamica()  > 0
                 && Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getAerodinamica() < 10 || Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getVelocidad()  > 0
                 && Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getVelocidad() < 10 && Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getDinero() > Gestion.g.dinero * Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getVelocidad()){
-            int r = JOptionPane.showConfirmDialog(getParent(), "¿Desea realizar una mejora al coche por valor de " + Gestion.g.dinero + " euros?");
-            if ( r == JOptionPane.YES_OPTION )
-            Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).setVelocidad(Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getVelocidad() + 1);
+            int r = JOptionPane.showConfirmDialog(getParent(), "¿Desea realizar una mejora al coche por valor de " + Gestion.g.dinero * Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getVelocidad() + " euros?");
+            if ( r == JOptionPane.YES_OPTION ) {
+                Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).setVelocidad(Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getVelocidad() + 1);
+                Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).setDinero((int)(Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getDinero() - Gestion.g.dinero * Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getVelocidad()));
+            }
         }
 
     }
@@ -491,6 +495,7 @@ public class Ventana extends JFrame implements ActionListener{
             }
             Gestion.g.mejoraIAExponencial(Gestion.g.arrayCoche, 1.08);
             Gestion.g.contCircuito++;
+            Gestion.g.puntosCarrera();
             Gestion.g.agregarDinero();
             comprobarMejora();
 

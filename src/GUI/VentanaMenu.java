@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
+import datos.Gestion;
 import datos.Usuario;
 
 import java.awt.event.ActionListener;
@@ -18,7 +19,8 @@ public class VentanaMenu extends JFrame{
 
 	private JFrame frame;
 	private JTable table;
-	Usuario u = new Usuario();
+	Usuario u = new Usuario("Borja", 2000000);
+
 
 	/**
 	 * Launch the application.
@@ -49,7 +51,7 @@ public class VentanaMenu extends JFrame{
 	private void initialize() {
 		frame = new JFrame();
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaMenu.class.getResource("/pictures/fc3b3rmula-1.jpg")));
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 720, 480);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
         frame.setResizable(false);
@@ -63,8 +65,9 @@ public class VentanaMenu extends JFrame{
 		});
 		btnIrACarrera.setBounds(299, 227, 125, 23);
 		frame.getContentPane().add(btnIrACarrera);
-		
-		JLabel lblDinero = new JLabel("DINERO: "+Integer.toString(u.getDinero()));
+		//TODO
+		Gestion.g.arrayUsuario.add(u);
+		JLabel lblDinero = new JLabel("DINERO: " + Integer.toString(Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getDinero()));
 		lblDinero.setBounds(105, 31, 209, 14);
 		frame.getContentPane().add(lblDinero);
 		

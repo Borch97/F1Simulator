@@ -78,6 +78,7 @@ public class Gestion {
 
     public void creacionPartidaNueva(){
         creacionUsuario();
+        creacionUsuarioCoche();
         creacionAI();
     }
 
@@ -152,13 +153,26 @@ public class Gestion {
         String nombreUsuario = variableUsuario;
         //TODO añadir imagen coche
 		return new Coche(nombrepiloto, " ", nombreescuderia, aleatorio(0, 10), aleatorio(0, 10), aleatorio(0, 10), 0,
-				100, null, 0, variableUsuario);
+				100, null, 0, variableUsuario,0);
     	// return new Coche(arrayNombres.get(aleatorio(0, arrayNombres.size() - 1))," ", arrayEscuderias.get(aleatorio(0, arrayEscuderias.size() - 1)), aleatorio(0, 10), aleatorio(0, 10), aleatorio(0, 10), 0, 100);
     }
 
     public void creacionUsuario(){
-        Coche c = new Coche(variableUsuario,variableUsuario.substring(0,4),arrayEscuderias.get(aleatorio(0, arrayEscuderias.size() - 1)), 0,0,0,0,100,null,0,variableUsuario);
+        Usuario u = new Usuario(variableUsuario, 2000000);
+        arrayUsuario.add(u);
+    }
+    public void creacionUsuarioCoche(){
+        Coche c = new Coche(variableUsuario,variableUsuario.substring(0,4),arrayEscuderias.get(aleatorio(0, arrayEscuderias.size() - 1)), 0,0,0,0,100,null,0,variableUsuario,0);
         arrayCoche.add(c);
+    }
+
+    public void puntosCarrera(){
+        int puntos = 100;
+        for(int i = 0;i < arrayCoche.size();i++){
+            arrayCoche.get(i).setPuntos(arrayCoche.get(i).getPuntos() + puntos);
+            if(puntos > 0)
+                puntos -= 10;
+        }
     }
     //Metodo que se encarga de crear automaticamente todos los otros pilotos del modo carrera
 

@@ -19,11 +19,8 @@ public class Coche {
 		protected Image imagen;
 		protected int paradasBoxes;
 		protected String nom_usuario;
-
-	    //
+		protected int puntos;
 	    protected Rango tiempo;
-
-		Simulacion s = new Simulacion();
 	    
 	    
 	    //en milisegundos
@@ -39,9 +36,9 @@ public class Coche {
     public void incrementarTiempo(int mins , int segs , int msegs )
 	    {
 			if(tiempo != null) {
-				long t1 = s.rangoMilisegundos(tiempo.getMinutes(), tiempo.getSeconds(), tiempo.getMilliseconds());
+				long t1 = Simulacion.s.rangoMilisegundos(tiempo.getMinutes(), tiempo.getSeconds(), tiempo.getMilliseconds());
 				long t2 = msegs + segs * 1000 + mins * 60 * 1000;
-				tiempo = s.milisegundosConversion(t1 + t2);
+				tiempo = Simulacion.s.milisegundosConversion(t1 + t2);
 			}
 	    }
 	    
@@ -73,7 +70,7 @@ public class Coche {
 	    
 	    public Coche(String nom_piloto, String abreviado, String escuderia,
 				double velocidad, double aceleracion, double aerodinamica, double prob_rotura, double neumaticos,
-				Image imagen, int paradasBoxes, String nom_usuario) {
+				Image imagen, int paradasBoxes, String nom_usuario,int puntos) {
 			this.nom_piloto = nom_piloto;
 			this.abreviado = abreviado;
 			this.escuderia = escuderia;
@@ -85,8 +82,7 @@ public class Coche {
 			this.imagen = imagen;
 			this.paradasBoxes = paradasBoxes;
 			this.nom_usuario= nom_usuario;
-			this.tiempo = tiempo;
-			this.s = s;
+			this.puntos = puntos;
 		}
 	   
 
@@ -174,15 +170,11 @@ public class Coche {
 			this.paradasBoxes = paradasBoxes;
 		}
 
-		public Simulacion getS() {
-			return s;
-		}
+		public int getPuntos() {return puntos;}
 
-		public void setS(Simulacion s) {
-			this.s = s;
-		}
+		public void setPuntos(int puntos) {this.puntos = puntos;}
 
-		/**public String getNom_usuario() {
+	/**public String getNom_usuario() {
 			return nom_usuario;
 		}
 
