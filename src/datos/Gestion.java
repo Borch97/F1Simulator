@@ -168,7 +168,7 @@ public class Gestion {
     }
 
     public void creacionUsuario(){
-        Usuario u = new Usuario(variableUsuario, 2000000);
+        Usuario u = new Usuario(variableUsuario,variableUsuario.substring(0,4),arrayEscuderias.get(aleatorio(0, arrayEscuderias.size() - 1)), 0,0,0,0,100,null,0,variableUsuario,0,2000000);
         arrayUsuario.add(u);
         GestorBD.getInstance().guardarDatosUsuario(u);
     }
@@ -176,6 +176,12 @@ public class Gestion {
         Coche c = new Coche(variableUsuario,variableUsuario.substring(0,4),arrayEscuderias.get(aleatorio(0, arrayEscuderias.size() - 1)), 0,0,0,0,100,null,0,variableUsuario,0);
         arrayCoche.add(c);
         GestorBD.getInstance().guardarDatosCoche(c);
+    }
+
+    public void guardarCoches(){
+        for(Coche c : arrayCoche){
+            GestorBD.getInstance().guardarDatosCoche(c);
+        }
     }
 
     public void puntosCarrera(){

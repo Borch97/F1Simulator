@@ -317,9 +317,10 @@ public class GestorBD{
  		while( resultado.next() )
 	    	{
  			//cada campo de la tabla de la BD
-	    		String nom = resultado.getString("nom_usuario");
+	    		String nom_us = resultado.getString("nom_usuario");
+				String nom = resultado.getString("nom_piloto");
 	    		int din = resultado.getInt("dinero");
-	    		usuario = new Usuario(nom,din);
+	    		usuario = new Usuario(nom,din,nom_us);
 				
 	    		usuarios.add(usuario);
 	    	}    		    			
@@ -451,7 +452,7 @@ public class GestorBD{
 	    	{
 	    		String ins = "INSERT INTO Coche ('nom_piloto','abreviado','escuderia',"
 	    				+ "'velocidad','aceleracion','aerodinamica',"
-	    				+ "'prob_rotura','neumaticos','nom_usuario', 'puntos') VALUES ('"+pilo+"','"+abre+"','"+escu+"'," + velo + "," + acel +"," + aero +"," + rotu +"," + neum +"," + usua +"," + punt +"')";
+	    				+ "'prob_rotura','neumaticos','nom_usuario', 'puntos') VALUES ('"+pilo+"','"+abre+"','"+escu+"'," + velo + "," + acel +"," + aero +"," + rotu +"," + neum +",'" + usua +"'," + punt +")";
 	    		insertar( ins );
 	    	}
 	    	else
@@ -510,7 +511,7 @@ public class GestorBD{
 		{
 			//Poner  como los datos del add de arriba
 			String q = "select nom_piloto,abreviado,escuderia, velocidad, aceleracion, aerodinamica,"
-					+ "prob_rotura,neumaticos,nom_usuario,dinero from Coche where nom_piloto = '" + pilo + "'"+ " and nom_usuario = '"+usua+"'"  ;
+					+ "prob_rotura,neumaticos,nom_usuario,dinero from Usuario where nom_piloto = '" + pilo + "'"+ " and nom_usuario = '"+usua+"'"  ;
 
 			ResultSet resultado = consultar( q );
 
@@ -519,7 +520,7 @@ public class GestorBD{
 			{
 				String ins = "INSERT INTO Usuario ('nom_piloto','abreviado','escuderia',"
 						+ "'velocidad','aceleracion','aerodinamica',"
-						+ "'prob_rotura','neumaticos','nom_usuario','dinero') VALUES ('"+pilo+"','"+abre+"','"+escu+"'," + velo + "," + acel +"," + aero +"," + rotu +"," + neum +"," + usua +"," + din+"')";
+						+ "'prob_rotura','neumaticos','nom_usuario','dinero') VALUES ('"+pilo+"','"+abre+"','"+escu+"'," + velo + "," + acel +"," + aero +"," + rotu +"," + neum +",'" + usua +"'," + din+")";
 				insertar( ins );
 			}
 			else

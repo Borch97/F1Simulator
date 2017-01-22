@@ -1,5 +1,6 @@
 package GUI;
 
+import BD.GestorBD;
 import GUI.test.fondoVentana;
 import GUI.test.test2;
 import GUI.test.testInformacion;
@@ -502,6 +503,8 @@ public class Ventana extends JFrame implements ActionListener{
             Gestion.g.ordenarPorPuntos(Gestion.g.arrayCoche);
             Gestion.g.agregarDinero();
             comprobarMejora();
+            GestorBD.getInstance().guardarDatosUsuario(Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()));
+            Gestion.g.guardarCoches();
             Gestion.g.resetearInformacion();
             dispose();
             VentanaMenu vm = new VentanaMenu();
