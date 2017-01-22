@@ -28,7 +28,9 @@ public class GestorBD {
 	private GestorBD() {
 
 	}
-
+/**
+ * Metodo mediante el cual nos conectamos a la BD
+ */
 	private void conectar() {
 		try {
 			Class.forName("org.sqlite.JDBC");
