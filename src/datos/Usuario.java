@@ -12,7 +12,12 @@
 		 this.nom_piloto = nom_piloto;
 	 }
 
-	 public Usuario(){}
+     public Usuario(String nom_piloto, String abreviado, String escuderia, double velocidad, double aceleracion, double aerodinamica, double prob_rotura, double neumaticos, Image imagen, int paradasBoxes, String nom_usuario, int puntos, int dinero) {
+         super(nom_piloto, abreviado, escuderia, velocidad, aceleracion, aerodinamica, prob_rotura, neumaticos, imagen, paradasBoxes, nom_usuario, puntos);
+         this.dinero = dinero;
+     }
+
+     public Usuario(){}
 
 	 public int getDinero() {
 		return dinero;

@@ -67,24 +67,22 @@ public class VentanaUsuario extends JFrame{
 		this.getContentPane().setLayout(null);
 		
 		JButton btnNewButton = new JButton("Nuevo Usuario");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				String m = JOptionPane.showInputDialog("Introduzca el nombre del nuevo usuario");
-                while(m.length()<4) {
-                    JOptionPane.showMessageDialog(getParent(),"El nombre de usuario tiene que tener al menos 4 caracteres","Inane warning",JOptionPane.WARNING_MESSAGE);
-                    m = JOptionPane.showInputDialog("Introduzca el nombre del nuevo usuario");
-                }
-				Gestion.g.variableUsuario = m;
-                Gestion.g.creacionPartidaNueva();
-                Simulacion.s.simulacionVueltas(Gestion.g.arrayCircuito,0,Gestion.g.arrayCoche,Gestion.g.arrayTiempoVuelta,Gestion.g.arrayTiempoVueltaSoloInicial,Gestion.g.posPiloto, true);
-                /*VentanaMenu vm = new VentanaMenu();
-                vm.setVisible(true);*/
-                VentanaMenu v = new VentanaMenu();
-                v.setVisible(true);
-				//getParent().setVisible(false);
+		btnNewButton.addActionListener(arg0 -> {
+            String m = JOptionPane.showInputDialog("Introduzca el nombre del nuevo usuario");
+            while(m.length()<4) {
+                JOptionPane.showMessageDialog(getParent(),"El nombre de usuario tiene que tener al menos 4 caracteres","Inane warning",JOptionPane.WARNING_MESSAGE);
+                m = JOptionPane.showInputDialog("Introduzca el nombre del nuevo usuario");
+            }
+            Gestion.g.variableUsuario = m;
+            Gestion.g.creacionPartidaNueva();
+            Simulacion.s.simulacionVueltas(Gestion.g.arrayCircuito,0,Gestion.g.arrayCoche,Gestion.g.arrayTiempoVuelta,Gestion.g.arrayTiempoVueltaSoloInicial,Gestion.g.posPiloto, true);
+            /*VentanaMenu vm = new VentanaMenu();
+            vm.setVisible(true);*/
+            VentanaMenu v = new VentanaMenu();
+            v.setVisible(true);
+            //getParent().setVisible(false);
 
-			}
-		});
+        });
 		btnNewButton.setBounds(159, 64, 130, 23);
 		this.getContentPane().add(btnNewButton);
 		
@@ -115,7 +113,7 @@ public class VentanaUsuario extends JFrame{
 		btnSalir.setBounds(159, 172, 130, 23);
 		this.getContentPane().add(btnSalir);
 		
-		Panelimagen panel = new Panelimagen();
+		Panelimagen panel = new Panelimagen("/pictures/usu.jpg");
 		panel.setBounds(0, 0, 444, 271);
 		this.getContentPane().add(panel);
 		

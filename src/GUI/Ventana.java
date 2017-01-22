@@ -355,12 +355,15 @@ public class Ventana extends JFrame implements ActionListener{
                 switch (Gestion.g.aleatorio(1,3)){
                     case 1:
                         Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).setAceleracion(Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getAceleracion() + 1);
+                        Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).setDinero((Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getDinero() - Gestion.g.dinero));
                         break;
                     case 2:
                         Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).setAerodinamica(Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getAerodinamica() + 1);
+                        Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).setDinero((Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getDinero() - Gestion.g.dinero));
                         break;
                     case 3:
                         Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).setVelocidad(Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getVelocidad() + 1);
+                        Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).setDinero((Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getDinero() - Gestion.g.dinero));
                         break;
                 }
             }
@@ -450,7 +453,7 @@ public class Ventana extends JFrame implements ActionListener{
          */
         @Override
         public void run() {
-            while(cont< Gestion.g.arrayCircuito.get(0).getVueltas() + 1) {
+            while(cont< Gestion.g.arrayCircuito.get(Gestion.g.contCircuito).getVueltas() + 1) {
                 vueltas.setText((Gestion.g.arrayCircuito.get(Gestion.g.contCircuito).getVueltas() - cont) + "/" + Gestion.g.arrayCircuito.get(Gestion.g.contCircuito).getVueltas());
                 cont++;
                 Gestion.g.arrayTiempoVuelta.clear();
@@ -496,8 +499,14 @@ public class Ventana extends JFrame implements ActionListener{
             Gestion.g.mejoraIAExponencial(Gestion.g.arrayCoche, 1.08);
             Gestion.g.contCircuito++;
             Gestion.g.puntosCarrera();
+            Gestion.g.ordenarPorPuntos(Gestion.g.arrayCoche);
             Gestion.g.agregarDinero();
             comprobarMejora();
+            Gestion.g.resetearInformacion();
+            dispose();
+            VentanaMenu vm = new VentanaMenu();
+            vm.setVisible(true);
+
 
 
         }

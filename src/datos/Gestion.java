@@ -170,10 +170,12 @@ public class Gestion {
     public void creacionUsuario(){
         Usuario u = new Usuario(variableUsuario, 2000000);
         arrayUsuario.add(u);
+        GestorBD.getInstance().guardarDatosUsuario(u);
     }
     public void creacionUsuarioCoche(){
         Coche c = new Coche(variableUsuario,variableUsuario.substring(0,4),arrayEscuderias.get(aleatorio(0, arrayEscuderias.size() - 1)), 0,0,0,0,100,null,0,variableUsuario,0);
         arrayCoche.add(c);
+        GestorBD.getInstance().guardarDatosCoche(c);
     }
 
     public void puntosCarrera(){
@@ -259,6 +261,12 @@ public class Gestion {
         arrayTiempoVueltaSoloInicial.clear();
     }
 
+    public void copiarArrayCoche(ArrayList<Coche> arrayCoche, ArrayList<Coche> arrayCocheClasificacion){
+        for(int i = 0;i<arrayCoche.size();i++){
+            arrayCocheClasificacion.add(arrayCoche.get(i));
+        }
+    }
+
     public void copiarArrayString(ArrayList<String> arrayTiempoVueltaSoloInicial, ArrayList<String> arrayTiempoVueltaSoloCopia){
         for(int i = 0;i<arrayTiempoVueltaSoloInicial.size();i++){
             arrayTiempoVueltaSoloCopia.add(arrayTiempoVueltaSoloInicial.get(i));
@@ -288,37 +296,47 @@ public class Gestion {
        }
 
    }
-   /* public void ordenar(ArrayList<Rango> arrayTiempoVueltaSoloInicial, ArrayList<String> arrayTiempoVuelta, ArrayList<Coche> arrayCoche) {
-        int masPequenio; // �ndice del elemento m�s peque�o
+    public void inicializarArrayCoche(ArrayList<Coche> array){
+        for(int i=0;i< totalPilotos;i++){
+            array.add(new Coche());
+        }
+
+    }
+    public void resetearInformacion(){
+        arrayDiferenciaTiempoVuelta.clear();
+        arrayDiferenciaTiempo.clear();
+        for (Coche c: arrayCoche) {
+            c.setNeumaticos(100);
+            c.setParadasBoxes(0);
+            c.setProb_rotura(0);
+        }
+    }
+
+    public void ordenarPorPuntos(ArrayList<Coche> arrayCocheClasificacion) {
+        int masGrande; // �ndice del elemento m�s peque�o
 
         // itera a trav�s de datos.size() - 1 elementos
-        for (int i = 0; i < arrayTiempoVueltaSoloInicial.size() - 1; i++) {
-            masPequenio = i; // primer �ndice del resto del arreglo
+        for (int i = 0; i < arrayCocheClasificacion.size() - 1; i++) {
+            masGrande = i; // primer �ndice del resto del arreglo
 
             // itera para buscar el �ndice del elemento m�s peque�o
-            for (int indice = i + 1; indice < arrayTiempoVueltaSoloInicial.size(); indice++)
-                if (arrayTiempoVueltaSoloInicial.get(indice).getSeconds() == arrayTiempoVueltaSoloInicial.get(masPequenio).getSeconds()) {
-                    if (arrayTiempoVueltaSoloInicial.get(indice).getMilliseconds() < arrayTiempoVueltaSoloInicial.get(masPequenio).getMilliseconds())
-                        masPequenio = indice;
-                } else if (arrayTiempoVueltaSoloInicial.get(indice).getSeconds() < arrayTiempoVueltaSoloInicial.get(masPequenio).getSeconds())
-                    masPequenio = indice;
+            for (int indice = i + 1; indice < arrayCocheClasificacion.size(); indice++) {
+                if (arrayCocheClasificacion.get(indice).getPuntos() == (arrayCocheClasificacion.get(masGrande).getPuntos()))
+                    break;
+                if (arrayCocheClasificacion.get(indice).getPuntos()> arrayCocheClasificacion.get(masGrande).getPuntos())
+                    masGrande = indice;
+            }
 
-            intercambiar(i, masPequenio, arrayTiempoVueltaSoloInicial, arrayTiempoVuelta, arrayCoche); // intercambia el elemento m�s peque�o en la posici�n
-        } // fin de for exterior
+            intercambiar(i, masGrande,arrayCocheClasificacion); // intercambia el elemento m�s peque�o en la posici�n
+        }
     }
 
     // m�todo ayudante para intercambiar los valores de dos elementos
-    public void intercambiar( int primero, int segundo, ArrayList<Rango> arrayTiempoVueltaSoloInicial, ArrayList<String> arrayTiempoVuelta, ArrayList<Coche> arrayCoche)
+    public void intercambiar( int primero, int segundo, ArrayList<Coche> arrayCocheClasificacion)
     {
-        Rango temporal = arrayTiempoVueltaSoloInicial.get(primero); // almacena primero en temporal
-        String temporal1 = arrayTiempoVuelta.get(primero);
-        Coche temporal2 = arrayCoche.get(primero);
-        arrayTiempoVueltaSoloInicial.set(primero,arrayTiempoVueltaSoloInicial.get(segundo)); // sustituye primero con segundo
-        arrayTiempoVuelta.set(primero,arrayTiempoVuelta.get(segundo));
-        arrayCoche.set(primero,arrayCoche.get(segundo));
-        arrayTiempoVueltaSoloInicial.set(segundo,temporal); // coloca temporal en segundo
-        arrayTiempoVuelta.set(segundo,temporal1);
-        arrayCoche.set(segundo, temporal2);
+        Coche temporal = arrayCocheClasificacion.get(primero);
+        arrayCocheClasificacion.set(primero,arrayCocheClasificacion.get(segundo));
+        arrayCoche.set(segundo, temporal);
     } // fin del m�todo intercambiar*/
     public void ordenarPorTiempoTotal(ArrayList<Rango> arrayTiempoVueltaSoloInicial, ArrayList<String> arrayTiempoVuelta, ArrayList<Coche> arrayCoche, ArrayList<Rango> arrayDiferenciaTiempoVuelta) {
         int masPequenio; // �ndice del elemento m�s peque�o
