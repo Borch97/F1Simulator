@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import datos.Circuito;
 import datos.Coche;
+import datos.Gestion;
 import datos.Usuario;
 
 public class GestorBD {
@@ -28,9 +29,7 @@ public class GestorBD {
 	private GestorBD() {
 
 	}
-/**
- * Metodo mediante el cual nos conectamos a la BD
- */
+
 	private void conectar() {
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -132,6 +131,50 @@ public class GestorBD {
 		}
 	}
 
+    public ArrayList<Coche> obtenerInfoCoches(){
+
+        String c = "select * from Coche ";
+        Coche coche = null;
+        ResultSet resultado = consultar( c );
+
+        ArrayList<Coche> coches = new ArrayList<Coche>();
+
+        try
+        {
+            while( resultado.next() )
+            {
+                //cada campo de la tabla de la BD
+                String pilo1 = resultado.getString("nom_piloto");
+                String abre1 = resultado.getString("abreviado");
+                String escu1 = resultado.getString("escuderia");
+                double velo1 = resultado.getDouble("velocidad");
+
+                double acel1 = resultado.getDouble("aceleracion");
+                double aero1 = resultado.getDouble("aerodinamica");
+
+                double rotu1 = resultado.getDouble("prob_rotura");
+                double neum1 = resultado.getDouble("neumaticos");
+                String usua1 = resultado.getString("nom_usuario");
+                int punt1 = resultado.getInt("puntos");
+
+                coche = new Coche(pilo1,abre1,escu1,velo1,acel1,aero1,rotu1,neum1,usua1,punt1);
+
+                coches.add( coche );
+            }
+        }
+        catch( SQLException ex )
+        {
+            ex.printStackTrace();
+        }
+        finally
+        {
+            desconectar();
+        }
+
+
+        return coches;
+    }
+
 	public ArrayList<Circuito> obtenerInfoCircuito() {
 
 		String c = "select * from Circuito ";
@@ -226,7 +269,8 @@ public class GestorBD {
 				String nom_us = resultado.getString("nom_usuario");
 				String nom = resultado.getString("nom_piloto");
 				int din = resultado.getInt("dinero");
-				usuario = new Usuario(nom, din, nom_us);
+                int cont = resultado.getInt("cont_circuito");
+				usuario = new Usuario(nom, din, nom_us, cont);
 
 				usuarios.add(usuario);
 			}
@@ -335,7 +379,7 @@ public class GestorBD {
 						+ punt + ")";
 				insertar(ins);
 			} else {
-				while (resultado.next()) {
+				while (!resultado.next()) {
 					String pilo1 = resultado.getString("nom_piloto");
 					String abre1 = resultado.getString("abreviado");
 					String escu1 = resultado.getString("escuderia");
@@ -399,11 +443,12 @@ public class GestorBD {
 		double neum = pUsuario.getNeumaticos();
 		String usua = pUsuario.getNom_usuario();
 		int din = pUsuario.getDinero();
+        int cont = pUsuario.getContCircuito();
 
 		try {
 			// Poner como los datos del add de arriba
 			String q = "select nom_piloto,abreviado,escuderia, velocidad, aceleracion, aerodinamica,"
-					+ "prob_rotura,neumaticos,nom_usuario,dinero from Usuario where nom_piloto = '" + pilo + "'"
+					+ "prob_rotura,neumaticos,nom_usuario,dinero, cont_circuito from Usuario where nom_piloto = '" + pilo + "'"
 					+ " and nom_usuario = '" + usua + "'";
 
 			ResultSet resultado = consultar(q);
@@ -412,9 +457,9 @@ public class GestorBD {
 			if (resultado.next() == false) {
 				String ins = "INSERT INTO Usuario ('nom_piloto','abreviado','escuderia',"
 						+ "'velocidad','aceleracion','aerodinamica',"
-						+ "'prob_rotura','neumaticos','nom_usuario','dinero') VALUES ('" + pilo + "','" + abre + "','"
+						+ "'prob_rotura','neumaticos','nom_usuario','dinero', 'cont_circuito') VALUES ('" + pilo + "','" + abre + "','"
 						+ escu + "'," + velo + "," + acel + "," + aero + "," + rotu + "," + neum + ",'" + usua + "',"
-						+ din + ")";
+						+ din + cont + ")";
 				insertar(ins);
 			} else {
 				while (resultado.next()) {
@@ -430,6 +475,7 @@ public class GestorBD {
 					double neum1 = resultado.getDouble("neumaticos");
 					String usua1 = resultado.getString("nom_usuario");
 					int din1 = resultado.getInt("dinero");
+                    int cont1 = resultado.getInt("cont_circuito");
 					/**
 					 * String nom = resultado.getString("Nombre"); int t =
 					 * resultado.getInt("Tiempo"); int n =
@@ -466,6 +512,14 @@ public class GestorBD {
 
 						sentencia.executeUpdate(upd);
 					}
+
+                    if (cont < cont1) {
+
+                        String upd = "UPDATE usuario SET cont_circuito = " + cont1 + " WHERE nom_usuario '" + usua
+                                + "' AND nom_piloto = '" + pilo + "'";
+
+                        sentencia.executeUpdate(upd);
+                    }
 				}
 			}
 		} catch (SQLException ex) {

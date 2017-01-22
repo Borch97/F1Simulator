@@ -2,14 +2,8 @@ package GUI;
 
 import java.awt.*;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JButton;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
+import javax.swing.*;
 
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import datos.Gestion;
@@ -20,21 +14,20 @@ import java.awt.event.*;
 public class VentanaUsuario extends JFrame{
 
 
+    Icon icon = new ImageIcon(this.getClass().getResource("/pictures/helmet.jpg"));
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaUsuario window = new VentanaUsuario();
-					window.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		EventQueue.invokeLater(() -> {
+            try {
+                VentanaUsuario window = new VentanaUsuario();
+                window.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
 	}
 
 	/**
@@ -75,7 +68,7 @@ public class VentanaUsuario extends JFrame{
             }
             Gestion.g.variableUsuario = m;
             Gestion.g.creacionPartidaNueva();
-            Simulacion.s.simulacionVueltas(Gestion.g.arrayCircuito,0,Gestion.g.arrayCoche,Gestion.g.arrayTiempoVuelta,Gestion.g.arrayTiempoVueltaSoloInicial,Gestion.g.posPiloto, true);
+            Simulacion.s.simulacionVueltas(Gestion.g.arrayCircuito,Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getContCircuito(),Gestion.g.arrayCoche,Gestion.g.arrayTiempoVuelta,Gestion.g.arrayTiempoVueltaSoloInicial,Gestion.g.posPiloto, true);
             /*VentanaMenu vm = new VentanaMenu();
             vm.setVisible(true);*/
             VentanaMenu v = new VentanaMenu();
@@ -87,13 +80,18 @@ public class VentanaUsuario extends JFrame{
 		this.getContentPane().add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Continuar");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			
-			
-			
-			}
-		});
+		btnNewButton_1.addActionListener(arg0 -> {
+            Object[] possibilities = new Object[Gestion.g.arrayUsuario.size()];
+            for(int i = 0;i < Gestion.g.arrayUsuario.size();i++) {
+            possibilities[i] = Gestion.g.arrayUsuario.get(i).getNom_usuario();
+            }
+            Gestion.g.variableUsuario = (String)JOptionPane.showInputDialog(getParent(),"Selecciona el piloto deseado:\n","Seleccion de piloto",JOptionPane.PLAIN_MESSAGE,icon,possibilities,possibilities[0]);
+            Simulacion.s.simulacionVueltas(Gestion.g.arrayCircuito,Gestion.g.arrayUsuario.get(Gestion.g.obtenerPosicionUsuario()).getContCircuito(),Gestion.g.arrayCoche,Gestion.g.arrayTiempoVuelta,Gestion.g.arrayTiempoVueltaSoloInicial,Gestion.g.posPiloto, true);
+            VentanaMenu vm = new VentanaMenu();
+            vm.setVisible(true);
+
+
+        });
 		btnNewButton_1.setBounds(159, 118, 130, 23);
 		this.getContentPane().add(btnNewButton_1);
 		

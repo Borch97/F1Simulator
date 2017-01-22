@@ -44,6 +44,7 @@ public class Gestion {
     	arrayEscuderias = GestorBD.getInstance().obtenerInfoEscuderias();
         arrayCircuito = GestorBD.getInstance().obtenerInfoCircuito();
         arrayUsuario = GestorBD.getInstance().obtenerInfoUsuario();
+        arrayCoche = GestorBD.getInstance().obtenerInfoCoches();
     }
 
     public int buscarPiloto(ArrayList<Coche> arrayCoche, String nombre){
@@ -168,7 +169,7 @@ public class Gestion {
     }
 
     public void creacionUsuario(){
-        Usuario u = new Usuario(variableUsuario,variableUsuario.substring(0,4),arrayEscuderias.get(aleatorio(0, arrayEscuderias.size() - 1)), 0,0,0,0,100,null,0,variableUsuario,0,2000000);
+        Usuario u = new Usuario(variableUsuario,variableUsuario.substring(0,4),arrayEscuderias.get(aleatorio(0, arrayEscuderias.size() - 1)), 0,0,0,0,100,null,0,variableUsuario,0,2000000, 0);
         arrayUsuario.add(u);
         GestorBD.getInstance().guardarDatosUsuario(u);
     }
