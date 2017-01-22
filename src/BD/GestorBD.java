@@ -28,9 +28,10 @@ public class GestorBD {
 	private GestorBD() {
 
 	}
-/**
- * Metodo mediante el cual nos conectamos a la BD
- */
+
+	/**
+	 * Metodo mediante el cual nos conectamos a la BD
+	 */
 	private void conectar() {
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -47,6 +48,10 @@ public class GestorBD {
 		}
 	}
 
+	/**
+	 * Metodo mediante el cual nos desconectamos de la BD
+	 */
+
 	private void desconectar() {
 		try {
 			sentencia.close();
@@ -56,6 +61,12 @@ public class GestorBD {
 		}
 	}
 
+	/**
+	 * Metodo al que hay que llamar para insertar datos en la BD
+	 * 
+	 * @param pSql
+	 * @return
+	 */
 	private boolean insertar(String pSql) {
 		boolean valor = true;
 		conectar();
@@ -86,8 +97,11 @@ public class GestorBD {
 		return resultado;
 	}
 
-	// 1 METODO RECURSIVO ----> 2 METODOS!!!! 1 no RECURSIVO y OTRO recursivo
-
+	/**
+	 * Metodo con el que cargamos los datos de los circuitos de la BD
+	 * 
+	 * @return
+	 */
 	public ArrayList<Circuito> cargarDatosCircuitos() {
 		String c = "select * from Circuito";
 
@@ -106,6 +120,14 @@ public class GestorBD {
 		return circ;
 	}
 
+	/**
+	 * Metodo recursivo para cargar los datos del los circuitos de la BD
+	 * 
+	 * @param pCircuitos
+	 * @param pResultado
+	 * @return
+	 * @throws SQLException
+	 */
 	private ArrayList<Circuito> cargarDatosCircuitosREC(ArrayList<Circuito> pCircuitos, ResultSet pResultado)
 			throws SQLException {
 		// CB
@@ -132,6 +154,11 @@ public class GestorBD {
 		}
 	}
 
+	/**
+	 * Metodo para obtener la informacion de los circuitos
+	 * 
+	 * @return
+	 */
 	public ArrayList<Circuito> obtenerInfoCircuito() {
 
 		String c = "select * from Circuito ";
@@ -165,6 +192,11 @@ public class GestorBD {
 		return circuitos;
 	}
 
+	/**
+	 * Obtener la informacion de los pilotos de la BD
+	 * 
+	 * @return
+	 */
 	public ArrayList<String> obtenerInfoPilotos() {
 
 		String c = "select nom_piloto from Pilotos";
@@ -187,6 +219,12 @@ public class GestorBD {
 
 		return pilotos;
 	}
+
+	/**
+	 * Obtener la informacion de las escuderias de la BD
+	 * 
+	 * @return
+	 */
 
 	public ArrayList<String> obtenerInfoEscuderias() {
 
@@ -211,6 +249,11 @@ public class GestorBD {
 		return escuderias;
 	}
 
+	/**
+	 * Obtener la informacion del usuario de la BD
+	 * 
+	 * @return
+	 */
 	public ArrayList<Usuario> obtenerInfoUsuario() {
 
 		String c = "select*from Usuario";
@@ -239,6 +282,12 @@ public class GestorBD {
 		return usuarios;
 	}
 
+	/**
+	 * Obtener la probabilidad de lluvia de los circuitos de la BD
+	 * 
+	 * @param nomcircuito
+	 * @return
+	 */
 	public double obtenerProbLluviaCircuito(String nomcircuito) {
 
 		String c = "select prob_lluvia from Circuito where nom_circuito = '" + nomcircuito + "'";
@@ -261,6 +310,9 @@ public class GestorBD {
 		return lluvia;
 	}
 
+	/**
+	 * Visualizar los datos del circuito por pantalla
+	 */
 	public void visualizarDatosCircuitos() {
 		ArrayList<Circuito> alo = cargarDatosCircuitos();
 
@@ -269,42 +321,10 @@ public class GestorBD {
 	}
 
 	/**
+	 * Guardar los datos de los coches en la BD
 	 * 
-	 * public ArrayList<Coche> cargarDatosCoche() { String q =
-	 * "select * from Coche";
-	 * 
-	 * //select * from coche where usuario like " + nom ;
-	 * 
-	 * ResultSet resultado = consultar( q );
-	 * 
-	 * ArrayList<Coche> coche = new ArrayList<>();
-	 * 
-	 * try { while( resultado.next() ) { //cada campo de la tabla de la BD
-	 * String nom = resultado.getString("nom_piloto"); //String usu =
-	 * resultado.getString("nom_usuario"); String abr =
-	 * resultado.getString("abreviado"); String esc =
-	 * resultado.getString("escuderia"); double vel =
-	 * resultado.getDouble("velocidad"); double ace =
-	 * resultado.getDouble("aceleracion"); double aero =
-	 * resultado.getDouble("aerodinamica"); double rot =
-	 * resultado.getDouble("rotura"); double neu =
-	 * resultado.getDouble("neumaticos");
-	 * 
-	 * //coche.add( new Coche(nom,usu,abr,esc,vel,ace,aero,rot)); coche.add( new
-	 * Coche(nom,abr,esc,vel,ace,aero,rot,neu)); } } catch( SQLException ex ) {
-	 * ex.printStackTrace(); } finally { desconectar(); }
-	 * 
-	 * return coche; }
-	 * 
+	 * @param pCoche
 	 */
-
-	/**
-	 * public void guardarDatosCoche ( Piloto pPiloto ) {
-	 * 
-	 * }
-	 */
-
-	// enviar por parametros los datos de un coche
 	public void guardarDatosCoche(Coche pCoche) {
 
 		String pilo = pCoche.getNom_piloto();
@@ -387,6 +407,11 @@ public class GestorBD {
 		}
 	}
 
+	/**
+	 * Guardar los datos del usuario en la BD
+	 * 
+	 * @param pUsuario
+	 */
 	public void guardarDatosUsuario(Usuario pUsuario) {
 
 		String pilo = pUsuario.getNom_piloto();
@@ -472,9 +497,7 @@ public class GestorBD {
 			ex.printStackTrace();
 		}
 	}
-/**
- * 
- */
+
 }
 
 
