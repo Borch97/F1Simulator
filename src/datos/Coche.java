@@ -18,12 +18,9 @@ public class Coche {
 	    protected double neumaticos;
 		protected Image imagen;
 		protected int paradasBoxes;
-	//	protected String nom_usuario;
-
-	    //
+		protected String nom_usuario;
+		protected int puntos;
 	    protected Rango tiempo;
-
-		Simulacion s = new Simulacion();
 	    
 	    
 	    //en milisegundos
@@ -39,11 +36,12 @@ public class Coche {
     public void incrementarTiempo(int mins , int segs , int msegs )
 	    {
 			if(tiempo != null) {
-				long t1 = s.rangoMilisegundos(tiempo.getMinutes(), tiempo.getSeconds(), tiempo.getMilliseconds());
+				long t1 = Simulacion.s.rangoMilisegundos(tiempo.getMinutes(), tiempo.getSeconds(), tiempo.getMilliseconds());
 				long t2 = msegs + segs * 1000 + mins * 60 * 1000;
-				tiempo = s.milisegundosConversion(t1 + t2);
+				tiempo = Simulacion.s.milisegundosConversion(t1 + t2);
 			}
 	    }
+
 	    
 	    /**
 	     * Contructor vacio con valores predeterminados
@@ -56,6 +54,9 @@ public class Coche {
 	        prob_rotura = 0;
 
 	    }
+	    public Coche(String nom_piloto){
+			this.nom_piloto = nom_piloto;
+		}
 
 	    /**
 	     * Contructor para la creacion personalizada de un piloto
@@ -70,7 +71,7 @@ public class Coche {
 	    
 	    public Coche(String nom_piloto, String abreviado, String escuderia,
 				double velocidad, double aceleracion, double aerodinamica, double prob_rotura, double neumaticos,
-				Image imagen, int paradasBoxes) {
+				Image imagen, int paradasBoxes, String nom_usuario,int puntos) {
 			this.nom_piloto = nom_piloto;
 			this.abreviado = abreviado;
 			this.escuderia = escuderia;
@@ -81,17 +82,50 @@ public class Coche {
 			this.neumaticos = neumaticos;
 			this.imagen = imagen;
 			this.paradasBoxes = paradasBoxes;
-			//this.nom_usuario= nom_usuario;
-			this.tiempo = tiempo;
-			this.s = s;
+			this.nom_usuario= nom_usuario;
+			this.puntos = puntos;
 		}
+
+    public Coche(String nom_piloto, String abreviado, String escuderia,
+                 double velocidad, double aceleracion, double aerodinamica, double prob_rotura, double neumaticos, String nom_usuario,int puntos) {
+        this.nom_piloto = nom_piloto;
+        this.abreviado = abreviado;
+        this.escuderia = escuderia;
+        this.velocidad = velocidad;
+        this.aceleracion = aceleracion;
+        this.aerodinamica = aerodinamica;
+        this.prob_rotura = prob_rotura;
+        this.neumaticos = neumaticos;
+        this.nom_usuario= nom_usuario;
+        this.puntos = puntos;
+    }
+
+    public Coche(String nom_piloto, String abreviado, String escuderia,
+                 double velocidad, double aceleracion, double aerodinamica, double prob_rotura, double neumaticos,
+                 Image imagen, int paradasBoxes, String nom_usuario,int puntos, Rango tiempo) {
+        this.nom_piloto = nom_piloto;
+        this.abreviado = abreviado;
+        this.escuderia = escuderia;
+        this.velocidad = velocidad;
+        this.aceleracion = aceleracion;
+        this.aerodinamica = aerodinamica;
+        this.prob_rotura = prob_rotura;
+        this.neumaticos = neumaticos;
+        this.imagen = imagen;
+        this.paradasBoxes = paradasBoxes;
+        this.nom_usuario= nom_usuario;
+        this.puntos = puntos;
+        this.tiempo = tiempo;
+    }
 	   
 
 		public String getNom_piloto() {
 			return nom_piloto;
 		}
 
-		
+		public String getNom_usuario() {return nom_usuario;}
+
+		public void setNom_usuario(String nom_usuario) {this.nom_usuario = nom_usuario;}
 
 		public void setNom_piloto(String nom_piloto) {
 			this.nom_piloto = nom_piloto;
@@ -169,15 +203,11 @@ public class Coche {
 			this.paradasBoxes = paradasBoxes;
 		}
 
-		public Simulacion getS() {
-			return s;
-		}
+		public int getPuntos() {return puntos;}
 
-		public void setS(Simulacion s) {
-			this.s = s;
-		}
+		public void setPuntos(int puntos) {this.puntos = puntos;}
 
-		/**public String getNom_usuario() {
+	/**public String getNom_usuario() {
 			return nom_usuario;
 		}
 

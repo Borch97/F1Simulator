@@ -10,9 +10,12 @@ import java.util.Random;
 
 import BD.GestorBD;
 
+import javax.swing.*;
+
 public class Gestion {
 
-    public final int totalPilotos = 9;
+    public static Gestion g = new Gestion();
+    public final int totalPilotos = 10;
     public ArrayList<Coche> arrayCoche = new ArrayList<>();
     public ArrayList<Circuito> arrayCircuito = new ArrayList<>();
     public ArrayList<String> arrayNombres; //= new ArrayList<>(Arrays.asList("Hamilton", "Vettel", "Verstappen", "Alonso", "Button", "Sainz", "Massa", "Rosberg", "Ricciardo", "Perez", "Bottas"));
@@ -24,16 +27,24 @@ public class Gestion {
     public ArrayList<String> posPiloto = new ArrayList<>();
     public ArrayList<String> nombreColumnas = new ArrayList<>();
     public String[] columnNames = {"Posición", "Nombre", "Coche", "Tiempo", "Diferencia", "P. Boxes"};
+    public String[] informacionClasificaion = new String[totalPilotos];
     public ArrayList<informacionTabla> informacionTabla = new ArrayList<>();
     public ArrayList<Rango> arrayDiferenciaTiempo = new ArrayList<>();
-
-
+    public ArrayList<Usuario> arrayUsuario; //= new ArrayList<>();
+    //poner el nombre final a este String para crear su variable en la base de datos
+    public String variableUsuario;
+    public int contCircuito = 0;
+    public int dinero = 50000;
+    public ArrayList<Coche> arrayCocheClasificacion;
     //Obtener nombre y escuderia de la base de datos
     
     public Gestion()
     {
     	arrayNombres = GestorBD.getInstance().obtenerInfoPilotos();
     	arrayEscuderias = GestorBD.getInstance().obtenerInfoEscuderias();
+        arrayCircuito = GestorBD.getInstance().obtenerInfoCircuito();
+        arrayUsuario = GestorBD.getInstance().obtenerInfoUsuario();
+        arrayCoche = GestorBD.getInstance().obtenerInfoCoches();
     }
 
     public int buscarPiloto(ArrayList<Coche> arrayCoche, String nombre){
@@ -68,6 +79,80 @@ public class Gestion {
         return random.nextInt(max - min +1) + min;
     }
 
+    public void arrayListToArray(){
+        int cont = 0;
+        for(Coche c: arrayCoche){
+            if(c.getNom_usuario().equals(variableUsuario)) {
+                informacionClasificaion[cont] = cont + 1 + ".- " + c.getNom_piloto();
+                cont++;
+            }
+        }
+    }
+
+    public void creacionPartidaNueva(){
+        creacionUsuario();
+        creacionUsuarioCoche();
+        creacionAI();
+    }
+
+    public int obtenerPosicion(){
+        for(int i = 0;i<arrayCoche.size();i++){
+            if(arrayCoche.get(i).getNom_piloto().equals(variableUsuario))
+                return i;
+        }
+        return 0;
+    }
+
+    public int obtenerPosicionUsuario(){
+        for(int i = 0;i<arrayUsuario.size();i++){
+            if(arrayUsuario.get(i).getNom_piloto().equals(variableUsuario))
+                return i;
+        }
+        return 0;
+    }
+
+    public void agregarDinero(){
+        switch (obtenerPosicion()){
+            case 0:
+                arrayUsuario.get(obtenerPosicionUsuario()).setDinero(arrayUsuario.get(obtenerPosicionUsuario()).getDinero() + 110000);
+                break;
+            case 1:
+                arrayUsuario.get(obtenerPosicionUsuario()).setDinero(arrayUsuario.get(obtenerPosicionUsuario()).getDinero() + 100000);
+                break;
+            case 2:
+                arrayUsuario.get(obtenerPosicionUsuario()).setDinero(arrayUsuario.get(obtenerPosicionUsuario()).getDinero() + 90000);
+                break;
+            case 3:
+                arrayUsuario.get(obtenerPosicionUsuario()).setDinero(arrayUsuario.get(obtenerPosicionUsuario()).getDinero() + 80000);
+                break;
+            case 4:
+                arrayUsuario.get(obtenerPosicionUsuario()).setDinero(arrayUsuario.get(obtenerPosicionUsuario()).getDinero() + 70000);
+                break;
+            case 5:
+                arrayUsuario.get(obtenerPosicionUsuario()).setDinero(arrayUsuario.get(obtenerPosicionUsuario()).getDinero() + 60000);
+                break;
+            case 6:
+                arrayUsuario.get(obtenerPosicionUsuario()).setDinero(arrayUsuario.get(obtenerPosicionUsuario()).getDinero() + 50000);
+                break;
+            case 7:
+                arrayUsuario.get(obtenerPosicionUsuario()).setDinero(arrayUsuario.get(obtenerPosicionUsuario()).getDinero() + 40000);
+                break;
+            case 8:
+                arrayUsuario.get(obtenerPosicionUsuario()).setDinero(arrayUsuario.get(obtenerPosicionUsuario()).getDinero() + 30000);
+                break;
+            case 9:
+                arrayUsuario.get(obtenerPosicionUsuario()).setDinero(arrayUsuario.get(obtenerPosicionUsuario()).getDinero() + 20000);
+                break;
+            case 10:
+                arrayUsuario.get(obtenerPosicionUsuario()).setDinero(arrayUsuario.get(obtenerPosicionUsuario()).getDinero() + 10000);
+                break;
+            default:
+                break;
+        }
+    }
+
+
+
     //Crea un piloto nuevo completamente aleatorio
 
     /**
@@ -78,10 +163,60 @@ public class Gestion {
     	
     	String nombrepiloto = arrayNombres.get(aleatorio(0, arrayNombres.size() - 1));
 		String nombreescuderia = arrayEscuderias.get(aleatorio(0, arrayEscuderias.size() - 1));
+        String nombreUsuario = variableUsuario;
         //TODO añadir imagen coche
+        Rango r = new Rango(0,0,0);
 		return new Coche(nombrepiloto, " ", nombreescuderia, aleatorio(0, 10), aleatorio(0, 10), aleatorio(0, 10), 0,
-				100, null, 0);
+				100, null, 0, variableUsuario,0, r );
     	// return new Coche(arrayNombres.get(aleatorio(0, arrayNombres.size() - 1))," ", arrayEscuderias.get(aleatorio(0, arrayEscuderias.size() - 1)), aleatorio(0, 10), aleatorio(0, 10), aleatorio(0, 10), 0, 100);
+    }
+
+    public void creacionUsuario(){
+        Rango r = new Rango(0,0,0);
+        Usuario u = new Usuario(variableUsuario,variableUsuario.substring(0,4),arrayEscuderias.get(aleatorio(0, arrayEscuderias.size() - 1)), 0,0,0,0,100,null,0,variableUsuario,0,2000000, 0, r);
+        arrayUsuario.add(u);
+        GestorBD.getInstance().guardarDatosUsuario(u);
+    }
+    public void creacionUsuarioCoche(){
+        Rango r = new Rango(0,0,0);
+        Coche c = new Coche(variableUsuario,variableUsuario.substring(0,4),arrayEscuderias.get(aleatorio(0, arrayEscuderias.size() - 1)), 0,0,0,0,100,null,0,variableUsuario,0, r);
+        arrayCoche.add(c);
+        GestorBD.getInstance().guardarDatosCoche(c);
+    }
+
+
+    public void resetearTiempo(){
+        for(Coche c: arrayCoche){
+            c.setTiempo(new Rango(0,0,0));
+        }
+    }
+
+    public void guardarCoches(){
+        for(Coche c : arrayCoche){
+            GestorBD.getInstance().guardarDatosCoche(c);
+        }
+    }
+
+    public void puntosCarrera(){
+        int puntos = 100;
+        for(int i = 0;i < arrayCoche.size();i++){
+            arrayCoche.get(i).setPuntos(arrayCoche.get(i).getPuntos() + puntos);
+            if(puntos > 0)
+                puntos -= 10;
+        }
+    }
+
+    public boolean comprobarUsuario(){
+        boolean comp = false;
+        int cont = 0;
+        for(Coche c : arrayCoche){
+            if(c.getNom_usuario().equals(variableUsuario))
+                cont++;
+        }
+        if(cont == 1)
+            comp = true;
+
+        return comp;
     }
     //Metodo que se encarga de crear automaticamente todos los otros pilotos del modo carrera
 
@@ -92,8 +227,8 @@ public class Gestion {
     public void creacionAI(){
         // while(arrayCoche.isEmpty() || arrayCoche.size()<totalPilotos) {
               Coche cocheComprobar;
-        if(arrayCoche.isEmpty()) {
-            for (int j = totalPilotos; j > 0; j--) {
+        if(arrayCoche.isEmpty() || arrayCoche.get(0).getNom_piloto().equals(variableUsuario) || comprobarUsuario()) {
+            for (int j = totalPilotos - 1; j > 0; j--) {
                 cocheComprobar = creacionPiloto();
                 while ((containsElement(arrayCoche, cocheComprobar.getNom_piloto())) || contains2Elements(arrayCoche, cocheComprobar.getEscuderia())) {
                     cocheComprobar = creacionPiloto();
@@ -121,7 +256,7 @@ public class Gestion {
         int cont = 0;
         boolean contains = false;
         for (Coche coche: arrayCoche) {
-            if(coche.getNom_piloto().equals(nombre)){
+            if(coche.getNom_piloto().equals(nombre) && coche.getNom_usuario().equals(variableUsuario)){
                 cont++;
             }
         }
@@ -142,7 +277,7 @@ public class Gestion {
         int cont = 0;
         boolean contains2total = false;
         for (Coche coche: arrayCoche) {
-            if(coche.getEscuderia().equals(escuderia)){
+            if(coche.getEscuderia().equals(escuderia) && coche.getNom_usuario().equals(variableUsuario)){
                 cont++;
             }
         }
@@ -156,6 +291,12 @@ public class Gestion {
             arrayTiempoVueltaSoloCopia.add(arrayTiempoVueltaSoloInicial.get(i));
         }
         arrayTiempoVueltaSoloInicial.clear();
+    }
+
+    public void copiarArrayCoche(ArrayList<Coche> arrayCoche, ArrayList<Coche> arrayCocheClasificacion){
+        for(int i = 0;i<arrayCoche.size();i++){
+            arrayCocheClasificacion.add(arrayCoche.get(i));
+        }
     }
 
     public void copiarArrayString(ArrayList<String> arrayTiempoVueltaSoloInicial, ArrayList<String> arrayTiempoVueltaSoloCopia){
@@ -187,37 +328,47 @@ public class Gestion {
        }
 
    }
-   /* public void ordenar(ArrayList<Rango> arrayTiempoVueltaSoloInicial, ArrayList<String> arrayTiempoVuelta, ArrayList<Coche> arrayCoche) {
-        int masPequenio; // �ndice del elemento m�s peque�o
+    public void inicializarArrayCoche(ArrayList<Coche> array){
+        for(int i=0;i< totalPilotos;i++){
+            array.add(new Coche());
+        }
+
+    }
+    public void resetearInformacion(){
+        arrayDiferenciaTiempoVuelta.clear();
+        arrayDiferenciaTiempo.clear();
+        for (Coche c: arrayCoche) {
+            c.setNeumaticos(100);
+            c.setParadasBoxes(0);
+            c.setProb_rotura(0);
+        }
+    }
+
+    public void ordenarPorPuntos(ArrayList<Coche> arrayCocheClasificacion) {
+        int masGrande; // �ndice del elemento m�s peque�o
 
         // itera a trav�s de datos.size() - 1 elementos
-        for (int i = 0; i < arrayTiempoVueltaSoloInicial.size() - 1; i++) {
-            masPequenio = i; // primer �ndice del resto del arreglo
+        for (int i = 0; i < arrayCocheClasificacion.size() - 1; i++) {
+            masGrande = i; // primer �ndice del resto del arreglo
 
             // itera para buscar el �ndice del elemento m�s peque�o
-            for (int indice = i + 1; indice < arrayTiempoVueltaSoloInicial.size(); indice++)
-                if (arrayTiempoVueltaSoloInicial.get(indice).getSeconds() == arrayTiempoVueltaSoloInicial.get(masPequenio).getSeconds()) {
-                    if (arrayTiempoVueltaSoloInicial.get(indice).getMilliseconds() < arrayTiempoVueltaSoloInicial.get(masPequenio).getMilliseconds())
-                        masPequenio = indice;
-                } else if (arrayTiempoVueltaSoloInicial.get(indice).getSeconds() < arrayTiempoVueltaSoloInicial.get(masPequenio).getSeconds())
-                    masPequenio = indice;
+            for (int indice = i + 1; indice < arrayCocheClasificacion.size(); indice++) {
+                if (arrayCocheClasificacion.get(indice).getPuntos() == (arrayCocheClasificacion.get(masGrande).getPuntos()))
+                    break;
+                if (arrayCocheClasificacion.get(indice).getPuntos()> arrayCocheClasificacion.get(masGrande).getPuntos())
+                    masGrande = indice;
+            }
 
-            intercambiar(i, masPequenio, arrayTiempoVueltaSoloInicial, arrayTiempoVuelta, arrayCoche); // intercambia el elemento m�s peque�o en la posici�n
-        } // fin de for exterior
+            intercambiar(i, masGrande,arrayCocheClasificacion); // intercambia el elemento m�s peque�o en la posici�n
+        }
     }
 
     // m�todo ayudante para intercambiar los valores de dos elementos
-    public void intercambiar( int primero, int segundo, ArrayList<Rango> arrayTiempoVueltaSoloInicial, ArrayList<String> arrayTiempoVuelta, ArrayList<Coche> arrayCoche)
+    public void intercambiar( int primero, int segundo, ArrayList<Coche> arrayCocheClasificacion)
     {
-        Rango temporal = arrayTiempoVueltaSoloInicial.get(primero); // almacena primero en temporal
-        String temporal1 = arrayTiempoVuelta.get(primero);
-        Coche temporal2 = arrayCoche.get(primero);
-        arrayTiempoVueltaSoloInicial.set(primero,arrayTiempoVueltaSoloInicial.get(segundo)); // sustituye primero con segundo
-        arrayTiempoVuelta.set(primero,arrayTiempoVuelta.get(segundo));
-        arrayCoche.set(primero,arrayCoche.get(segundo));
-        arrayTiempoVueltaSoloInicial.set(segundo,temporal); // coloca temporal en segundo
-        arrayTiempoVuelta.set(segundo,temporal1);
-        arrayCoche.set(segundo, temporal2);
+        Coche temporal = arrayCocheClasificacion.get(primero);
+        arrayCocheClasificacion.set(primero,arrayCocheClasificacion.get(segundo));
+        arrayCoche.set(segundo, temporal);
     } // fin del m�todo intercambiar*/
     public void ordenarPorTiempoTotal(ArrayList<Rango> arrayTiempoVueltaSoloInicial, ArrayList<String> arrayTiempoVuelta, ArrayList<Coche> arrayCoche, ArrayList<Rango> arrayDiferenciaTiempoVuelta) {
         int masPequenio; // �ndice del elemento m�s peque�o
@@ -227,34 +378,37 @@ public class Gestion {
             masPequenio = i; // primer �ndice del resto del arreglo
 
             // itera para buscar el �ndice del elemento m�s peque�o
-            for (int indice = i + 1; indice < arrayCoche.size(); indice++)
-                if (arrayCoche.get(indice).getTiempo() == arrayCoche.get(masPequenio).getTiempo()) {
-                    if (arrayCoche.get(indice).getTiempo().getMinutes() < arrayCoche.get(masPequenio).getTiempo().getMinutes())
-                        masPequenio = indice;
-                } else if (arrayCoche.get(indice).getTiempo().getSeconds() < arrayCoche.get(masPequenio).getTiempo().getSeconds())
+            for (int indice = i + 1; indice < arrayCoche.size(); indice++) {
+                if (arrayCoche.get(indice).getTiempo().equals(arrayCoche.get(masPequenio).getTiempo()))
+                    break;
+                if (arrayCoche.get(indice).getTiempo().getMinutes() < arrayCoche.get(masPequenio).getTiempo().getMinutes())
                     masPequenio = indice;
-                  else if (arrayCoche.get(indice).getTiempo().getMilliseconds() < arrayCoche.get(masPequenio).getTiempo().getMilliseconds())
+                else if (((arrayCoche.get(indice).getTiempo().getMinutes() == (arrayCoche.get(masPequenio).getTiempo().getMinutes())) && (arrayCoche.get(indice).getTiempo().getSeconds() < arrayCoche.get(masPequenio).getTiempo().getSeconds())))
                     masPequenio = indice;
+                else if (((arrayCoche.get(indice).getTiempo().getMinutes() == (arrayCoche.get(masPequenio).getTiempo().getMinutes())) && (arrayCoche.get(indice).getTiempo().getSeconds() == (arrayCoche.get(masPequenio).getTiempo().getSeconds())) && (arrayCoche.get(indice).getTiempo().getMilliseconds() < arrayCoche.get(masPequenio).getTiempo().getMilliseconds())))
+                    masPequenio = indice;
+            }
 
             intercambiar(i, masPequenio, arrayTiempoVueltaSoloInicial, arrayTiempoVuelta, arrayCoche, arrayDiferenciaTiempoVuelta); // intercambia el elemento m�s peque�o en la posici�n
-        } // fin de for exterior
-    }
+        }
+    }// fin de for exterior
+
 
     // m�todo ayudante para intercambiar los valores de dos elementos
-    public void intercambiar( int primero, int segundo, ArrayList<Rango> arrayTiempoVueltaSoloInicial, ArrayList<String> arrayTiempoVuelta, ArrayList<Coche> arrayCoche, ArrayList<Rango> arrayDiferenciaTiempoVuelta)
+    public void intercambiar( int primero, int segundo, ArrayList<Rango> arrayTiempoVueltaSoloInicial, ArrayList<String> arrayTiempoVuelta, ArrayList<Coche> arrayCoche, ArrayList<Rango> arrayDiferenciaTiempo)
     {
         Rango temporal = arrayTiempoVueltaSoloInicial.get(primero); // almacena primero en temporal
         String temporal1 = arrayTiempoVuelta.get(primero);
         Coche temporal2 = arrayCoche.get(primero);
-        Rango temporal3 = arrayDiferenciaTiempoVuelta.get(primero);
+        Rango temporal3 = arrayDiferenciaTiempo.get(primero);
         arrayTiempoVueltaSoloInicial.set(primero,arrayTiempoVueltaSoloInicial.get(segundo)); // sustituye primero con segundo
         arrayTiempoVuelta.set(primero,arrayTiempoVuelta.get(segundo));
         arrayCoche.set(primero,arrayCoche.get(segundo));
-        arrayDiferenciaTiempoVuelta.set(primero, arrayDiferenciaTiempoVuelta.get(segundo));
+        arrayDiferenciaTiempo.set(primero, arrayDiferenciaTiempo.get(segundo));
         arrayTiempoVueltaSoloInicial.set(segundo,temporal); // coloca temporal en segundo
         arrayTiempoVuelta.set(segundo,temporal1);
         arrayCoche.set(segundo, temporal2);
-        arrayDiferenciaTiempoVuelta.set(segundo,temporal3);
+        arrayDiferenciaTiempo.set(segundo,temporal3);
     } // fin del m�todo intercambiar
 
     public void reordenarIndices(ArrayList<String> arrayTiempoVuelta){

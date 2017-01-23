@@ -10,6 +10,15 @@ public class informacionTabla {
     private String tiempo;
     private String Diferencia;
     private int paradasBoxes;
+    
+    /**
+     * Constructor
+     * @param nombre
+     * @param imagen
+     * @param tiempo
+     * @param diferencia
+     * @param paradasBoxes
+     */
 
     public informacionTabla(String nombre, Image imagen, String tiempo, String diferencia, int paradasBoxes) {
         this.nombre = nombre;
