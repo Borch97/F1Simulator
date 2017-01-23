@@ -81,10 +81,14 @@ public class Ventana extends JFrame implements ActionListener{
     {
         ArrayList<testInformacion> list = new ArrayList<>();
 
-        for(int i = 0;i<Gestion.g.totalPilotos;i++){
-            testInformacion info = new testInformacion(i + 1,Gestion.g.arrayCoche.get(i).getNom_piloto(),Gestion.g.arrayCoche.get(i).getEscuderia(),Gestion.g.arrayTiempoVueltaSoloInicial.get(i).getMinutes() + ":" + Gestion.g.arrayTiempoVueltaSoloInicial.get(i).getSeconds() + "," +
-                    Gestion.g.arrayTiempoVueltaSoloInicial.get(i).getMilliseconds()," + " + Gestion.g.arrayDiferenciaTiempoVuelta.get(i).getSeconds() + "," + Gestion.g.arrayDiferenciaTiempoVuelta.get(i).getMilliseconds(),Gestion.g.arrayCoche.get(i).getParadasBoxes());
-            list.add(info);
+        int cont = 0;
+        for(int i = 0;i<Gestion.g.arrayCoche.size();i++){
+            if(Gestion.g.arrayCoche.get(i).getNom_usuario().equals(Gestion.g.variableUsuario)) {
+                testInformacion info = new testInformacion(i + 1, Gestion.g.arrayCoche.get(i).getNom_piloto(), Gestion.g.arrayCoche.get(i).getEscuderia(), Gestion.g.arrayTiempoVueltaSoloInicial.get(cont).getMinutes() + ":" + Gestion.g.arrayTiempoVueltaSoloInicial.get(cont).getSeconds() + "," +
+                        Gestion.g.arrayTiempoVueltaSoloInicial.get(cont).getMilliseconds(), " + " + Gestion.g.arrayDiferenciaTiempoVuelta.get(cont).getSeconds() + "," + Gestion.g.arrayDiferenciaTiempoVuelta.get(cont).getMilliseconds(), Gestion.g.arrayCoche.get(cont).getParadasBoxes());
+                list.add(info);
+                cont++;
+            }
         }
         return list;
     }
@@ -302,6 +306,7 @@ public class Ventana extends JFrame implements ActionListener{
         panelInformacion.add(informacionCircuito2);
         panelInformacion.add(informacionCircuito3);
         panelCircuito.add(texto, BorderLayout.CENTER);
+        o.setBounds(50,(int)screenSize.getHeight()-50,128,128);
         panelTiempo.add(o, BorderLayout.CENTER);
         //panelPrincipal.add(clasificacionVuelta);
         //this.add(clasificacionVueltaDiferencia);
@@ -472,7 +477,8 @@ public class Ventana extends JFrame implements ActionListener{
                 Simulacion.s.comprobacionDiferenciasArray(Gestion.g.arrayCoche,Gestion.g.arrayDiferenciaTiempo);
                 Gestion.g.arrayDiferenciaTiempoVuelta.clear();
                 Gestion.g.copiarArray(Gestion.g.arrayDiferenciaTiempo,Gestion.g.arrayDiferenciaTiempoVuelta);
-                Gestion.g.ordenarPorTiempoTotal(Gestion.g.arrayTiempoVueltaSoloInicial,Gestion.g.arrayTiempoVuelta,Gestion.g.arrayCoche, Gestion.g.arrayDiferenciaTiempoVuelta);
+                Gestion.g.ordenarPorTiempoTotal(Gestion.g.arrayCoche);
+                Gestion.g.ordenarDiferencias(Gestion.g.arrayDiferenciaTiempoVuelta, Gestion.g.arrayTiempoVueltaSoloInicial, Gestion.g.arrayCoche);
                 Gestion.g.reordenarIndices(Gestion.g.arrayTiempoVuelta);
                 //g.stringArrayOrdenado(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVuelta,g.posPiloto);
                 //s.calcularDiferencia(g.arrayTiempoVueltaSoloInicial,g.arrayTiempoVueltaSoloCopia,g.arrayDiferenciaTiempoVuelta);

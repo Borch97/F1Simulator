@@ -23,16 +23,14 @@ public class VentanaMenu extends JFrame{
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaMenu window = new VentanaMenu();
-					window.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		EventQueue.invokeLater(() -> {
+            try {
+                VentanaMenu window = new VentanaMenu();
+                window.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
 	}
 
 	/**
@@ -73,8 +71,8 @@ public class VentanaMenu extends JFrame{
         table.addListSelectionListener(e -> {
             int pos = table.getSelectedIndex();
             if (pos != -1) {
-                jTextArea.setText("Nombre: " + Gestion.g.arrayCoche.get(table.getSelectedIndex()).getNom_piloto() + "\n\nEscuderia: " + Gestion.g.arrayCoche.get(table.getSelectedIndex()).getEscuderia() + "\n\nPuntos: " + Gestion.g.arrayCoche.get(table.getSelectedIndex()).getPuntos() +
-                "\n\nAceleracion: " + Gestion.g.arrayCoche.get(table.getSelectedIndex()).getAceleracion() + "\n\nAerodinamica: " + Gestion.g.arrayCoche.get(table.getSelectedIndex()).getAerodinamica() + "\n\nVelocidad: " + Gestion.g.arrayCoche.get(table.getSelectedIndex()).getVelocidad());
+                jTextArea.setText("Nombre: " + Gestion.g.arrayCoche.get(Gestion.g.buscarPosicion(Gestion.g.arrayCoche.get(table.getSelectedIndex()).getNom_piloto())).getNom_piloto() + "\n\nEscuderia: " + Gestion.g.arrayCoche.get(Gestion.g.buscarPosicion(Gestion.g.arrayCoche.get(table.getSelectedIndex()).getNom_piloto())).getEscuderia() + "\n\nPuntos: " + Gestion.g.arrayCoche.get(Gestion.g.buscarPosicion(Gestion.g.arrayCoche.get(table.getSelectedIndex()).getNom_piloto())).getPuntos()+
+                "\n\nAceleracion: " + Gestion.g.arrayCoche.get(Gestion.g.buscarPosicion(Gestion.g.arrayCoche.get(table.getSelectedIndex()).getNom_piloto())).getAceleracion() + "\n\nAerodinamica: " + Gestion.g.arrayCoche.get(Gestion.g.buscarPosicion(Gestion.g.arrayCoche.get(table.getSelectedIndex()).getNom_piloto())).getAerodinamica() + "\n\nVelocidad: " + Gestion.g.arrayCoche.get(Gestion.g.buscarPosicion(Gestion.g.arrayCoche.get(table.getSelectedIndex()).getNom_piloto())).getVelocidad());
             }
         });
         table.setCellRenderer(new TransparentCellListRender());

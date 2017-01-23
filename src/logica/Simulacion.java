@@ -103,45 +103,46 @@ public class Simulacion{
     }
 
     public void simulacionVueltas(ArrayList<Circuito> circuito, int pos, ArrayList<Coche> piloto, ArrayList<String> tiempoVuelta, ArrayList<Rango> tiempos, ArrayList<String> posPilotos, boolean incrementar){
-        int cont = 0;
         Rango r;
-        while (cont<g.totalPilotos) {
-            if (piloto.get(cont).getProb_rotura() == 100) {
-                r = new Rango(9,99,999);
-                tiempoVuelta.add((cont + 1) + ".-" + piloto.get(cont).getNom_piloto().substring(0,4) + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
-                tiempos.add(r);
-                if(piloto.get(cont).getTiempo()==null)
-                    piloto.get(cont).setTiempo(r);
-            } else {
-                r = this.tiempoVueltaInicial((int) circuito.get(pos).getRangoTiempoInicial(), (int) circuito.get(pos).getRangoTiempoFinal(),
-                        piloto.get(cont).getVelocidad(), piloto.get(cont).getAceleracion(), piloto.get(cont).getAerodinamica());
+        for(int i = 0; i<piloto.size();i++) {
+            if (piloto.get(i).getNom_usuario().equals(Gestion.g.variableUsuario)) {
+                if (piloto.get(i).getProb_rotura() == 100) {
+                    r = new Rango(9, 99, 999);
+                    tiempoVuelta.add((i + 1) + ".-" + piloto.get(i).getNom_piloto().substring(0, 4) + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
+                    tiempos.add(r);
+                    if (piloto.get(i).getTiempo() == null)
+                        piloto.get(i).setTiempo(r);
+                } else {
+                    r = this.tiempoVueltaInicial((int) circuito.get(pos).getRangoTiempoInicial(), (int) circuito.get(pos).getRangoTiempoFinal(),
+                            piloto.get(i).getVelocidad(), piloto.get(i).getAceleracion(), piloto.get(i).getAerodinamica());
 
-                if (piloto.get(cont).getNeumaticos() < 50 && piloto.get(cont).getNeumaticos() >= 25) {
-                    if (lluvia((int) circuito.get(pos).getProbLluvia())) {
-                        cambioTiempos(3, cont, r, piloto, tiempoVuelta, tiempos);
-                    } else
-                        cambioTiempos(1, cont, r, piloto, tiempoVuelta, tiempos);
-                } else if (piloto.get(cont).getNeumaticos() < 25 && piloto.get(cont).getNeumaticos() > 0) {
-                    if (lluvia((int) circuito.get(pos).getProbLluvia())) {
-                        cambioTiempos(4, cont, r, piloto, tiempoVuelta, tiempos);
-                    } else
-                        cambioTiempos(2, cont, r, piloto, tiempoVuelta, tiempos);
-                } else if (piloto.get(cont).getNeumaticos() >= 50) {
-                    if (lluvia((int) circuito.get(pos).getProbLluvia())) {
-                        cambioTiempos(2, cont, r, piloto, tiempoVuelta, tiempos);
-                    } else {
-                        tiempoVuelta.add((cont + 1) + ".-" + piloto.get(cont).getNom_piloto().substring(0, 4) + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
-                        tiempos.add(r);
-                        if(piloto.get(cont).getTiempo()==null)
-                            piloto.get(cont).setTiempo(r);
+                    if (piloto.get(i).getNeumaticos() < 50 && piloto.get(i).getNeumaticos() >= 25) {
+                        if (lluvia((int) circuito.get(pos).getProbLluvia())) {
+                            cambioTiempos(3, i, r, piloto, tiempoVuelta, tiempos);
+                        } else
+                            cambioTiempos(1, i, r, piloto, tiempoVuelta, tiempos);
+                    } else if (piloto.get(i).getNeumaticos() < 25 && piloto.get(i).getNeumaticos() > 0) {
+                        if (lluvia((int) circuito.get(pos).getProbLluvia())) {
+                            cambioTiempos(4, i, r, piloto, tiempoVuelta, tiempos);
+                        } else
+                            cambioTiempos(2, i, r, piloto, tiempoVuelta, tiempos);
+                    } else if (piloto.get(i).getNeumaticos() >= 50) {
+                        if (lluvia((int) circuito.get(pos).getProbLluvia())) {
+                            cambioTiempos(2, i, r, piloto, tiempoVuelta, tiempos);
+                        } else {
+                            tiempoVuelta.add((i + 1) + ".-" + piloto.get(i).getNom_piloto().substring(0, 4) + " = " + r.getMinutes() + ":" + r.getSeconds() + "," + r.getMilliseconds());
+                            tiempos.add(r);
+                            if (piloto.get(i).getTiempo() == null)
+                                piloto.get(i).setTiempo(r);
+                        }
+                    } else if (piloto.get(i).getNeumaticos() <= 0) {
+                        piloto.get(i).setProb_rotura(100);
+                        ;
                     }
-                } else if (piloto.get(cont).getNeumaticos() <= 0) {
-                    piloto.get(cont).setProb_rotura(100);;
+                    posPilotos.add(piloto.get(i).getAbreviado());
+                    if (cont2 == 1 && incrementar)
+                        piloto.get(i).incrementarTiempo(r.getMinutes(), r.getSeconds(), r.getMilliseconds());
                 }
-                posPilotos.add(piloto.get(cont).getAbreviado());
-                if(cont2 == 1 && incrementar)
-                    piloto.get(cont).incrementarTiempo(tiempos.get(cont).getMinutes(), r.getSeconds(), r.getMilliseconds());
-                cont++;
             }
         }
         if(cont2 == 0)
@@ -196,11 +197,14 @@ public class Simulacion{
     }
 
     public void comprobacionDiferenciasArray(ArrayList<Coche> pilotos, ArrayList<Rango> diferencia){
+        int cont = 0;
         for(int i = 0;i<pilotos.size();i++) {
             if (pilotos.get(i).getNom_usuario().equals(Gestion.g.variableUsuario)) {
-                if (i == 0)
+                if (cont == 0) {
                     diferencia.add(new Rango(0, 0, 0));
-                else
+                    cont++;
+                }
+                else if(pilotos.get(i - 1).getNom_usuario().equals(Gestion.g.variableUsuario))
                     diferencia.add(comprobarDiferencias(pilotos.get(i - 1).getTiempo(), pilotos.get(i).getTiempo()));
             }
         }

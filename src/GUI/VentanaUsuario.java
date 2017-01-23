@@ -55,7 +55,7 @@ public class VentanaUsuario extends JFrame{
 		});
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaUsuario.class.getResource("/pictures/fc3b3rmula-1.jpg")));
 		this.setResizable(false);
-		this.setBounds(100, 100, 450, 300);
+		this.setBounds(100, 100, 400, 280);
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.getContentPane().setLayout(null);
 		
@@ -76,7 +76,7 @@ public class VentanaUsuario extends JFrame{
             //getParent().setVisible(false);
 
         });
-		btnNewButton.setBounds(159, 64, 130, 23);
+		btnNewButton.setBounds(110, 64, 180, 23);
 		this.getContentPane().add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Continuar");
@@ -92,7 +92,7 @@ public class VentanaUsuario extends JFrame{
 
 
         });
-		btnNewButton_1.setBounds(159, 118, 130, 23);
+		btnNewButton_1.setBounds(110, 118, 180, 23);
 		this.getContentPane().add(btnNewButton_1);
 		
 		JButton btnSalir = new JButton("Salir");
@@ -108,7 +108,7 @@ public class VentanaUsuario extends JFrame{
 			
 			}
 		});
-		btnSalir.setBounds(159, 172, 130, 23);
+		btnSalir.setBounds(110, 172, 180, 23);
 		this.getContentPane().add(btnSalir);
 		
 		Panelimagen panel = new Panelimagen("/pictures/usu.jpg");
