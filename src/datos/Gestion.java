@@ -82,8 +82,10 @@ public class Gestion {
     public void arrayListToArray(){
         int cont = 0;
         for(Coche c: arrayCoche){
-            informacionClasificaion[cont] = cont + 1 + ".- " + c.getNom_piloto();
-            cont++;
+            if(c.getNom_usuario().equals(variableUsuario)) {
+                informacionClasificaion[cont] = cont + 1 + ".- " + c.getNom_piloto();
+                cont++;
+            }
         }
     }
 
@@ -163,18 +165,21 @@ public class Gestion {
 		String nombreescuderia = arrayEscuderias.get(aleatorio(0, arrayEscuderias.size() - 1));
         String nombreUsuario = variableUsuario;
         //TODO añadir imagen coche
+        Rango r = new Rango(0,0,0);
 		return new Coche(nombrepiloto, " ", nombreescuderia, aleatorio(0, 10), aleatorio(0, 10), aleatorio(0, 10), 0,
-				100, null, 0, variableUsuario,0);
+				100, null, 0, variableUsuario,0, r );
     	// return new Coche(arrayNombres.get(aleatorio(0, arrayNombres.size() - 1))," ", arrayEscuderias.get(aleatorio(0, arrayEscuderias.size() - 1)), aleatorio(0, 10), aleatorio(0, 10), aleatorio(0, 10), 0, 100);
     }
 
     public void creacionUsuario(){
-        Usuario u = new Usuario(variableUsuario,variableUsuario.substring(0,4),arrayEscuderias.get(aleatorio(0, arrayEscuderias.size() - 1)), 0,0,0,0,100,null,0,variableUsuario,0,2000000, 0);
+        Rango r = new Rango(0,0,0);
+        Usuario u = new Usuario(variableUsuario,variableUsuario.substring(0,4),arrayEscuderias.get(aleatorio(0, arrayEscuderias.size() - 1)), 0,0,0,0,100,null,0,variableUsuario,0,2000000, 0, r);
         arrayUsuario.add(u);
         GestorBD.getInstance().guardarDatosUsuario(u);
     }
     public void creacionUsuarioCoche(){
-        Coche c = new Coche(variableUsuario,variableUsuario.substring(0,4),arrayEscuderias.get(aleatorio(0, arrayEscuderias.size() - 1)), 0,0,0,0,100,null,0,variableUsuario,0);
+        Rango r = new Rango(0,0,0);
+        Coche c = new Coche(variableUsuario,variableUsuario.substring(0,4),arrayEscuderias.get(aleatorio(0, arrayEscuderias.size() - 1)), 0,0,0,0,100,null,0,variableUsuario,0, r);
         arrayCoche.add(c);
         GestorBD.getInstance().guardarDatosCoche(c);
     }
@@ -200,6 +205,19 @@ public class Gestion {
                 puntos -= 10;
         }
     }
+
+    public boolean comprobarUsuario(){
+        boolean comp = false;
+        int cont = 0;
+        for(Coche c : arrayCoche){
+            if(c.getNom_usuario().equals(variableUsuario))
+                cont++;
+        }
+        if(cont == 1)
+            comp = true;
+
+        return comp;
+    }
     //Metodo que se encarga de crear automaticamente todos los otros pilotos del modo carrera
 
     /**
@@ -209,7 +227,7 @@ public class Gestion {
     public void creacionAI(){
         // while(arrayCoche.isEmpty() || arrayCoche.size()<totalPilotos) {
               Coche cocheComprobar;
-        if(arrayCoche.isEmpty() || arrayCoche.get(0).getNom_piloto().equals(variableUsuario)) {
+        if(arrayCoche.isEmpty() || arrayCoche.get(0).getNom_piloto().equals(variableUsuario) || comprobarUsuario()) {
             for (int j = totalPilotos - 1; j > 0; j--) {
                 cocheComprobar = creacionPiloto();
                 while ((containsElement(arrayCoche, cocheComprobar.getNom_piloto())) || contains2Elements(arrayCoche, cocheComprobar.getEscuderia())) {
@@ -238,7 +256,7 @@ public class Gestion {
         int cont = 0;
         boolean contains = false;
         for (Coche coche: arrayCoche) {
-            if(coche.getNom_piloto().equals(nombre)){
+            if(coche.getNom_piloto().equals(nombre) && coche.getNom_usuario().equals(variableUsuario)){
                 cont++;
             }
         }
@@ -259,7 +277,7 @@ public class Gestion {
         int cont = 0;
         boolean contains2total = false;
         for (Coche coche: arrayCoche) {
-            if(coche.getEscuderia().equals(escuderia)){
+            if(coche.getEscuderia().equals(escuderia) && coche.getNom_usuario().equals(variableUsuario)){
                 cont++;
             }
         }

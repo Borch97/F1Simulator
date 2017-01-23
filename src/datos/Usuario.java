@@ -15,7 +15,7 @@
          this.contCircuito = contCircuito;
 	 }
 
-     public Usuario(String nom_piloto, String abreviado, String escuderia, double velocidad, double aceleracion, double aerodinamica, double prob_rotura, double neumaticos, Image imagen, int paradasBoxes, String nom_usuario, int puntos, int dinero, int contCircuito) {
+     public Usuario(String nom_piloto, String abreviado, String escuderia, double velocidad, double aceleracion, double aerodinamica, double prob_rotura, double neumaticos, Image imagen, int paradasBoxes, String nom_usuario, int puntos, int dinero, int contCircuito, Rango tiempo) {
          super(nom_piloto, abreviado, escuderia, velocidad, aceleracion, aerodinamica, prob_rotura, neumaticos, imagen, paradasBoxes, nom_usuario, puntos);
          this.nom_piloto = nom_piloto;
          this.abreviado = abreviado;
@@ -31,6 +31,7 @@
          this.puntos = puntos;
          this.dinero = dinero;
          this.contCircuito = contCircuito;
+         this.tiempo = tiempo;
      }
 
      public Usuario(){}

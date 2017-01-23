@@ -139,7 +139,7 @@ public class Simulacion{
                     piloto.get(cont).setProb_rotura(100);;
                 }
                 posPilotos.add(piloto.get(cont).getAbreviado());
-                if(cont2==1 && incrementar)
+                if(cont2 == 1 && incrementar)
                     piloto.get(cont).incrementarTiempo(tiempos.get(cont).getMinutes(), r.getSeconds(), r.getMilliseconds());
                 cont++;
             }
@@ -196,11 +196,13 @@ public class Simulacion{
     }
 
     public void comprobacionDiferenciasArray(ArrayList<Coche> pilotos, ArrayList<Rango> diferencia){
-        for(int i = 0;i<pilotos.size();i++){
-            if(i == 0)
-                diferencia.add(new Rango(0,0,0));
-            else
-                diferencia.add(comprobarDiferencias(pilotos.get(i - 1).getTiempo(),pilotos.get(i).getTiempo()));
+        for(int i = 0;i<pilotos.size();i++) {
+            if (pilotos.get(i).getNom_usuario().equals(Gestion.g.variableUsuario)) {
+                if (i == 0)
+                    diferencia.add(new Rango(0, 0, 0));
+                else
+                    diferencia.add(comprobarDiferencias(pilotos.get(i - 1).getTiempo(), pilotos.get(i).getTiempo()));
+            }
         }
 
     }

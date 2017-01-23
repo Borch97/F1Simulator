@@ -99,6 +99,24 @@ public class Coche {
         this.nom_usuario= nom_usuario;
         this.puntos = puntos;
     }
+
+    public Coche(String nom_piloto, String abreviado, String escuderia,
+                 double velocidad, double aceleracion, double aerodinamica, double prob_rotura, double neumaticos,
+                 Image imagen, int paradasBoxes, String nom_usuario,int puntos, Rango tiempo) {
+        this.nom_piloto = nom_piloto;
+        this.abreviado = abreviado;
+        this.escuderia = escuderia;
+        this.velocidad = velocidad;
+        this.aceleracion = aceleracion;
+        this.aerodinamica = aerodinamica;
+        this.prob_rotura = prob_rotura;
+        this.neumaticos = neumaticos;
+        this.imagen = imagen;
+        this.paradasBoxes = paradasBoxes;
+        this.nom_usuario= nom_usuario;
+        this.puntos = puntos;
+        this.tiempo = tiempo;
+    }
 	   
 
 		public String getNom_piloto() {

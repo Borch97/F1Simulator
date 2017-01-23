@@ -379,7 +379,7 @@ public class GestorBD {
 						+ punt + ")";
 				insertar(ins);
 			} else {
-				while (!resultado.next()) {
+				while (resultado.next()) {
 					String pilo1 = resultado.getString("nom_piloto");
 					String abre1 = resultado.getString("abreviado");
 					String escu1 = resultado.getString("escuderia");
@@ -459,7 +459,7 @@ public class GestorBD {
 						+ "'velocidad','aceleracion','aerodinamica',"
 						+ "'prob_rotura','neumaticos','nom_usuario','dinero', 'cont_circuito') VALUES ('" + pilo + "','" + abre + "','"
 						+ escu + "'," + velo + "," + acel + "," + aero + "," + rotu + "," + neum + ",'" + usua + "',"
-						+ din + cont + ")";
+						+ din + "," + cont + ")";
 				insertar(ins);
 			} else {
 				while (resultado.next()) {
